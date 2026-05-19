@@ -8,581 +8,198 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box
-}
-
-html{
-scroll-behavior:smooth
-}
-
-body{
-font-family:Inter,sans-serif;
-background:#020617;
-color:white;
-overflow-x:hidden;
-}
-
-/* SFONDO ANIMATO */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Inter,sans-serif;background:#020617;color:white;overflow-x:hidden}
 
 body::before{
 content:"";
 position:fixed;
 inset:0;
-background-image:
-linear-gradient(rgba(2,6,23,.72),rgba(2,6,23,.92)),
-var(--hero-bg);
+background-image:linear-gradient(rgba(2,6,23,.70),rgba(2,6,23,.93)),var(--hero-bg);
 background-size:cover;
 background-position:center;
-transition:all 1.5s ease;
+transition:opacity 1.2s ease,transform 4s ease;
 transform:scale(1.05);
 z-index:-2;
 }
+
+body.bg-fade::before{opacity:.35;transform:scale(1.09)}
 
 body::after{
 content:"";
 position:fixed;
 inset:0;
-background:
-radial-gradient(circle at top,rgba(14,165,233,.26),transparent 35%);
+background:radial-gradient(circle at top,rgba(14,165,233,.28),transparent 35%);
 z-index:-1;
 }
 
-/* NAVBAR */
-
 .topbar{
-position:fixed;
-top:8px;
-left:18px;
-right:18px;
-z-index:99;
-height:68px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:10px 22px;
-border-radius:20px;
-background:rgba(2,6,23,.78);
-border:1px solid rgba(125,211,252,.22);
-backdrop-filter:blur(18px);
-box-shadow:0 15px 50px rgba(0,0,0,.45);
+position:fixed;top:8px;left:18px;right:18px;z-index:99;
+height:68px;display:flex;align-items:center;justify-content:space-between;
+padding:10px 22px;border-radius:20px;background:rgba(2,6,23,.78);
+border:1px solid rgba(125,211,252,.22);backdrop-filter:blur(18px);
+box-shadow:0 15px 50px rgba(0,0,0,.45)
 }
 
-.brand{
-display:flex;
-align-items:center;
-gap:12px;
-font-weight:900;
-}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900}
+.brand img{width:48px;height:48px;border-radius:50%;background:white;padding:2px}
+.brand-text{line-height:1.1}
+.brand-text strong{font-size:22px;letter-spacing:1px}
+.brand-text span{display:block;font-size:13px;color:#38bdf8;font-weight:800}
 
-.brand img{
-width:48px;
-height:48px;
-border-radius:50%;
-background:white;
-padding:2px;
-}
-
-.brand-text{
-line-height:1.1;
-}
-
-.brand-text strong{
-font-size:22px;
-letter-spacing:1px;
-}
-
-.brand-text span{
-display:block;
-font-size:13px;
-color:#38bdf8;
-font-weight:800;
-}
-
-.nav{
-display:flex;
-gap:20px;
-align-items:center;
-}
-
+.nav{display:flex;gap:20px;align-items:center}
 .nav a{
-color:white;
-text-decoration:none;
-font-weight:900;
-font-size:15px;
-padding:22px 6px;
-border-bottom:3px solid transparent;
-transition:.3s;
+color:white;text-decoration:none;font-weight:900;font-size:15px;
+padding:22px 6px;border-bottom:3px solid transparent;transition:.3s
 }
-
-.nav a:hover{
-color:#38bdf8;
-border-bottom-color:#38bdf8;
-}
-
-/* HERO */
+.nav a:hover{color:#38bdf8;border-bottom-color:#38bdf8}
 
 .hero{
-min-height:520px;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:95px 20px 25px;
+min-height:520px;display:flex;align-items:center;justify-content:center;
+text-align:center;padding:95px 20px 25px
 }
 
-.hero-box{
-max-width:760px;
-width:100%;
-}
+.hero-box{max-width:760px;width:100%}
 
 .logo-main{
-width:360px;
-max-width:82vw;
-border-radius:50%;
-background:white;
-padding:6px;
-box-shadow:
-0 0 0 8px rgba(255,255,255,.08),
-0 0 45px rgba(14,165,233,.75),
-0 28px 70px rgba(0,0,0,.6);
+width:390px;max-width:84vw;border-radius:50%;background:white;padding:6px;
+box-shadow:0 0 0 8px rgba(255,255,255,.08),0 0 45px rgba(14,165,233,.75),0 28px 70px rgba(0,0,0,.6)
 }
 
 .clock-box{
-margin:22px auto 0;
-max-width:500px;
-padding:15px 20px;
-border-radius:22px;
-background:rgba(2,6,23,.78);
-border:1px solid rgba(56,189,248,.55);
-box-shadow:0 0 35px rgba(14,165,233,.35);
+margin:22px auto 0;max-width:500px;padding:15px 20px;border-radius:22px;
+background:rgba(2,6,23,.80);border:1px solid rgba(56,189,248,.55);
+box-shadow:0 0 35px rgba(14,165,233,.35)
 }
 
-#liveDate{
-font-size:18px;
-font-weight:900;
-color:#e0f2fe;
-}
-
+#liveDate{font-size:18px;font-weight:900;color:#e0f2fe}
 #liveClock{
-font-family:Orbitron,sans-serif;
-font-size:44px;
-font-weight:900;
-color:#facc15;
-margin-top:5px;
-text-shadow:0 0 24px rgba(250,204,21,.6);
+font-family:Orbitron,sans-serif;font-size:44px;font-weight:900;
+color:#facc15;margin-top:5px;text-shadow:0 0 24px rgba(250,204,21,.6)
 }
-
-/* DASHBOARD */
 
 .dashboard{
-max-width:1380px;
-margin:auto;
-padding:0 18px 40px;
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:18px;
+max-width:1380px;margin:auto;padding:0 18px 40px;
+display:grid;grid-template-columns:2fr 1fr;gap:18px
 }
 
 .panel{
-background:rgba(15,23,42,.78);
-border:1px solid rgba(125,211,252,.24);
-border-radius:18px;
-padding:18px;
-box-shadow:0 18px 50px rgba(0,0,0,.35);
-backdrop-filter:blur(14px);
+background:rgba(15,23,42,.78);border:1px solid rgba(125,211,252,.24);
+border-radius:18px;padding:18px;box-shadow:0 18px 50px rgba(0,0,0,.35);
+backdrop-filter:blur(14px)
 }
 
-.panel-title{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-margin-bottom:14px;
-}
+.panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.panel-title h2{font-size:18px;font-weight:900}
+.panel-title span{font-size:13px;color:#cbd5e1}
 
-.panel-title h2{
-font-size:18px;
-font-weight:900;
-}
+.blue-dot,.green-dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:7px}
+.blue-dot{background:#0ea5e9}
+.green-dot{background:#22c55e}
 
-.panel-title span{
-font-size:13px;
-color:#cbd5e1;
-}
-
-.blue-dot,.green-dot{
-display:inline-block;
-width:12px;
-height:12px;
-border-radius:50%;
-margin-right:7px;
-}
-
-.blue-dot{
-background:#0ea5e9
-}
-
-.green-dot{
-background:#22c55e
-}
-
-/* DATI LIVE */
-
-.live-grid{
-display:grid;
-grid-template-columns:repeat(6,1fr);
-gap:10px;
-}
-
+.live-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
 .live-card{
-background:rgba(15,23,42,.86);
-border:1px solid rgba(148,163,184,.2);
-border-radius:12px;
-padding:18px 10px;
-text-align:center;
-min-height:130px;
+background:rgba(15,23,42,.86);border:1px solid rgba(148,163,184,.2);
+border-radius:12px;padding:18px 10px;text-align:center;min-height:130px
 }
+.live-card .emoji{font-size:31px;margin-bottom:12px}
+.live-card h3{font-size:14px;color:#e5e7eb;margin-bottom:8px}
+.live-card strong{display:block;font-size:24px;color:white}
+.live-card small{display:block;margin-top:8px;color:#93c5fd;font-size:12px}
 
-.live-card .emoji{
-font-size:31px;
-margin-bottom:12px;
-}
-
-.live-card h3{
-font-size:14px;
-color:#e5e7eb;
-margin-bottom:8px;
-}
-
-.live-card strong{
-display:block;
-font-size:24px;
-color:white;
-}
-
-.live-card small{
-display:block;
-margin-top:8px;
-color:#93c5fd;
-font-size:12px;
-}
-
-/* BOTTONI */
-
-.buttons{
-display:flex;
-justify-content:center;
-gap:12px;
-margin-top:14px;
-flex-wrap:wrap;
-}
-
+.buttons{display:flex;justify-content:center;gap:12px;margin-top:14px;flex-wrap:wrap}
 .btn{
-display:inline-block;
-padding:12px 28px;
-border-radius:9px;
+display:inline-block;padding:12px 28px;border-radius:9px;
 background:linear-gradient(135deg,#2563eb,#1d4ed8);
-color:white;
-text-decoration:none;
-font-weight:900;
-box-shadow:0 10px 25px rgba(37,99,235,.35);
-transition:.3s;
+color:white;text-decoration:none;font-weight:900;
+box-shadow:0 10px 25px rgba(37,99,235,.35);transition:.3s
 }
+.btn:hover{transform:translateY(-2px)}
+.btn.dark{background:rgba(15,23,42,.75);border:1px solid rgba(148,163,184,.25)}
 
-.btn:hover{
-transform:translateY(-2px);
-}
-
-.btn.dark{
-background:rgba(15,23,42,.75);
-border:1px solid rgba(148,163,184,.25);
-}
-
-/* PREVISIONI */
-
-.forecast-grid{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:9px;
-}
-
+.forecast-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:9px}
 .day-card,.hour-card{
-background:rgba(15,23,42,.86);
-border:1px solid rgba(148,163,184,.18);
-border-radius:10px;
-padding:14px 8px;
-text-align:center;
+background:rgba(15,23,42,.86);border:1px solid rgba(148,163,184,.18);
+border-radius:10px;padding:14px 8px;text-align:center
 }
+.day-card h3,.hour-card h3{font-size:13px}
+.day-card .icon{font-size:34px;margin:10px 0}
+.hour-card .icon{font-size:26px;margin:8px 0}
+.temp-max{color:#f87171;font-size:22px;font-weight:900}
+.temp-min{color:#60a5fa;font-size:20px;font-weight:900;margin-left:6px}
+.rain-small{color:#38bdf8;font-size:12px;margin-top:6px}
 
-.day-card .icon{
-font-size:34px;
-margin:10px 0;
-}
+.hourly-scroll{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px}
+.hour-card{min-width:95px}
 
-.temp-max{
-color:#f87171;
-font-size:22px;
-font-weight:900;
-}
+.side{display:flex;flex-direction:column;gap:18px}
 
-.temp-min{
-color:#60a5fa;
-font-size:20px;
-font-weight:900;
-margin-left:6px;
-}
-
-.rain-small{
-color:#38bdf8;
-font-size:12px;
-margin-top:6px;
-}
-
-/* ORARIE */
-
-.hourly-scroll{
-display:flex;
-gap:9px;
-overflow-x:auto;
-padding-bottom:4px;
-}
-
-.hour-card{
-min-width:95px;
-}
-
-.hour-card .icon{
-font-size:26px;
-margin:8px 0;
-}
-
-/* SIDEBAR */
-
-.side{
-display:flex;
-flex-direction:column;
-gap:18px;
-}
-
-/* WEBCAM */
-
-.webcam-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:6px;
-}
-
-.webcam-box{
-position:relative;
-overflow:hidden;
-border-radius:8px;
-border:1px solid rgba(125,211,252,.25);
-}
-
-.webcam-box img{
-width:100%;
-height:72px;
-object-fit:cover;
-display:block;
-transition:.4s;
-}
-
-.webcam-box:hover img{
-transform:scale(1.05);
-}
-
+.webcam-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.webcam-box{position:relative;overflow:hidden;border-radius:8px;border:1px solid rgba(125,211,252,.25)}
+.webcam-box img{width:100%;height:72px;object-fit:cover;display:block;transition:.4s}
+.webcam-box:hover img{transform:scale(1.05)}
 .live-label{
-position:absolute;
-top:4px;
-right:4px;
-background:#22c55e;
-font-size:10px;
-font-weight:900;
-padding:3px 6px;
-border-radius:5px;
+position:absolute;top:4px;right:4px;background:#22c55e;
+font-size:10px;font-weight:900;padding:3px 6px;border-radius:5px
 }
 
-/* FRAME */
+.frame{overflow:hidden;border-radius:10px;border:1px solid rgba(125,211,252,.22);background:#020617}
+.frame img,.frame iframe{width:100%;display:block;border:0}
+.frame iframe{height:260px;background:white}
 
-.frame{
-overflow:hidden;
-border-radius:10px;
-border:1px solid rgba(125,211,252,.22);
-background:#020617;
-}
-
-.frame img,.frame iframe{
-width:100%;
-display:block;
-border:0;
-}
-
-.frame iframe{
-height:260px;
-background:white;
-}
-
-/* ARIA + ASTRONOMIA */
-
-.air-astro{
-display:grid;
-grid-template-columns:1fr 1.25fr;
-gap:18px;
-margin-top:18px;
-}
-
-.air-value{
-display:flex;
-align-items:center;
-gap:18px;
-}
-
+.air-astro{display:grid;grid-template-columns:1fr 1.25fr;gap:18px;margin-top:18px}
+.air-value{display:flex;align-items:center;gap:18px}
 .gauge{
-width:105px;
-height:105px;
-border-radius:50%;
+width:105px;height:105px;border-radius:50%;
 background:conic-gradient(#22c55e 0 72%,rgba(255,255,255,.1) 72% 100%);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:32px;
-font-weight:900;
+display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900
 }
 
-.astro-row{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-}
-
+.astro-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .astro-card{
-background:rgba(15,23,42,.86);
-border:1px solid rgba(148,163,184,.18);
-border-radius:12px;
-padding:14px;
-display:flex;
-align-items:center;
-gap:12px;
+background:rgba(15,23,42,.86);border:1px solid rgba(148,163,184,.18);
+border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px
 }
+.astro-card .big{font-size:42px}
 
-.astro-card .big{
-font-size:42px;
-}
-
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:25px;
-color:#cbd5e1;
-font-size:14px;
-}
-
-/* TO TOP */
+footer{text-align:center;padding:25px;color:#cbd5e1;font-size:14px}
 
 .to-top{
-position:fixed;
-right:18px;
-bottom:18px;
-width:48px;
-height:48px;
-border-radius:50%;
-background:#2563eb;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-font-size:24px;
-font-weight:900;
-text-decoration:none;
-box-shadow:0 12px 30px rgba(37,99,235,.5);
-z-index:99;
+position:fixed;right:18px;bottom:18px;width:48px;height:48px;border-radius:50%;
+background:#2563eb;display:flex;align-items:center;justify-content:center;color:white;
+font-size:24px;font-weight:900;text-decoration:none;box-shadow:0 12px 30px rgba(37,99,235,.5);z-index:99
 }
-
-/* MOBILE */
 
 @media(max-width:1000px){
-
-.dashboard{
-grid-template-columns:1fr;
-}
-
-.live-grid{
-grid-template-columns:repeat(3,1fr);
-}
-
-.nav{
-gap:10px;
-}
-
-.nav a{
-font-size:13px;
-}
+.dashboard{grid-template-columns:1fr}
+.live-grid{grid-template-columns:repeat(3,1fr)}
+.nav{gap:10px}
+.nav a{font-size:13px}
 }
 
 @media(max-width:760px){
-
-.topbar{
-position:relative;
-top:0;
-left:0;
-right:0;
-border-radius:0;
-height:auto;
-flex-direction:column;
-gap:12px;
+.topbar{position:relative;top:0;left:0;right:0;border-radius:0;height:auto;flex-direction:column;gap:12px}
+.nav{flex-wrap:wrap;justify-content:center}
+.hero{padding-top:35px;min-height:auto}
+.logo-main{width:280px}
+#liveClock{font-size:32px}
+.live-grid{grid-template-columns:repeat(2,1fr)}
+.forecast-grid{grid-template-columns:repeat(2,1fr)}
+.air-astro{grid-template-columns:1fr}
 }
-
-.nav{
-flex-wrap:wrap;
-justify-content:center;
-}
-
-.hero{
-padding-top:35px;
-min-height:auto;
-}
-
-.logo-main{
-width:260px;
-}
-
-#liveClock{
-font-size:32px;
-}
-
-.live-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.forecast-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.air-astro{
-grid-template-columns:1fr;
-}
-}
-
 </style>
 </head>
 
 <body>
 
 <header class="topbar">
-
 <div class="brand">
-<img src="5f6a1571-8449-4f65-afcd-8130873109bb.png">
-
+<img src="5f6a1571-8449-4f65-afcd-8130873109bb.png" alt="Logo Meteo Pisticci">
 <div class="brand-text">
 <strong>METEO <span style="display:inline;color:#38bdf8;font-size:22px">PISTICCI</span></strong>
 <span>di Gabriele Lopatriello</span>
 </div>
-
 </div>
 
 <nav class="nav">
@@ -594,34 +211,175 @@ grid-template-columns:1fr;
 <a href="#satellite">🛰️ Satellite</a>
 <a href="#astronomy">🔭 Astronomia</a>
 </nav>
-
 </header>
 
 <section class="hero">
-
 <div class="hero-box">
-
-<img class="logo-main" src="5f6a1571-8449-4f65-afcd-8130873109bb.png">
+<img class="logo-main" src="5f6a1571-8449-4f65-afcd-8130873109bb.png" alt="Logo Meteo Pisticci">
 
 <div class="clock-box">
 <div id="liveDate">--</div>
 <div id="liveClock">--:--:--</div>
 </div>
+</div>
+</section>
+
+<main class="dashboard">
+
+<div>
+
+<section class="panel" id="live">
+<div class="panel-title">
+<div>
+<h2><span class="blue-dot"></span>DATI LIVE STAZIONE METEO</h2>
+<span>Valori aggiornati in tempo reale</span>
+</div>
+<span>Ultimo aggiornamento: <strong id="update">--</strong></span>
+</div>
+
+<div class="live-grid">
+<div class="live-card"><div class="emoji">🌡️</div><h3>Temperatura</h3><strong id="temp">--</strong><small>Stazione live</small></div>
+<div class="live-card"><div class="emoji">💧</div><h3>Umidità</h3><strong id="hum">--</strong><small>Punto di rugiada</small></div>
+<div class="live-card"><div class="emoji">🌬️</div><h3>Vento</h3><strong id="wind">--</strong><small>Raffiche live</small></div>
+<div class="live-card"><div class="emoji">🧭</div><h3>Direzione</h3><strong id="winddir">--</strong><small>Direzione vento</small></div>
+<div class="live-card"><div class="emoji">☔</div><h3>Pioggia</h3><strong id="rain">--</strong><small>Oggi</small></div>
+<div class="live-card"><div class="emoji">📈</div><h3>Pressione</h3><strong id="pressure">--</strong><small>hPa</small></div>
+</div>
+
+<div class="buttons">
+<a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/station/liveData.php" target="_blank">📈 Dati completi</a>
+<a class="btn dark" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/station/graph.php" target="_blank">📉 Grafici interattivi</a>
+</div>
+</section>
+
+<section class="panel" id="forecast" style="margin-top:18px">
+<div class="panel-title">
+<div>
+<h2><span class="blue-dot"></span>PREVISIONI 7 GIORNI</h2>
+<span>Previsioni giornaliere</span>
+</div>
+</div>
+
+<div class="forecast-grid" id="dailyForecast"></div>
+
+<div class="panel-title" style="margin-top:18px">
+<div>
+<h2><span class="blue-dot"></span>PREVISIONI ORARIE</h2>
+<span>Prossime ore</span>
+</div>
+</div>
+
+<div class="hourly-scroll" id="hourlyForecast"></div>
+</section>
+
+<div class="air-astro">
+
+<section class="panel" id="air">
+<div class="panel-title">
+<div>
+<h2><span class="green-dot"></span>QUALITÀ DELL’ARIA</h2>
+<span>Dati aggiornati</span>
+</div>
+</div>
+
+<div class="air-value">
+<div class="gauge">42</div>
+<div>
+<p><strong>PM2.5</strong> 18 µg/m³</p>
+<p><strong>PM10</strong> 28 µg/m³</p>
+<p><strong>O₃</strong> 56 µg/m³</p>
+<p><strong>NO₂</strong> 12 µg/m³</p>
+</div>
+</div>
+
+<a class="btn" style="width:100%;text-align:center;margin-top:18px" href="https://stazioni4.soluzionimeteo.it/pisticci/upload/airlink.html" target="_blank">🌿 Dettagli qualità aria</a>
+</section>
+
+<section class="panel" id="astronomy">
+<div class="panel-title">
+<div>
+<h2><span class="blue-dot"></span>ASTRONOMIA</h2>
+<span>Informazioni astronomiche</span>
+</div>
+</div>
+
+<div class="astro-row">
+<div class="astro-card"><div class="big">🌙</div><div><strong>Fase lunare</strong><p>Luna crescente</p></div></div>
+<div class="astro-card"><div class="big">🌅</div><div><strong>Alba</strong><p>05:42</p></div></div>
+<div class="astro-card"><div class="big">🌇</div><div><strong>Tramonto</strong><p>20:33</p></div></div>
+</div>
+
+<a class="btn" style="width:100%;text-align:center;margin-top:18px" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/moonPhase.php" target="_blank">⭐ Vai alla sezione astronomia</a>
+</section>
 
 </div>
 
+</div>
+
+<aside class="side">
+
+<section class="panel" id="webcam">
+<div class="panel-title">
+<div>
+<h2><span class="green-dot"></span>WEB CAM LIVE</h2>
+<span>Immagini in tempo reale</span>
+</div>
+</div>
+
+<div class="webcam-grid">
+<div class="webcam-box"><span class="live-label">LIVE</span><img src="https://webcam.soluzionimeteo.it/pisticci/webcam.jpg"></div>
+<div class="webcam-box"><span class="live-label">LIVE</span><img src="https://www.meteomarconia.it/webcam_pisticci/web1cropdx.php"></div>
+<div class="webcam-box"><span class="live-label">LIVE</span><img src="https://www.meteomarconia.it/webcam_pisticci/web1cropsx.php"></div>
+<div class="webcam-box"><span class="live-label">LIVE</span><img src="https://www.meteomarconia.it/webcam_pisticci2/web2cropsx.php"></div>
+<div class="webcam-box"><span class="live-label">LIVE</span><img src="https://www.meteomarconia.it/webcam_pisticci2/web2cropdx.php"></div>
+<div class="webcam-box"><span class="live-label">LIVE</span><img src="https://www.meteomarconia.it/webcam_marconia3/web3cropdx.php"></div>
+</div>
+
+<a class="btn" style="width:100%;text-align:center;margin-top:14px" href="#webcam">📷 Vedi tutte le webcam</a>
 </section>
 
+<section class="panel" id="radar">
+<div class="panel-title">
+<div>
+<h2><span class="blue-dot"></span>RADAR METEO</h2>
+<span>Precipitazioni in tempo reale</span>
+</div>
+</div>
+
+<div class="frame">
+<iframe src="https://embed.windy.com/embed2.html?lat=40.390&lon=16.559&detailLat=40.390&detailLon=16.559&width=650&height=450&zoom=8&level=surface&overlay=rain&product=radar&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=true&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"></iframe>
+</div>
+
+<a class="btn" style="width:100%;text-align:center;margin-top:14px" href="https://www.windy.com/40.390/16.559/radar" target="_blank">☁️ Apri radar</a>
+</section>
+
+<section class="panel" id="satellite">
+<div class="panel-title">
+<div>
+<h2><span class="blue-dot"></span>SATELLITE</h2>
+<span>Immagini satellite aggiornate</span>
+</div>
+</div>
+
+<div class="frame">
+<img src="https://modeles20.meteociel.fr/satellite/animsatviscolmtgit.gif" alt="Satellite Italia">
+</div>
+
+<a class="btn" style="width:100%;text-align:center;margin-top:14px" href="https://www.meteociel.fr/observations-meteo/satellite.php" target="_blank">🛰️ Vedi satellite</a>
+</section>
+
+</aside>
+
+</main>
+
 <footer>
-© 2026 Meteo Pisticci - di Gabriele Lopatriello
+© 2026 Meteo Pisticci - di Gabriele Lopatriello<br>
+Dati meteo, webcam, radar, satellite e astronomia per Pisticci.
 </footer>
 
 <a href="#" class="to-top">↑</a>
 
 <script>
-
-/* SFONDO ANIMATO */
-
 const backgrounds = [
 "ChatGPT Image 13 mag 2026, 20_06_28(1)(1).png",
 "dji_fly_20260224_172416_0188_1771952691019_photo.jpg",
@@ -635,23 +393,19 @@ const backgrounds = [
 let currentBg = 0;
 
 function changeBackground(){
+document.body.classList.add("bg-fade");
 
-document.documentElement.style.setProperty(
-"--hero-bg",
-`url("${backgrounds[currentBg]}")`
-);
-
+setTimeout(()=>{
+document.documentElement.style.setProperty("--hero-bg", `url("${backgrounds[currentBg]}")`);
 currentBg = (currentBg + 1) % backgrounds.length;
+document.body.classList.remove("bg-fade");
+},600);
 }
 
 changeBackground();
-
-setInterval(changeBackground,5000);
-
-/* OROLOGIO */
+setInterval(changeBackground,4000);
 
 function updateLiveClock(){
-
 const now = new Date();
 
 const date = now.toLocaleDateString("it-IT",{
@@ -674,9 +428,112 @@ document.getElementById("liveClock").innerText = time;
 }
 
 updateLiveClock();
-
 setInterval(updateLiveClock,1000);
 
+async function loadRealtime(){
+try{
+const response = await fetch("https://stazioni4.soluzionimeteo.it/pisticci/upload/realtime.txt?nocache="+Date.now());
+const text = await response.text();
+const data = text.trim().split(/\s+/);
+
+document.getElementById("update").innerText = (data[0] || "") + " " + (data[1] || "");
+document.getElementById("temp").innerText = data[2] ? data[2] + " °C" : "--";
+document.getElementById("hum").innerText = data[3] ? data[3] + " %" : "--";
+document.getElementById("wind").innerText = data[5] ? data[5] + " km/h" : "--";
+document.getElementById("winddir").innerText = data[7] ? data[7] + "°" : "--";
+document.getElementById("rain").innerText = data[9] ? data[9] + " mm" : "--";
+document.getElementById("pressure").innerText = data[10] ? data[10] + " hPa" : "--";
+}catch(err){
+console.log(err);
+}
+}
+
+async function loadOpenMeteo(){
+try{
+const url = "https://api.open-meteo.com/v1/forecast?latitude=40.3902&longitude=16.5592&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max&hourly=temperature_2m,precipitation_probability,precipitation,wind_speed_10m,wind_gusts_10m&models=ecmwf_ifs&timezone=Europe/Rome";
+
+const response = await fetch(url);
+const data = await response.json();
+
+const dailyBox = document.getElementById("dailyForecast");
+const hourlyBox = document.getElementById("hourlyForecast");
+const giorni = ["DOM","LUN","MAR","MER","GIO","VEN","SAB"];
+
+dailyBox.innerHTML = "";
+
+const max = data.daily.temperature_2m_max_ecmwf_ifs || data.daily.temperature_2m_max;
+const min = data.daily.temperature_2m_min_ecmwf_ifs || data.daily.temperature_2m_min;
+const rain = data.daily.precipitation_sum_ecmwf_ifs || data.daily.precipitation_sum;
+const code = data.daily.weather_code_ecmwf_ifs || data.daily.weather_code;
+
+data.daily.time.forEach((day,i)=>{
+const d = new Date(day);
+
+dailyBox.innerHTML += `
+<div class="day-card">
+<h3>${giorni[d.getDay()]}<br>${d.getDate()}</h3>
+<div class="icon">${weatherIcon(code[i])}</div>
+<div><span class="temp-max">${Math.round(max[i])}°</span><span class="temp-min">${Math.round(min[i])}°</span></div>
+<div class="rain-small">💧 ${rain[i]} mm</div>
+</div>
+`;
+});
+
+hourlyBox.innerHTML = "";
+
+const hTemp = data.hourly.temperature_2m_ecmwf_ifs || data.hourly.temperature_2m;
+const hProb = data.hourly.precipitation_probability_ecmwf_ifs || data.hourly.precipitation_probability;
+const hRain = data.hourly.precipitation_ecmwf_ifs || data.hourly.precipitation;
+
+const now = new Date();
+let startIndex = data.hourly.time.findIndex(t => new Date(t) >= now);
+if(startIndex < 0) startIndex = 0;
+
+for(let x=0;x<8;x++){
+const i = startIndex + (x*3);
+if(!data.hourly.time[i]) break;
+
+const d = new Date(data.hourly.time[i]);
+const c = hourlyCode(hRain[i],hProb[i]);
+
+hourlyBox.innerHTML += `
+<div class="hour-card">
+<h3>${String(d.getHours()).padStart(2,"0")}:00</h3>
+<div class="icon">${weatherIcon(c)}</div>
+<strong>${Math.round(hTemp[i])}°</strong>
+<div class="rain-small">💧 ${hProb[i]}%</div>
+</div>
+`;
+}
+
+}catch(err){
+console.log(err);
+document.getElementById("dailyForecast").innerHTML = "<p>Previsioni non disponibili.</p>";
+}
+}
+
+function hourlyCode(precipitation, probability){
+if(precipitation > 2) return 65;
+if(precipitation > 0.2) return 61;
+if(probability >= 60) return 61;
+if(probability >= 30) return 2;
+return 1;
+}
+
+function weatherIcon(code){
+if(code==0) return "☀️";
+if(code==1 || code==2) return "🌤️";
+if(code==3) return "☁️";
+if(code==45 || code==48) return "🌫️";
+if(code>=51 && code<=67) return "🌧️";
+if(code>=80 && code<=82) return "🌦️";
+if(code>=95) return "⛈️";
+return "☁️";
+}
+
+loadRealtime();
+setInterval(loadRealtime,60000);
+loadOpenMeteo();
 </script>
 
 </body>
