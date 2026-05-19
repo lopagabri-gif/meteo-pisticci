@@ -28,6 +28,21 @@ body{font-family:Inter,sans-serif;background:#030712;color:white;overflow-x:hidd
 .container{max-width:1350px;margin:auto;padding:50px 18px}
 .section-title{font-family:Orbitron,sans-serif;font-size:36px;margin-bottom:25px;margin-top:60px;color:#7dd3fc}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+
+.hourly-scroll{
+display:flex;
+gap:18px;
+overflow-x:auto;
+padding-bottom:18px;
+scroll-snap-type:x mandatory;
+-webkit-overflow-scrolling:touch;
+}
+
+.hourly-scroll .card{
+min-width:210px;
+scroll-snap-align:start;
+}
+
 .card{background:#111827d9;border:1px solid #33415580;border-radius:28px;padding:24px;backdrop-filter:blur(10px);box-shadow:0 10px 40px rgba(0,0,0,.3)}
 .center{text-align:center}
 .card h2{margin-top:10px;color:#38bdf8}
@@ -50,6 +65,7 @@ footer{margin-top:70px;padding:35px;text-align:center;background:#020617;color:#
 .section-title{font-size:26px}
 .value{font-size:32px}
 iframe{height:500px}
+.hourly-scroll .card{min-width:180px}
 }
 </style>
 </head>
@@ -98,14 +114,11 @@ iframe{height:500px}
 </section>
 
 <section id="forecast">
-<h2 class="section-title">Condizioni Meteo Attuali</h2>
-<div id="currentForecast"></div>
-
 <h2 class="section-title">Previsioni Meteo Pisticci - 7 giorni ECMWF</h2>
 <div class="grid" id="dailyForecast"></div>
 
-<h2 class="section-title">Previsioni Meteo Orarie - ECMWF</h2>
-<div class="grid" id="hourlyForecast"></div>
+<h2 class="section-title">Previsioni Meteo Orarie - scorri con il dito</h2>
+<div class="hourly-scroll" id="hourlyForecast"></div>
 </section>
 
 <section id="air">
@@ -200,22 +213,10 @@ const url = "https://api.open-meteo.com/v1/forecast?latitude=40.3902&longitude=1
 const response = await fetch(url);
 const data = await response.json();
 
-const currentBox = document.getElementById("currentForecast");
 const dailyBox = document.getElementById("dailyForecast");
 const hourlyBox = document.getElementById("hourlyForecast");
 
 const giorni = ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
-
-currentBox.innerHTML = `
-<div class="grid">
-<div class="card center"><h2>🌡️ Temperatura</h2><div class="value">${Math.round(data.current.temperature_2m)}°C</div></div>
-<div class="card center"><h2>💧 Umidità</h2><div class="value">${data.current.relative_humidity_2m}%</div></div>
-<div class="card center"><h2>🌧️ Pioggia</h2><div class="value">${data.current.precipitation} mm</div></div>
-<div class="card center"><h2>🌬️ Vento</h2><div class="value">${Math.round(data.current.wind_speed_10m)} km/h</div></div>
-<div class="card center"><h2>💨 Raffiche</h2><div class="value">${Math.round(data.current.wind_gusts_10m)} km/h</div></div>
-<div class="card center"><h2>🧭 Direzione</h2><div class="value">${Math.round(data.current.wind_direction_10m)}°</div></div>
-</div>
-`;
 
 dailyBox.innerHTML = "";
 
@@ -248,10 +249,14 @@ const i = startIndex + x;
 if(!data.hourly.time[i]) break;
 
 const d = new Date(data.hourly.time[i]);
+const code = hourlyCode(
+data.hourly.precipitation_ecmwf_ifs[i],
+data.hourly.precipitation_probability_ecmwf_ifs[i]
+);
 
 hourlyBox.innerHTML += `
 <div class="card center">
-<div class="icon-small">🌡️</div>
+<div class="icon-small">${weatherIcon(code)}</div>
 <h2>${String(d.getHours()).padStart(2,"0")}:00</h2>
 <div class="value">${Math.round(data.hourly.temperature_2m_ecmwf_ifs[i])}°</div>
 <p>🌧️ Probabilità: ${data.hourly.precipitation_probability_ecmwf_ifs[i]}%</p>
@@ -259,6 +264,7 @@ hourlyBox.innerHTML += `
 <p>🌬️ Vento: ${Math.round(data.hourly.wind_speed_10m_ecmwf_ifs[i])} km/h</p>
 <p>💨 Raffiche: ${Math.round(data.hourly.wind_gusts_10m_ecmwf_ifs[i])} km/h</p>
 <p>🧭 Direzione: ${Math.round(data.hourly.wind_direction_10m_ecmwf_ifs[i])}°</p>
+<p>${weatherText(code)}</p>
 <p style="color:#7dd3fc;font-weight:800">ECMWF</p>
 </div>
 `;
@@ -267,6 +273,14 @@ hourlyBox.innerHTML += `
 console.log(err);
 document.getElementById("dailyForecast").innerHTML = "<div class='card'><h2>Previsioni non caricate</h2><p>Controlla più tardi.</p></div>";
 }
+}
+
+function hourlyCode(precipitation, probability){
+if(precipitation > 2) return 65;
+if(precipitation > 0.2) return 61;
+if(probability >= 60) return 61;
+if(probability >= 30) return 2;
+return 1;
 }
 
 function weatherText(code){
