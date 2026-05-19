@@ -1,232 +1,318 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Meteo Pisticci</title>
 
 <style>
-*{box-sizing:border-box}
+
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#eef4f8;
-  color:#102033;
+  font-family:Arial,sans-serif;
+  background:#eef2f7;
+  color:#0f172a;
 }
+
 .hero{
   background:
-    linear-gradient(rgba(2,6,23,.62),rgba(2,6,23,.68)),
+    linear-gradient(rgba(2,6,23,.55),rgba(2,6,23,.72)),
     url("1001187687.jpg");
   background-size:cover;
   background-position:center;
-  color:white;
-  padding:35px 18px 45px;
+  background-repeat:no-repeat;
   text-align:center;
+  padding:40px 20px 140px;
+  position:relative;
 }
-.logo{
-  width:170px;
-  height:170px;
+
+.hero img{
+  width:220px;
+  max-width:80%;
+  margin-top:20px;
+  margin-bottom:20px;
   border-radius:50%;
-  object-fit:cover;
-  border:5px solid white;
-  box-shadow:0 12px 35px rgba(0,0,0,.45);
-  background:white;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
 }
+
 .hero h1{
-  font-size:44px;
-  margin:18px 0 5px;
-  font-weight:900;
-  letter-spacing:1px;
+  font-size:58px;
+  margin:10px 0;
+  font-weight:800;
+  color:white;
+  text-shadow:0 4px 20px rgba(0,0,0,.7);
 }
-.hero p{font-size:18px;margin:6px 0;color:#dff5ff}
+
+.hero h2{
+  font-size:28px;
+  color:white;
+  margin-top:0;
+  text-shadow:0 2px 10px rgba(0,0,0,.7);
+}
+
+.hero p{
+  font-size:22px;
+  color:white;
+  max-width:900px;
+  margin:auto;
+  line-height:1.5;
+  text-shadow:0 2px 10px rgba(0,0,0,.7);
+}
+
 .menu{
   display:flex;
-  gap:10px;
   justify-content:center;
+  gap:20px;
   flex-wrap:wrap;
-  margin-top:25px;
+  margin-top:40px;
 }
+
 .menu a{
-  color:white;
   text-decoration:none;
-  background:rgba(255,255,255,.16);
-  border:1px solid rgba(255,255,255,.35);
-  padding:11px 16px;
-  border-radius:999px;
+  color:white;
+  font-size:22px;
   font-weight:700;
+  padding:18px 35px;
+  border-radius:50px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.3);
+  backdrop-filter:blur(8px);
+  transition:.3s;
 }
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:22px;
+
+.menu a:hover{
+  background:rgba(255,255,255,.3);
+  transform:scale(1.05);
 }
-.section-title{
-  font-size:28px;
-  margin:30px 0 15px;
-  color:#082f49;
+
+.section{
+  padding:70px 25px;
 }
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:18px;
+
+.section h2{
+  font-size:58px;
+  margin-bottom:40px;
+  color:#0b3b66;
 }
+
 .card{
   background:white;
-  border-radius:24px;
-  padding:22px;
-  box-shadow:0 10px 25px rgba(15,23,42,.12);
-  border:1px solid #dbeafe;
+  border-radius:30px;
+  padding:35px;
+  margin-bottom:30px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
-.card h2{
-  margin:0 0 10px;
-  color:#075985;
-  font-size:23px;
+
+.card h3{
+  font-size:42px;
+  color:#0b5c93;
+  margin-top:0;
 }
+
 .card p{
+  font-size:28px;
   color:#475569;
-  line-height:1.5;
+  line-height:1.6;
 }
-.btn{
+
+.button{
   display:inline-block;
-  margin-top:10px;
-  background:#0284c7;
+  margin-top:20px;
+  padding:20px 40px;
+  background:#0ea5e9;
   color:white;
-  padding:12px 18px;
-  border-radius:14px;
   text-decoration:none;
-  font-weight:800;
+  border-radius:20px;
+  font-size:28px;
+  font-weight:bold;
 }
-.btn.dark{background:#0f172a}
-.frame{
-  background:white;
-  border-radius:26px;
-  padding:14px;
-  box-shadow:0 10px 25px rgba(15,23,42,.15);
-  margin-top:15px;
-}
-iframe{
-  width:100%;
-  height:520px;
-  border:0;
-  border-radius:18px;
-}
-.news{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:18px;
-}
-.news-box{
-  background:#ffffff;
-  padding:20px;
-  border-radius:22px;
-  border-left:7px solid #0284c7;
-  box-shadow:0 8px 20px rgba(15,23,42,.10);
-}
-.news-box h3{margin-top:0;color:#0f172a}
+
 footer{
-  margin-top:35px;
-  background:#020617;
-  color:#cbd5e1;
+  background:#0f172a;
+  color:white;
   text-align:center;
-  padding:28px 15px;
+  padding:30px;
+  font-size:20px;
 }
-@media(max-width:600px){
-  .hero h1{font-size:34px}
-  .logo{width:145px;height:145px}
-  iframe{height:420px}
+
+@media(max-width:768px){
+
+.hero h1{
+  font-size:38px;
 }
+
+.hero h2{
+  font-size:20px;
+}
+
+.hero p{
+  font-size:18px;
+}
+
+.section h2{
+  font-size:34px;
+}
+
+.card h3{
+  font-size:28px;
+}
+
+.card p{
+  font-size:20px;
+}
+
+.menu a{
+  font-size:18px;
+  padding:14px 24px;
+}
+
+.button{
+  font-size:20px;
+  padding:16px 30px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header class="hero">
-  <img src="5f6a1571-8449-4f65-afcd-8130873109bb.png" class="logo" alt="Logo Meteo Pisticci">
-  <h1>METEO PISTICCI</h1>
-  <p>di Gabriele Lopatriello</p>
-  <p>Dati meteo live, webcam, radar, satellite e modelli previsionali</p>
 
-  <div class="menu">
-    <a href="#stazione">Stazione</a>
-    <a href="#windy">Radar/Venti</a>
-    <a href="#modelli">Modelli</a>
-    <a href="#news">News</a>
-  </div>
+<img src="logo.png" alt="Logo Meteo Pisticci">
+
+<h1>METEO PISTICCI</h1>
+
+<h2>di Gabriele Lopatriello</h2>
+
+<p>
+Dati meteo live, webcam, radar, satellite e modelli previsionali
+</p>
+
+<div class="menu">
+  <a href="#stazione">Stazione</a>
+  <a href="#radar">Radar/Venti</a>
+  <a href="#modelli">Modelli</a>
+  <a href="#news">News</a>
+</div>
+
 </header>
 
-<main class="container">
+<section class="section" id="stazione">
 
-  <h2 class="section-title" id="stazione">Stazione meteo e webcam</h2>
-  <div class="card">
-    <h2>🌦️ Dati live Meteo Pisticci</h2>
-    <p>Qui trovi i dati aggiornati della stazione meteo, webcam e condizioni in tempo reale.</p>
-    <a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/indexMobile.php" target="_blank">Apri stazione completa</a>
-  </div>
+<h2>Stazione meteo e webcam</h2>
 
-  <div class="frame">
-    <iframe src="https://stazioni4.soluzionimeteo.it/pisticci/indexMobile.php"></iframe>
-  </div>
+<div class="card">
 
-  <h2 class="section-title" id="windy">Radar, venti e satellite</h2>
-  <div class="grid">
-    <div class="card">
-      <h2>🌧️ Radar Windy</h2>
-      <p>Radar pioggia, temporali, vento e nuvolosità in tempo reale.</p>
-      <a class="btn" href="https://www.windy.com" target="_blank">Apri Windy</a>
-    </div>
+<h3>🌦️ Dati live Meteo Pisticci</h3>
 
-    <div class="card">
-      <h2>🛰️ Satellite</h2>
-      <p>Controlla nubi, perturbazioni e situazione meteo sul Mediterraneo.</p>
-      <a class="btn" href="https://www.windy.com/-Satellite-satellite?satellite" target="_blank">Apri satellite</a>
-    </div>
+<p>
+Qui trovi i dati aggiornati della stazione meteo,
+webcam e condizioni in tempo reale.
+</p>
 
-    <div class="card">
-      <h2>⚠️ Protezione Civile</h2>
-      <p>Mappe, allerte e aggiornamenti ufficiali della Protezione Civile.</p>
-      <a class="btn" href="https://www.protezionecivile.gov.it" target="_blank">Apri Protezione Civile</a>
-    </div>
-  </div>
+<a class="button" href="#">
+Apri stazione completa
+</a>
 
-  <div class="frame">
-    <iframe src="https://embed.windy.com/embed2.html?lat=40.39&lon=16.56&detailLat=40.39&detailLon=16.56&width=650&height=450&zoom=8&level=surface&overlay=rain&product=ecmwf"></iframe>
-  </div>
+</div>
 
-  <h2 class="section-title" id="modelli">Modelli meteo</h2>
-  <div class="grid">
-    <div class="card">
-      <h2>📈 Meteociel</h2>
-      <p>Mappe previsionali, modelli, pioggia, vento, temperature e pressione.</p>
-      <a class="btn dark" href="https://www.meteociel.fr" target="_blank">Apri Meteociel</a>
-    </div>
+</section>
 
-    <div class="card">
-      <h2>🌍 Wetterzentrale</h2>
-      <p>Carte meteo europee e globali per analisi più approfondite.</p>
-      <a class="btn dark" href="https://www.wetterzentrale.de" target="_blank">Apri Wetterzentrale</a>
-    </div>
-  </div>
+<section class="section" id="radar">
 
-  <h2 class="section-title" id="news">News e previsioni</h2>
-  <div class="news">
-    <div class="news-box">
-      <h3>📰 Aggiornamento meteo</h3>
-      <p>Qui potrai scrivere gli aggiornamenti meteo giornalieri per Pisticci.</p>
-    </div>
-    <div class="news-box">
-      <h3>🌤️ Tendenza prossimi giorni</h3>
-      <p>Spazio dedicato alle previsioni, temperature, vento e rischio pioggia.</p>
-    </div>
-    <div class="news-box">
-      <h3>⚠️ Avvisi locali</h3>
-      <p>Qui puoi inserire allerte, temporali, vento forte o comunicazioni importanti.</p>
-    </div>
-  </div>
+<h2>Radar e venti</h2>
 
-</main>
+<div class="card">
+
+<h3>🌩️ Windy Radar</h3>
+
+<p>
+Consulta radar pioggia, vento, temperature e satellite in tempo reale.
+</p>
+
+<a class="button" href="https://www.windy.com" target="_blank">
+Apri Windy
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>🛰️ Protezione Civile</h3>
+
+<p>
+Radar meteo e monitoraggio ufficiale della Protezione Civile.
+</p>
+
+<a class="button" href="https://mappe.protezionecivile.gov.it" target="_blank">
+Apri radar
+</a>
+
+</div>
+
+</section>
+
+<section class="section" id="modelli">
+
+<h2>Modelli previsionali</h2>
+
+<div class="card">
+
+<h3>📈 Meteociel</h3>
+
+<p>
+Modelli meteo GFS, ECMWF e mappe previsionali dettagliate.
+</p>
+
+<a class="button" href="https://www.meteociel.fr" target="_blank">
+Apri Meteociel
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>🌍 Wetterzentrale</h3>
+
+<p>
+Carte meteo professionali e modelli europei aggiornati.
+</p>
+
+<a class="button" href="https://www.wetterzentrale.de" target="_blank">
+Apri Wetterzentrale
+</a>
+
+</div>
+
+</section>
+
+<section class="section" id="news">
+
+<h2>News e previsioni</h2>
+
+<div class="card">
+
+<h3>📰 Ultime notizie meteo</h3>
+
+<p>
+Aggiornamenti, previsioni e allerte meteo su Pisticci e Basilicata.
+</p>
+
+<a class="button" href="#">
+Leggi news
+</a>
+
+</div>
+
+</section>
 
 <footer>
-  © 2026 Meteo Pisticci - di Gabriele Lopatriello
+
+© Meteo Pisticci - Gabriele Lopatriello
+
 </footer>
 
 </body>
