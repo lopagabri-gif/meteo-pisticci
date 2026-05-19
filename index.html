@@ -231,14 +231,6 @@ object-fit:cover;
 background:black;
 }
 
-.feature{
-background:linear-gradient(135deg,#0369a1,#0f172a);
-border:1px solid rgba(125,211,252,.35);
-border-radius:34px;
-padding:34px;
-box-shadow:0 25px 70px rgba(0,0,0,.35);
-}
-
 footer{
 margin-top:60px;
 background:#020617;
@@ -298,8 +290,8 @@ di Gabriele Lopatriello
 </div>
 
 <p class="desc">
-Portale meteo locale con dati live, webcam, radar, satellite,
-modelli previsionali, qualità dell’aria e astronomia.
+Portale meteo locale con webcam, radar, satellite,
+spaghi, modelli previsionali e astronomia.
 </p>
 
 <nav class="menu">
@@ -308,8 +300,8 @@ modelli previsionali, qualità dell’aria e astronomia.
 <a href="#satellite">Satellite</a>
 <a href="#spaghi">Spaghi</a>
 <a href="#modelli">Modelli</a>
-<a href="#astronomia">Astronomia</a>
 <a href="#previsioni">Previsioni</a>
+<a href="#astronomia">Astronomia</a>
 </nav>
 
 </div>
@@ -325,7 +317,8 @@ Webcam live Pisticci
 </h2>
 
 <div class="frame">
-<img class="webcam-img" src="https://webcam.soluzionimeteo.it/pisticci/webcam.jpg">
+<img class="webcam-img"
+src="https://webcam.soluzionimeteo.it/pisticci/webcam.jpg">
 </div>
 
 </section>
@@ -338,7 +331,9 @@ Radar Windy
 
 <div class="frame">
 
-<iframe src="https://embed.windy.com/embed2.html?lat=40.39&lon=16.56&zoom=8&level=surface&overlay=rain&product=ecmwf"></iframe>
+<iframe
+src="https://embed.windy.com/embed2.html?lat=40.39&lon=16.56&zoom=8&level=surface&overlay=rain&product=ecmwf">
+</iframe>
 
 </div>
 
@@ -352,7 +347,8 @@ Satellite
 
 <div class="frame">
 
-<img class="satellite-img" src="https://modeles20.meteociel.fr/satellite/animsatviscolmtgit.gif">
+<img class="satellite-img"
+src="https://modeles20.meteociel.fr/satellite/animsatviscolmtgit.gif">
 
 </div>
 
@@ -466,25 +462,15 @@ Apri Wetterzentrale
 <section id="previsioni">
 
 <h2 class="section-title">
-Previsioni Meteo
+Previsioni Meteo Pisticci
 </h2>
 
-<div class="feature">
+<div class="frame">
 
-<h2>
-Previsioni a cura di 3Bmeteo
-</h2>
-
-<p>
-Consulta le previsioni aggiornate
-per Pisticci.
-</p>
-
-<a class="btn"
-href="https://www.3bmeteo.com/meteo/pisticci"
-target="_blank">
-Apri 3Bmeteo
-</a>
+<iframe
+src="https://www.3bmeteo.com/meteo/pisticci"
+style="height:900px;">
+</iframe>
 
 </div>
 
@@ -503,31 +489,79 @@ Astronomia
 <h2>🌅 Alba e tramonto</h2>
 
 <p>
-Orari del Sole e della Luna
-per Pisticci.
+Orari del Sole e della Luna per Pisticci.
 </p>
 
 <a class="btn"
 href="https://www.comuni-italiani.it/soleluna/comune/077020/"
 target="_blank">
-Apri orari astronomici
+Apri orari
 </a>
 
 </div>
 
 <div class="card">
+
 <h2>🌙 Fase lunare</h2>
-<p>Informazioni aggiornate sulla Luna.</p>
+
+<p>
+Consulta la fase lunare aggiornata.
+</p>
+
+<a class="btn"
+href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/moonPhase.php"
+target="_blank">
+Apri fase lunare
+</a>
+
 </div>
 
 <div class="card">
-<h2>☀️ Radiazione solare</h2>
-<p>Potenziale massimo di radiazione solare.</p>
-</div>
 
-<div class="card">
 <h2>🗓️ Calendario astronomico</h2>
-<p>Equinozi, solstizi ed eventi astronomici.</p>
+
+<p>
+Calendario astronomico completo.
+</p>
+
+<a class="btn"
+href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/astroCalendar.php"
+target="_blank">
+Apri calendario
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>☀️ Radiazione solare</h2>
+
+<p>
+Potenziale massimo annuale di radiazione solare.
+</p>
+
+<a class="btn"
+href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/annualSolarMax.php"
+target="_blank">
+Apri dati
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>🌍 Solstizi ed equinozi</h2>
+
+<p>
+Date e informazioni stagionali.
+</p>
+
+<a class="btn"
+href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/equisol.php"
+target="_blank">
+Apri dati
+</a>
+
 </div>
 
 </div>
