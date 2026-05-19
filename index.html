@@ -1,1 +1,683 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meteo Pisticci</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+
+html{
+scroll-behavior:smooth
+}
+
+body{
+font-family:Inter,sans-serif;
+background:#020617;
+color:white;
+overflow-x:hidden;
+}
+
+/* SFONDO ANIMATO */
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(2,6,23,.72),rgba(2,6,23,.92)),
+var(--hero-bg);
+background-size:cover;
+background-position:center;
+transition:all 1.5s ease;
+transform:scale(1.05);
+z-index:-2;
+}
+
+body::after{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top,rgba(14,165,233,.26),transparent 35%);
+z-index:-1;
+}
+
+/* NAVBAR */
+
+.topbar{
+position:fixed;
+top:8px;
+left:18px;
+right:18px;
+z-index:99;
+height:68px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:10px 22px;
+border-radius:20px;
+background:rgba(2,6,23,.78);
+border:1px solid rgba(125,211,252,.22);
+backdrop-filter:blur(18px);
+box-shadow:0 15px 50px rgba(0,0,0,.45);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:900;
+}
+
+.brand img{
+width:48px;
+height:48px;
+border-radius:50%;
+background:white;
+padding:2px;
+}
+
+.brand-text{
+line-height:1.1;
+}
+
+.brand-text strong{
+font-size:22px;
+letter-spacing:1px;
+}
+
+.brand-text span{
+display:block;
+font-size:13px;
+color:#38bdf8;
+font-weight:800;
+}
+
+.nav{
+display:flex;
+gap:20px;
+align-items:center;
+}
+
+.nav a{
+color:white;
+text-decoration:none;
+font-weight:900;
+font-size:15px;
+padding:22px 6px;
+border-bottom:3px solid transparent;
+transition:.3s;
+}
+
+.nav a:hover{
+color:#38bdf8;
+border-bottom-color:#38bdf8;
+}
+
+/* HERO */
+
+.hero{
+min-height:520px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:95px 20px 25px;
+}
+
+.hero-box{
+max-width:760px;
+width:100%;
+}
+
+.logo-main{
+width:360px;
+max-width:82vw;
+border-radius:50%;
+background:white;
+padding:6px;
+box-shadow:
+0 0 0 8px rgba(255,255,255,.08),
+0 0 45px rgba(14,165,233,.75),
+0 28px 70px rgba(0,0,0,.6);
+}
+
+.clock-box{
+margin:22px auto 0;
+max-width:500px;
+padding:15px 20px;
+border-radius:22px;
+background:rgba(2,6,23,.78);
+border:1px solid rgba(56,189,248,.55);
+box-shadow:0 0 35px rgba(14,165,233,.35);
+}
+
+#liveDate{
+font-size:18px;
+font-weight:900;
+color:#e0f2fe;
+}
+
+#liveClock{
+font-family:Orbitron,sans-serif;
+font-size:44px;
+font-weight:900;
+color:#facc15;
+margin-top:5px;
+text-shadow:0 0 24px rgba(250,204,21,.6);
+}
+
+/* DASHBOARD */
+
+.dashboard{
+max-width:1380px;
+margin:auto;
+padding:0 18px 40px;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:18px;
+}
+
+.panel{
+background:rgba(15,23,42,.78);
+border:1px solid rgba(125,211,252,.24);
+border-radius:18px;
+padding:18px;
+box-shadow:0 18px 50px rgba(0,0,0,.35);
+backdrop-filter:blur(14px);
+}
+
+.panel-title{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+margin-bottom:14px;
+}
+
+.panel-title h2{
+font-size:18px;
+font-weight:900;
+}
+
+.panel-title span{
+font-size:13px;
+color:#cbd5e1;
+}
+
+.blue-dot,.green-dot{
+display:inline-block;
+width:12px;
+height:12px;
+border-radius:50%;
+margin-right:7px;
+}
+
+.blue-dot{
+background:#0ea5e9
+}
+
+.green-dot{
+background:#22c55e
+}
+
+/* DATI LIVE */
+
+.live-grid{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:10px;
+}
+
+.live-card{
+background:rgba(15,23,42,.86);
+border:1px solid rgba(148,163,184,.2);
+border-radius:12px;
+padding:18px 10px;
+text-align:center;
+min-height:130px;
+}
+
+.live-card .emoji{
+font-size:31px;
+margin-bottom:12px;
+}
+
+.live-card h3{
+font-size:14px;
+color:#e5e7eb;
+margin-bottom:8px;
+}
+
+.live-card strong{
+display:block;
+font-size:24px;
+color:white;
+}
+
+.live-card small{
+display:block;
+margin-top:8px;
+color:#93c5fd;
+font-size:12px;
+}
+
+/* BOTTONI */
+
+.buttons{
+display:flex;
+justify-content:center;
+gap:12px;
+margin-top:14px;
+flex-wrap:wrap;
+}
+
+.btn{
+display:inline-block;
+padding:12px 28px;
+border-radius:9px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-weight:900;
+box-shadow:0 10px 25px rgba(37,99,235,.35);
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-2px);
+}
+
+.btn.dark{
+background:rgba(15,23,42,.75);
+border:1px solid rgba(148,163,184,.25);
+}
+
+/* PREVISIONI */
+
+.forecast-grid{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:9px;
+}
+
+.day-card,.hour-card{
+background:rgba(15,23,42,.86);
+border:1px solid rgba(148,163,184,.18);
+border-radius:10px;
+padding:14px 8px;
+text-align:center;
+}
+
+.day-card .icon{
+font-size:34px;
+margin:10px 0;
+}
+
+.temp-max{
+color:#f87171;
+font-size:22px;
+font-weight:900;
+}
+
+.temp-min{
+color:#60a5fa;
+font-size:20px;
+font-weight:900;
+margin-left:6px;
+}
+
+.rain-small{
+color:#38bdf8;
+font-size:12px;
+margin-top:6px;
+}
+
+/* ORARIE */
+
+.hourly-scroll{
+display:flex;
+gap:9px;
+overflow-x:auto;
+padding-bottom:4px;
+}
+
+.hour-card{
+min-width:95px;
+}
+
+.hour-card .icon{
+font-size:26px;
+margin:8px 0;
+}
+
+/* SIDEBAR */
+
+.side{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+/* WEBCAM */
+
+.webcam-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:6px;
+}
+
+.webcam-box{
+position:relative;
+overflow:hidden;
+border-radius:8px;
+border:1px solid rgba(125,211,252,.25);
+}
+
+.webcam-box img{
+width:100%;
+height:72px;
+object-fit:cover;
+display:block;
+transition:.4s;
+}
+
+.webcam-box:hover img{
+transform:scale(1.05);
+}
+
+.live-label{
+position:absolute;
+top:4px;
+right:4px;
+background:#22c55e;
+font-size:10px;
+font-weight:900;
+padding:3px 6px;
+border-radius:5px;
+}
+
+/* FRAME */
+
+.frame{
+overflow:hidden;
+border-radius:10px;
+border:1px solid rgba(125,211,252,.22);
+background:#020617;
+}
+
+.frame img,.frame iframe{
+width:100%;
+display:block;
+border:0;
+}
+
+.frame iframe{
+height:260px;
+background:white;
+}
+
+/* ARIA + ASTRONOMIA */
+
+.air-astro{
+display:grid;
+grid-template-columns:1fr 1.25fr;
+gap:18px;
+margin-top:18px;
+}
+
+.air-value{
+display:flex;
+align-items:center;
+gap:18px;
+}
+
+.gauge{
+width:105px;
+height:105px;
+border-radius:50%;
+background:conic-gradient(#22c55e 0 72%,rgba(255,255,255,.1) 72% 100%);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+font-weight:900;
+}
+
+.astro-row{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+}
+
+.astro-card{
+background:rgba(15,23,42,.86);
+border:1px solid rgba(148,163,184,.18);
+border-radius:12px;
+padding:14px;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.astro-card .big{
+font-size:42px;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:25px;
+color:#cbd5e1;
+font-size:14px;
+}
+
+/* TO TOP */
+
+.to-top{
+position:fixed;
+right:18px;
+bottom:18px;
+width:48px;
+height:48px;
+border-radius:50%;
+background:#2563eb;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:24px;
+font-weight:900;
+text-decoration:none;
+box-shadow:0 12px 30px rgba(37,99,235,.5);
+z-index:99;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+.dashboard{
+grid-template-columns:1fr;
+}
+
+.live-grid{
+grid-template-columns:repeat(3,1fr);
+}
+
+.nav{
+gap:10px;
+}
+
+.nav a{
+font-size:13px;
+}
+}
+
+@media(max-width:760px){
+
+.topbar{
+position:relative;
+top:0;
+left:0;
+right:0;
+border-radius:0;
+height:auto;
+flex-direction:column;
+gap:12px;
+}
+
+.nav{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.hero{
+padding-top:35px;
+min-height:auto;
+}
+
+.logo-main{
+width:260px;
+}
+
+#liveClock{
+font-size:32px;
+}
+
+.live-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.forecast-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.air-astro{
+grid-template-columns:1fr;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+<div class="brand">
+<img src="5f6a1571-8449-4f65-afcd-8130873109bb.png">
+
+<div class="brand-text">
+<strong>METEO <span style="display:inline;color:#38bdf8;font-size:22px">PISTICCI</span></strong>
+<span>di Gabriele Lopatriello</span>
+</div>
+
+</div>
+
+<nav class="nav">
+<a href="#live">🌡️ Live</a>
+<a href="#forecast">🌧️ Previsioni</a>
+<a href="#webcam">📷 Webcam</a>
+<a href="#air">🧭 Aria</a>
+<a href="#radar">🌪️ Radar</a>
+<a href="#satellite">🛰️ Satellite</a>
+<a href="#astronomy">🔭 Astronomia</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-box">
+
+<img class="logo-main" src="5f6a1571-8449-4f65-afcd-8130873109bb.png">
+
+<div class="clock-box">
+<div id="liveDate">--</div>
+<div id="liveClock">--:--:--</div>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+© 2026 Meteo Pisticci - di Gabriele Lopatriello
+</footer>
+
+<a href="#" class="to-top">↑</a>
+
+<script>
+
+/* SFONDO ANIMATO */
+
+const backgrounds = [
+"ChatGPT Image 13 mag 2026, 20_06_28(1)(1).png",
+"dji_fly_20260224_172416_0188_1771952691019_photo.jpg",
+"dji_fly_20260302_060320_0294_1772432077678_photo.jpg",
+"dji_fly_20260411_175320_0511_1775923166342_photo.jpg",
+"dji_fly_20260417_114232_0528_1776419222580_pano.jpg",
+"dji_fly_20260419_202626_0548_1776624071234_photo.jpg",
+"dji_fly_20260425_225612_0036_1777151234846_photo.jpg"
+];
+
+let currentBg = 0;
+
+function changeBackground(){
+
+document.documentElement.style.setProperty(
+"--hero-bg",
+`url("${backgrounds[currentBg]}")`
+);
+
+currentBg = (currentBg + 1) % backgrounds.length;
+}
+
+changeBackground();
+
+setInterval(changeBackground,5000);
+
+/* OROLOGIO */
+
+function updateLiveClock(){
+
+const now = new Date();
+
+const date = now.toLocaleDateString("it-IT",{
+weekday:"long",
+day:"2-digit",
+month:"long",
+year:"numeric"
+});
+
+const time = now.toLocaleTimeString("it-IT",{
+hour:"2-digit",
+minute:"2-digit",
+second:"2-digit"
+});
+
+document.getElementById("liveDate").innerText =
+date.charAt(0).toUpperCase() + date.slice(1);
+
+document.getElementById("liveClock").innerText = time;
+}
+
+updateLiveClock();
+
+setInterval(updateLiveClock,1000);
+
+</script>
+
+</body>
+</html>
