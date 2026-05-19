@@ -1,1 +1,169 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meteo Pisticci</title>
 
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0f172a;
+color:white;
+}
+
+header{
+background:linear-gradient(135deg,#0ea5e9,#1e3a8a);
+padding:40px 20px;
+text-align:center;
+}
+
+header h1{
+font-size:48px;
+margin:10px 0;
+}
+
+header p{
+font-size:18px;
+opacity:0.9;
+}
+
+.logo{
+width:180px;
+border-radius:50%;
+border:4px solid white;
+box-shadow:0 0 20px rgba(255,255,255,0.4);
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-top:30px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:20px;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+.card h2{
+margin-top:0;
+color:#38bdf8;
+}
+
+.button{
+display:inline-block;
+margin-top:15px;
+padding:12px 18px;
+background:#0ea5e9;
+color:white;
+text-decoration:none;
+border-radius:12px;
+font-weight:bold;
+}
+
+iframe{
+width:100%;
+height:500px;
+border:none;
+border-radius:20px;
+}
+
+.news{
+background:#111827;
+padding:20px;
+border-radius:20px;
+margin-top:30px;
+}
+
+footer{
+text-align:center;
+padding:30px;
+margin-top:40px;
+background:#020617;
+color:#94a3b8;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<img class="logo" src="https://i.imgur.com/lLxWlQx.png">
+<h1>METEO PISTICCI</h1>
+<p>di Gabriele Lopatriello</p>
+</header>
+
+<div class="container">
+
+<div class="grid">
+
+<div class="card">
+<h2>🌡️ Stazione Meteo</h2>
+<p>Dati live della stazione meteo di Pisticci.</p>
+<a class="button" href="https://stazioni4.soluzionimeteo.it/pisticci/indexMobile.php" target="_blank">
+Apri
+</a>
+</div>
+
+<div class="card">
+<h2>📡 Radar Windy</h2>
+<p>Radar pioggia, vento e temporali.</p>
+<a class="button" href="https://www.windy.com" target="_blank">
+Apri
+</a>
+</div>
+
+<div class="card">
+<h2>🛰️ Satellite</h2>
+<p>Immagini satellitari e situazione in tempo reale.</p>
+<a class="button" href="https://www.protezionecivile.gov.it" target="_blank">
+Apri
+</a>
+</div>
+
+<div class="card">
+<h2>📈 Modelli Meteo</h2>
+<p>Meteociel e Wetterzentrale.</p>
+<a class="button" href="https://www.meteociel.fr" target="_blank">
+Meteociel
+</a>
+<br><br>
+<a class="button" href="https://www.wetterzentrale.de" target="_blank">
+Wetterzentrale
+</a>
+</div>
+
+</div>
+
+<div class="news">
+<h2>📰 News & Previsioni</h2>
+<p>
+Benvenuti su Meteo Pisticci.  
+Qui troverete aggiornamenti meteo, previsioni locali,
+radar, webcam e analisi in tempo reale.
+</p>
+</div>
+
+<h2 style="margin-top:40px;">📷 Webcam / Dati Live</h2>
+
+<iframe src="https://stazioni4.soluzionimeteo.it/pisticci/indexMobile.php"></iframe>
+
+</div>
+
+<footer>
+© 2026 Meteo Pisticci - di Gabriele Lopatriello
+</footer>
+
+</body>
+</html>
