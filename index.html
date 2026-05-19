@@ -1,584 +1,165 @@
-```html
 <!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Meteo Pisticci</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,sans-serif;background:#050b16;color:white;overflow-x:hidden}
 
-*{
-box-sizing:border-box;
-}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px 18px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.55)),var(--hero-bg);background-size:cover;background-position:center;z-index:0;transition:opacity 1.5s ease;transform:scale(1.04)}
+.hero.fade::before{opacity:.25}
+.hero-box{position:relative;z-index:2;max-width:1100px;padding:28px;border-radius:38px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(4px)}
+.logo{width:170px;border-radius:50%;background:white;padding:6px;box-shadow:0 20px 50px rgba(0,0,0,.55)}
+h1{font-family:Orbitron,sans-serif;font-size:70px;margin:22px 0 8px;letter-spacing:4px;text-shadow:0 8px 35px #000}
+.subtitle{font-size:22px;font-weight:800;color:#dbeafe}
+.desc{font-size:20px;max-width:850px;margin:18px auto;line-height:1.6;color:#f1f5f9}
 
-html{
-scroll-behavior:smooth;
-}
+.menu{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px}
+.menu a,.btn{color:white;text-decoration:none;padding:13px 18px;border-radius:16px;background:linear-gradient(135deg,#0284c7,#0ea5e9);font-weight:900;display:inline-block;margin-top:12px}
+.menu a{border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25)}
 
-body{
-margin:0;
-font-family:'Inter',sans-serif;
-background:#050b16;
-color:white;
-overflow-x:hidden;
-}
+.container{max-width:1280px;margin:auto;padding:45px 18px}
+.section-title{font-family:Orbitron,sans-serif;font-size:34px;margin:55px 0 25px;color:#7dd3fc}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.card,.frame,.feature{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:24px;backdrop-filter:blur(10px);box-shadow:0 18px 40px rgba(0,0,0,.25)}
+.card h2{color:#38bdf8;margin-top:0}
+.card p{color:#cbd5e1;line-height:1.6}
+.value{font-size:34px;font-weight:900;color:#facc15;margin-top:8px}
+.frame{padding:14px;margin-top:18px}
+.frame img,.frame iframe{width:100%;border:0;border-radius:22px;display:block}
+iframe{height:620px;background:white}
+.webcam-img{max-height:650px;object-fit:cover}
+.satellite-img{min-height:330px;object-fit:cover;background:#000}
+.note{color:#cbd5e1;font-size:14px;margin-top:10px}
 
-.hero{
-min-height:100vh;
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:30px 18px;
-overflow:hidden;
-}
-
-.hero::before{
-content:"";
-position:absolute;
-inset:0;
-background-image:
-linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.50)),
-var(--hero-bg);
-background-size:cover;
-background-position:center;
-z-index:0;
-transform:scale(1.05);
-transition:
-opacity 1.8s ease,
-transform 6s ease,
-background-image 1.8s ease;
-opacity:1;
-}
-
-.hero.fade::before{
-opacity:0;
-transform:scale(1.12);
-}
-
-.hero::after{
-content:"";
-position:absolute;
-inset:0;
-background:
-radial-gradient(circle at top,rgba(255,255,255,.08),transparent 40%);
-z-index:1;
-}
-
-.hero-box{
-position:relative;
-z-index:2;
-max-width:1100px;
-padding:28px;
-border-radius:40px;
-background:rgba(0,0,0,.14);
-border:1px solid rgba(255,255,255,.18);
-backdrop-filter:blur(3px);
-}
-
-.logo{
-width:170px;
-border-radius:50%;
-background:white;
-padding:6px;
-box-shadow:0 20px 50px rgba(0,0,0,.55);
-}
-
-h1{
-font-family:'Orbitron',sans-serif;
-font-size:72px;
-margin:22px 0 8px;
-letter-spacing:4px;
-text-shadow:0 8px 35px rgba(0,0,0,.8);
-}
-
-.subtitle{
-font-size:22px;
-font-weight:800;
-color:#dbeafe;
-}
-
-.desc{
-font-size:20px;
-max-width:850px;
-margin:18px auto;
-line-height:1.7;
-color:#f1f5f9;
-}
-
-.menu{
-display:flex;
-flex-wrap:wrap;
-gap:12px;
-justify-content:center;
-margin-top:30px;
-}
-
-.menu a{
-color:white;
-text-decoration:none;
-padding:14px 22px;
-border-radius:999px;
-background:rgba(255,255,255,.10);
-border:1px solid rgba(255,255,255,.22);
-backdrop-filter:blur(8px);
-font-weight:800;
-transition:.25s;
-}
-
-.menu a:hover{
-background:#0ea5e9;
-transform:translateY(-3px);
-}
-
-.container{
-max-width:1280px;
-margin:auto;
-padding:45px 18px;
-}
-
-.section-title{
-font-family:'Orbitron',sans-serif;
-font-size:36px;
-margin:60px 0 25px;
-color:#7dd3fc;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:22px;
-}
-
-.card{
-background:rgba(255,255,255,.08);
-border:1px solid rgba(255,255,255,.15);
-border-radius:30px;
-padding:26px;
-backdrop-filter:blur(10px);
-box-shadow:0 18px 40px rgba(0,0,0,.25);
-transition:.25s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-border-color:#38bdf8;
-}
-
-.card h2{
-margin:0 0 10px;
-color:#38bdf8;
-font-size:23px;
-}
-
-.card p{
-color:#cbd5e1;
-line-height:1.6;
-}
-
-.btn{
-display:inline-block;
-margin-top:14px;
-margin-right:8px;
-padding:13px 18px;
-background:linear-gradient(135deg,#0284c7,#0ea5e9);
-color:white;
-border-radius:16px;
-text-decoration:none;
-font-weight:900;
-box-shadow:0 10px 25px rgba(14,165,233,.35);
-transition:.25s;
-}
-
-.btn:hover{
-transform:translateY(-3px) scale(1.03);
-}
-
-.frame{
-background:rgba(255,255,255,.08);
-border:1px solid rgba(255,255,255,.15);
-border-radius:34px;
-padding:14px;
-margin-top:20px;
-backdrop-filter:blur(10px);
-box-shadow:0 25px 70px rgba(0,0,0,.35);
-}
-
-.frame img,
-.frame iframe{
-width:100%;
-border:0;
-border-radius:24px;
-display:block;
-}
-
-iframe{
-height:520px;
-}
-
-.webcam-img{
-max-height:650px;
-object-fit:cover;
-}
-
-.satellite-img{
-min-height:330px;
-object-fit:cover;
-background:black;
-}
-
-footer{
-margin-top:60px;
-background:#020617;
-color:#94a3b8;
-text-align:center;
-padding:34px 15px;
-font-size:15px;
-}
+footer{margin-top:60px;background:#020617;color:#94a3b8;text-align:center;padding:34px 15px}
 
 @media(max-width:700px){
-
-.hero-box{
-padding:22px 16px;
+.logo{width:135px}
+h1{font-size:36px}
+.desc{font-size:15px}
+.section-title{font-size:25px}
+iframe{height:520px}
+.value{font-size:28px}
 }
-
-.logo{
-width:135px;
-}
-
-h1{
-font-size:38px;
-}
-
-.subtitle{
-font-size:17px;
-}
-
-.desc{
-font-size:15px;
-}
-
-.section-title{
-font-size:26px;
-}
-
-iframe{
-height:420px;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
 <header class="hero">
-
 <div class="hero-box">
-
 <img class="logo" src="5f6a1571-8449-4f65-afcd-8130873109bb.png">
-
 <h1>METEO PISTICCI</h1>
-
-<div class="subtitle">
-di Gabriele Lopatriello
-</div>
-
-<p class="desc">
-Portale meteo locale con webcam, radar, satellite,
-spaghi, modelli previsionali e astronomia.
-</p>
+<div class="subtitle">di Gabriele Lopatriello</div>
+<p class="desc">Portale meteo locale con dati live, webcam, qualità dell’aria, previsioni, radar, satellite e modelli.</p>
 
 <nav class="menu">
+<a href="#stazione">Dati Live</a>
+<a href="#aria">Qualità Aria</a>
+<a href="#previsioni">Previsioni</a>
 <a href="#webcam">Webcam</a>
 <a href="#radar">Radar</a>
 <a href="#satellite">Satellite</a>
-<a href="#spaghi">Spaghi</a>
 <a href="#modelli">Modelli</a>
-<a href="#previsioni">Previsioni</a>
 <a href="#astronomia">Astronomia</a>
 </nav>
-
 </div>
-
 </header>
 
 <main class="container">
 
-<section id="webcam">
-
-<h2 class="section-title">
-Webcam live Pisticci
-</h2>
-
-<div class="frame">
-<img class="webcam-img"
-src="https://webcam.soluzionimeteo.it/pisticci/webcam.jpg">
-</div>
-
-</section>
-
-<section id="radar">
-
-<h2 class="section-title">
-Radar Windy
-</h2>
-
-<div class="frame">
-
-<iframe
-src="https://embed.windy.com/embed2.html?lat=40.39&lon=16.56&zoom=8&level=surface&overlay=rain&product=ecmwf">
-</iframe>
-
-</div>
-
-</section>
-
-<section id="satellite">
-
-<h2 class="section-title">
-Satellite
-</h2>
-
-<div class="frame">
-
-<img class="satellite-img"
-src="https://modeles20.meteociel.fr/satellite/animsatviscolmtgit.gif">
-
-</div>
-
-</section>
-
-<section id="spaghi">
-
-<h2 class="section-title">
-Diagrammi Spaghi
-</h2>
+<section id="stazione">
+<h2 class="section-title">Dati live stazione meteo Pisticci Sud</h2>
 
 <div class="grid">
-
-<div class="card">
-
-<h2>📈 Spaghi GFS</h2>
-
-<p>
-Diagramma ensemble GFS per Pisticci.
-</p>
-
-<a class="btn"
-href="https://www.wetterzentrale.de/de/ens_image.php?geoid=72566&var=201&run=12&date=2026-05-18&model=gfs&member=ENS&bw=1"
-target="_blank">
-Apri diagramma GFS
-</a>
-
+<div class="card"><h2>🌡️ Temperatura</h2><div class="value" id="temp">--</div></div>
+<div class="card"><h2>💧 Umidità</h2><div class="value" id="hum">--</div></div>
+<div class="card"><h2>🌬️ Vento</h2><div class="value" id="wind">--</div></div>
+<div class="card"><h2>🧭 Direzione vento</h2><div class="value" id="winddir">--</div></div>
+<div class="card"><h2>🌧️ Pioggia</h2><div class="value" id="rain">--</div></div>
+<div class="card"><h2>📈 Pressione</h2><div class="value" id="pressure">--</div></div>
 </div>
 
-<div class="card">
-
-<h2>🌍 Spaghi ECMWF</h2>
-
-<p>
-Diagramma ensemble ECMWF per Pisticci.
-</p>
-
-<a class="btn"
-href="https://www.wetterzentrale.de/de/ens_image.php?geoid=72566&var=201&run=0&date=2026-05-19&model=ecm&member=ENS&bw=1"
-target="_blank">
-Apri diagramma ECMWF
-</a>
-
+<div class="card" style="margin-top:22px">
+<h2>📡 Aggiornamento stazione</h2>
+<p>Ultimo aggiornamento: <strong id="update">--</strong></p>
+<a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/station/liveData.php" target="_blank">Apri pagina dati completa</a>
+<a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/station/graph.php" target="_blank">Grafici interattivi</a>
+<p class="note">I dati vengono letti da realtime.txt e aggiornati automaticamente ogni minuto.</p>
 </div>
-
-<div class="card">
-
-<h2>🛰️ Altri diagrammi</h2>
-
-<p>
-Consulta altri modelli e località.
-</p>
-
-<a class="btn"
-href="https://wetterzentrale.de/show_diagrams.php?model=gfs"
-target="_blank">
-Apri diagrammi
-</a>
-
-</div>
-
-</div>
-
 </section>
 
-<section id="modelli">
-
-<h2 class="section-title">
-Modelli previsionali
-</h2>
-
-<div class="grid">
-
-<div class="card">
-
-<h2>📈 Meteociel</h2>
-
-<p>
-Carte meteo GFS, ECMWF,
-temperature, pioggia e vento.
-</p>
-
-<a class="btn"
-href="https://www.meteociel.fr/modeles/gfse_cartes.php"
-target="_blank">
-Apri Meteociel
-</a>
-
+<section id="aria">
+<h2 class="section-title">Qualità dell’aria</h2>
+<div class="frame">
+<iframe src="https://stazioni4.soluzionimeteo.it/pisticci/upload/airlink.html"></iframe>
 </div>
-
-<div class="card">
-
-<h2>🌍 Wetterzentrale</h2>
-
-<p>
-Carte meteo professionali e modelli globali.
-</p>
-
-<a class="btn"
-href="https://www.wetterzentrale.de/de/topkarten.php?model=gfs&lid=OP"
-target="_blank">
-Apri Wetterzentrale
-</a>
-
-</div>
-
-</div>
-
 </section>
 
 <section id="previsioni">
-
-<h2 class="section-title">
-Previsioni Meteo Pisticci
-</h2>
-
+<h2 class="section-title">Previsioni Meteo Pisticci</h2>
 <div class="frame">
-
-<iframe
-src="https://www.3bmeteo.com/meteo/pisticci"
-style="height:900px;">
-</iframe>
-
+<iframe src="https://www.3bmeteo.com/meteo/pisticci" style="height:850px;"></iframe>
 </div>
+<a class="btn" href="https://www.3bmeteo.com/meteo/pisticci" target="_blank">Apri 3Bmeteo</a>
+<p class="note">Se l’anteprima 3Bmeteo non viene caricata dal browser, usa il pulsante “Apri 3Bmeteo”.</p>
+</section>
 
+<section id="webcam">
+<h2 class="section-title">Webcam live Pisticci</h2>
+<div class="frame">
+<img class="webcam-img" src="https://webcam.soluzionimeteo.it/pisticci/webcam.jpg">
+</div>
+</section>
+
+<section id="radar">
+<h2 class="section-title">Radar Windy</h2>
+<div class="frame">
+<iframe src="https://embed.windy.com/embed2.html?lat=40.39&lon=16.56&zoom=8&level=surface&overlay=rain&product=ecmwf"></iframe>
+</div>
+</section>
+
+<section id="satellite">
+<h2 class="section-title">Satellite</h2>
+<div class="frame">
+<img class="satellite-img" src="https://modeles20.meteociel.fr/satellite/animsatviscolmtgit.gif">
+</div>
+</section>
+
+<section id="modelli">
+<h2 class="section-title">Modelli e diagrammi</h2>
+<div class="grid">
+<div class="card"><h2>📈 Meteociel</h2><p>Carte meteo GFS e modelli previsionali.</p><a class="btn" href="https://www.meteociel.fr/modeles/gfse_cartes.php" target="_blank">Apri Meteociel</a></div>
+<div class="card"><h2>🌍 Wetterzentrale</h2><p>Carte meteo professionali.</p><a class="btn" href="https://www.wetterzentrale.de/de/topkarten.php?model=gfs&lid=OP" target="_blank">Apri Wetterzentrale</a></div>
+<div class="card"><h2>📉 Spaghi GFS</h2><p>Diagramma ensemble GFS.</p><a class="btn" href="https://www.wetterzentrale.de/de/ens_image.php?geoid=72566&var=201&run=12&date=2026-05-18&model=gfs&member=ENS&bw=1" target="_blank">Apri GFS</a></div>
+<div class="card"><h2>📉 Spaghi ECMWF</h2><p>Diagramma ensemble ECMWF.</p><a class="btn" href="https://www.wetterzentrale.de/de/ens_image.php?geoid=72566&var=201&run=0&date=2026-05-19&model=ecm&member=ENS&bw=1" target="_blank">Apri ECMWF</a></div>
+</div>
 </section>
 
 <section id="astronomia">
-
-<h2 class="section-title">
-Astronomia
-</h2>
-
+<h2 class="section-title">Astronomia</h2>
 <div class="grid">
-
-<div class="card">
-
-<h2>🌅 Alba e tramonto</h2>
-
-<p>
-Orari del Sole e della Luna per Pisticci.
-</p>
-
-<a class="btn"
-href="https://www.comuni-italiani.it/soleluna/comune/077020/"
-target="_blank">
-Apri orari
-</a>
-
+<div class="card"><h2>🌅 Alba e tramonto</h2><p>Orari del Sole e della Luna.</p><a class="btn" href="https://www.comuni-italiani.it/soleluna/comune/077020/" target="_blank">Apri orari</a></div>
+<div class="card"><h2>🌙 Fase lunare</h2><p>Fase lunare aggiornata.</p><a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/moonPhase.php" target="_blank">Apri fase lunare</a></div>
+<div class="card"><h2>🗓️ Calendario astronomico</h2><p>Calendario astronomico completo.</p><a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/astroCalendar.php" target="_blank">Apri calendario</a></div>
+<div class="card"><h2>☀️ Radiazione solare</h2><p>Potenziale massimo annuale.</p><a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/annualSolarMax.php" target="_blank">Apri dati</a></div>
+<div class="card"><h2>🌍 Solstizi ed equinozi</h2><p>Date e informazioni stagionali.</p><a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/equisol.php" target="_blank">Apri dati</a></div>
 </div>
-
-<div class="card">
-
-<h2>🌙 Fase lunare</h2>
-
-<p>
-Consulta la fase lunare aggiornata.
-</p>
-
-<a class="btn"
-href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/moonPhase.php"
-target="_blank">
-Apri fase lunare
-</a>
-
-</div>
-
-<div class="card">
-
-<h2>🗓️ Calendario astronomico</h2>
-
-<p>
-Calendario astronomico completo.
-</p>
-
-<a class="btn"
-href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/astroCalendar.php"
-target="_blank">
-Apri calendario
-</a>
-
-</div>
-
-<div class="card">
-
-<h2>☀️ Radiazione solare</h2>
-
-<p>
-Potenziale massimo annuale di radiazione solare.
-</p>
-
-<a class="btn"
-href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/annualSolarMax.php"
-target="_blank">
-Apri dati
-</a>
-
-</div>
-
-<div class="card">
-
-<h2>🌍 Solstizi ed equinozi</h2>
-
-<p>
-Date e informazioni stagionali.
-</p>
-
-<a class="btn"
-href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/equisol.php"
-target="_blank">
-Apri dati
-</a>
-
-</div>
-
-</div>
-
 </section>
 
 </main>
 
-<footer>
-
-© 2026 Meteo Pisticci - di Gabriele Lopatriello
-
-</footer>
+<footer>© 2026 Meteo Pisticci - di Gabriele Lopatriello</footer>
 
 <script>
-
 const backgrounds = [
 "ChatGPT Image 13 mag 2026, 20_06_28(1)(1).png",
 "dji_fly_20260224_172416_0188_1771952691019_photo.jpg",
@@ -590,34 +171,42 @@ const backgrounds = [
 ];
 
 let currentBg = 0;
-
 const hero = document.querySelector(".hero");
 
 function changeHeroBackground(){
-
 hero.classList.add("fade");
-
-setTimeout(() => {
-
-document.documentElement.style.setProperty(
-"--hero-bg",
-`url("${backgrounds[currentBg]}")`
-);
-
+setTimeout(()=>{
+document.documentElement.style.setProperty("--hero-bg", `url("${backgrounds[currentBg]}")`);
 hero.classList.remove("fade");
-
 currentBg = (currentBg + 1) % backgrounds.length;
-
-},1200);
-
+},700);
 }
 
 changeHeroBackground();
-
 setInterval(changeHeroBackground,5000);
 
+async function loadRealtime(){
+try{
+const response = await fetch("https://stazioni4.soluzionimeteo.it/pisticci/upload/realtime.txt?nocache=" + Date.now());
+const text = await response.text();
+const data = text.trim().split(/\s+/);
+
+document.getElementById("update").innerText = (data[0] || "") + " " + (data[1] || "");
+
+document.getElementById("temp").innerText = data[2] ? data[2] + " °C" : "--";
+document.getElementById("hum").innerText = data[3] ? data[3] + " %" : "--";
+document.getElementById("wind").innerText = data[5] ? data[5] + " km/h" : "--";
+document.getElementById("winddir").innerText = data[7] ? data[7] + "°" : "--";
+document.getElementById("rain").innerText = data[9] ? data[9] + " mm" : "--";
+document.getElementById("pressure").innerText = data[10] ? data[10] + " hPa" : "--";
+}catch(e){
+document.getElementById("update").innerText = "Dati non caricati";
+}
+}
+
+loadRealtime();
+setInterval(loadRealtime,60000);
 </script>
 
 </body>
 </html>
-```
