@@ -5,35 +5,261 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meteo Pisticci</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:Inter,sans-serif;background:#030712;color:white;overflow-x:hidden}
+body{
+font-family:Inter,sans-serif;
+background:#020617;
+color:white;
+overflow-x:hidden;
+}
 
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:20px}
-.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.65)),var(--hero-bg);background-size:cover;background-position:center;transition:all 1.5s ease;transform:scale(1.05);z-index:0}
-.hero.fade::before{opacity:.25}
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,rgba(14,165,233,.25),transparent 35%),
+radial-gradient(circle at bottom right,rgba(59,130,246,.2),transparent 35%),
+#020617;
+z-index:-2;
+}
 
-.hero-content{position:relative;z-index:2;max-width:1100px;padding:30px;border-radius:35px;background:rgba(0,0,0,.2);backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,.15)}
-.logo{width:170px;border-radius:50%;background:white;padding:5px;box-shadow:0 15px 45px rgba(0,0,0,.5)}
-.hero h1{font-family:Orbitron,sans-serif;font-size:72px;margin-top:25px;letter-spacing:4px;text-shadow:0 10px 35px black}
-.subtitle{font-size:24px;font-weight:700;color:#38bdf8;margin-top:10px}
-.hero p{margin-top:15px;font-size:20px;line-height:1.6;color:#e2e8f0}
+.topbar{
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:50;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 28px;
+background:rgba(2,6,23,.65);
+backdrop-filter:blur(16px);
+border-bottom:1px solid rgba(255,255,255,.12);
+}
 
-.menu{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:35px}
-.menu a{padding:13px 20px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);text-decoration:none;color:white;font-weight:700}
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:900;
+letter-spacing:1px;
+}
 
-.container{max-width:1350px;margin:auto;padding:50px 18px}
-.section-title{font-family:Orbitron,sans-serif;font-size:36px;margin-bottom:25px;margin-top:60px;color:#7dd3fc}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.brand img{
+width:42px;
+height:42px;
+border-radius:50%;
+background:white;
+padding:2px;
+}
+
+.nav{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.nav a{
+text-decoration:none;
+color:#e0f2fe;
+font-size:14px;
+font-weight:800;
+padding:9px 13px;
+border-radius:999px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.1);
+transition:.3s;
+}
+
+.nav a:hover{
+background:#0ea5e9;
+color:white;
+transform:translateY(-2px);
+}
+
+.hero{
+position:relative;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+overflow:hidden;
+padding:120px 20px 50px;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+inset:0;
+background-image:
+linear-gradient(rgba(2,6,23,.35),rgba(2,6,23,.9)),
+var(--hero-bg);
+background-size:cover;
+background-position:center;
+transition:opacity 1s ease,transform 3s ease;
+transform:scale(1.08);
+z-index:0;
+}
+
+.hero.fade::before{opacity:.35}
+
+.hero-content{
+position:relative;
+z-index:2;
+max-width:1050px;
+padding:38px 30px;
+border-radius:36px;
+background:rgba(15,23,42,.45);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.18);
+box-shadow:0 30px 90px rgba(0,0,0,.55);
+}
+
+.logo{
+width:170px;
+border-radius:50%;
+background:white;
+padding:5px;
+box-shadow:0 20px 55px rgba(0,0,0,.55);
+}
+
+.hero h1{
+font-family:Orbitron,sans-serif;
+font-size:72px;
+margin-top:26px;
+letter-spacing:4px;
+text-shadow:0 15px 40px black;
+}
+
+.subtitle{
+font-size:24px;
+font-weight:900;
+color:#38bdf8;
+margin-top:12px;
+}
+
+.hero p{
+margin:18px auto 0;
+font-size:20px;
+line-height:1.6;
+color:#e2e8f0;
+max-width:850px;
+}
+
+.hero-badges{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:12px;
+margin-top:28px;
+}
+
+.badge{
+padding:11px 16px;
+border-radius:999px;
+background:rgba(14,165,233,.16);
+border:1px solid rgba(125,211,252,.35);
+font-weight:800;
+color:#e0f2fe;
+}
+
+.container{
+max-width:1380px;
+margin:auto;
+padding:50px 18px;
+}
+
+.section-title{
+font-family:Orbitron,sans-serif;
+font-size:34px;
+margin:70px 0 25px;
+color:#7dd3fc;
+}
+
+.section-subtitle{
+color:#cbd5e1;
+margin-top:-12px;
+margin-bottom:25px;
+font-size:17px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:22px;
+}
+
+.card{
+background:linear-gradient(180deg,rgba(15,23,42,.95),rgba(15,23,42,.75));
+border:1px solid rgba(148,163,184,.22);
+border-radius:30px;
+padding:24px;
+backdrop-filter:blur(14px);
+box-shadow:0 16px 45px rgba(0,0,0,.32);
+transition:.35s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+border-color:rgba(56,189,248,.55);
+box-shadow:0 25px 65px rgba(14,165,233,.18);
+}
+
+.center{text-align:center}
+
+.card h2{
+margin-top:8px;
+color:#38bdf8;
+font-size:21px;
+}
+
+.value{
+font-size:40px;
+font-weight:900;
+color:#facc15;
+margin-top:12px;
+}
+
+.card p{
+margin-top:10px;
+color:#d1d5db;
+line-height:1.5;
+}
+
+.icon{font-size:58px}
+.icon-small{font-size:44px}
+
+.btn{
+display:inline-block;
+margin:12px 6px 0;
+padding:13px 18px;
+border-radius:16px;
+background:linear-gradient(135deg,#0284c7,#38bdf8);
+text-decoration:none;
+color:white;
+font-weight:900;
+box-shadow:0 12px 25px rgba(14,165,233,.25);
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-3px);
+filter:brightness(1.1);
+}
 
 .hourly-scroll{
 display:flex;
 gap:18px;
 overflow-x:auto;
-padding-bottom:18px;
+padding-bottom:20px;
 scroll-snap-type:x mandatory;
 -webkit-overflow-scrolling:touch;
 }
@@ -43,58 +269,163 @@ min-width:210px;
 scroll-snap-align:start;
 }
 
-.card{background:#111827d9;border:1px solid #33415580;border-radius:28px;padding:24px;backdrop-filter:blur(10px);box-shadow:0 10px 40px rgba(0,0,0,.3)}
-.center{text-align:center}
-.card h2{margin-top:10px;color:#38bdf8}
-.value{font-size:42px;font-weight:900;color:#facc15;margin-top:10px}
-.card p{margin-top:10px;color:#d1d5db;line-height:1.5}
-.icon{font-size:60px}
-.icon-small{font-size:45px}
-.btn{display:inline-block;margin-top:15px;padding:12px 18px;border-radius:15px;background:linear-gradient(135deg,#0284c7,#0ea5e9);text-decoration:none;color:white;font-weight:800}
+.frame{
+margin-top:20px;
+border-radius:30px;
+overflow:hidden;
+border:1px solid rgba(148,163,184,.22);
+background:#0f172a;
+box-shadow:0 16px 45px rgba(0,0,0,.35);
+}
 
-.frame{margin-top:20px;border-radius:30px;overflow:hidden;border:1px solid #33415580;background:#0f172a}
-.frame iframe,.frame img{width:100%;display:block;border:0}
-iframe{height:650px;background:white}
+.frame iframe,.frame img{
+width:100%;
+display:block;
+border:0;
+}
 
-footer{margin-top:70px;padding:35px;text-align:center;background:#020617;color:#94a3b8}
+iframe{
+height:650px;
+background:white;
+}
+
+.webcam-img{
+width:100%;
+border-radius:22px;
+margin-top:12px;
+transition:.4s;
+}
+
+.card:hover .webcam-img{
+transform:scale(1.03);
+}
+
+.live-dot{
+display:inline-flex;
+align-items:center;
+gap:8px;
+color:#22c55e;
+font-weight:900;
+margin-top:12px;
+}
+
+.live-dot::before{
+content:"";
+width:10px;
+height:10px;
+background:#22c55e;
+border-radius:50%;
+box-shadow:0 0 16px #22c55e;
+}
+
+.alert-box{
+background:linear-gradient(135deg,rgba(250,204,21,.18),rgba(14,165,233,.12));
+border:1px solid rgba(250,204,21,.35);
+}
+
+footer{
+margin-top:80px;
+padding:40px 20px;
+text-align:center;
+background:#020617;
+color:#94a3b8;
+border-top:1px solid rgba(255,255,255,.1);
+}
+
+.to-top{
+position:fixed;
+right:18px;
+bottom:18px;
+width:48px;
+height:48px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:#0ea5e9;
+color:white;
+font-size:24px;
+font-weight:900;
+text-decoration:none;
+box-shadow:0 15px 35px rgba(14,165,233,.35);
+z-index:60;
+}
+
+@media(max-width:900px){
+.topbar{
+position:relative;
+flex-direction:column;
+gap:12px;
+}
+.hero{
+padding-top:60px;
+}
+.hero h1{
+font-size:42px;
+}
+.nav a{
+font-size:13px;
+padding:8px 11px;
+}
+}
 
 @media(max-width:700px){
-.hero h1{font-size:38px}
+.hero h1{font-size:36px}
 .hero p{font-size:16px}
 .logo{width:130px}
-.section-title{font-size:26px}
+.section-title{font-size:25px}
 .value{font-size:32px}
 iframe{height:500px}
 .hourly-scroll .card{min-width:180px}
+.card{padding:20px}
 }
 </style>
 </head>
 
 <body>
 
-<header class="hero">
-<div class="hero-content">
-<img src="5f6a1571-8449-4f65-afcd-8130873109bb.png" class="logo">
-<h1>METEO PISTICCI</h1>
-<div class="subtitle">di Gabriele Lopatriello</div>
-<p>Dati meteo live, qualità dell’aria, webcam, previsioni ECMWF per Pisticci, satellite, radar e astronomia.</p>
+<header class="topbar">
+<div class="brand">
+<img src="5f6a1571-8449-4f65-afcd-8130873109bb.png" alt="Logo Meteo Pisticci">
+<span>METEO PISTICCI</span>
+</div>
 
-<nav class="menu">
-<a href="#live">Dati Live</a>
+<nav class="nav">
+<a href="#live">Live</a>
 <a href="#forecast">Previsioni</a>
-<a href="#air">Qualità Aria</a>
+<a href="#air">Aria</a>
 <a href="#webcam">Webcam</a>
 <a href="#radar">Radar</a>
 <a href="#satellite">Satellite</a>
 <a href="#astronomy">Astronomia</a>
 </nav>
-</div>
 </header>
+
+<section class="hero">
+<div class="hero-content">
+<img src="5f6a1571-8449-4f65-afcd-8130873109bb.png" class="logo" alt="Logo Meteo Pisticci">
+
+<h1>METEO PISTICCI</h1>
+<div class="subtitle">di Gabriele Lopatriello</div>
+
+<p>
+Dati meteo live, previsioni ECMWF, webcam, qualità dell’aria, radar, satellite e astronomia per Pisticci.
+</p>
+
+<div class="hero-badges">
+<div class="badge">🌡️ Dati live</div>
+<div class="badge">📷 Webcam</div>
+<div class="badge">🌧️ Previsioni ECMWF</div>
+<div class="badge">🛰️ Satellite</div>
+</div>
+</div>
+</section>
 
 <main class="container">
 
 <section id="live">
 <h2 class="section-title">Dati live stazione meteo</h2>
+<p class="section-subtitle">Valori aggiornati dalla stazione meteo di Pisticci.</p>
 
 <div class="grid">
 <div class="card center"><h2>🌡️ Temperatura</h2><div class="value" id="temp">--</div></div>
@@ -105,19 +436,21 @@ iframe{height:500px}
 <div class="card center"><h2>📈 Pressione</h2><div class="value" id="pressure">--</div></div>
 </div>
 
-<div class="card" style="margin-top:20px">
+<div class="card alert-box" style="margin-top:22px">
 <h2>📡 Aggiornamento stazione</h2>
 <p>Ultimo aggiornamento: <strong id="update">--</strong></p>
-<a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/station/liveData.php" target="_blank">Apri pagina dati completa</a>
+<a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/station/liveData.php" target="_blank">Apri dati completi</a>
 <a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/station/graph.php" target="_blank">Grafici interattivi</a>
 </div>
 </section>
 
 <section id="forecast">
 <h2 class="section-title">Previsioni Meteo Pisticci - 7 giorni ECMWF</h2>
+<p class="section-subtitle">Previsioni giornaliere con temperatura, pioggia, vento e raffiche.</p>
 <div class="grid" id="dailyForecast"></div>
 
-<h2 class="section-title">Previsioni Meteo Orarie - scorri con il dito</h2>
+<h2 class="section-title">Previsioni orarie</h2>
+<p class="section-subtitle">Scorri con il dito per vedere le prossime ore.</p>
 <div class="hourly-scroll" id="hourlyForecast"></div>
 </section>
 
@@ -129,123 +462,67 @@ iframe{height:500px}
 </section>
 
 <section id="webcam">
-
-<h2 class="section-title">
-Webcam live Pisticci
-</h2>
+<h2 class="section-title">Webcam live Pisticci</h2>
 
 <div class="grid">
 
 <div class="card center">
-
-<h2>
-📷 Pisticci Sud - Gabriele Lopatriello
-</h2>
-
-<p style="margin-bottom:15px">
-Webcam mobile (360°)
-</p>
-
-<img
-src="https://webcam.soluzionimeteo.it/pisticci/webcam.jpg"
-style="width:100%;border-radius:20px">
-
+<h2>📷 Pisticci Sud - Gabriele Lopatriello</h2>
+<p>Webcam mobile 360°</p>
+<div class="live-dot">LIVE</div>
+<img class="webcam-img" src="https://webcam.soluzionimeteo.it/pisticci/webcam.jpg" alt="Webcam Pisticci Sud">
 </div>
 
 <div class="card center">
-
-<h2>
-📷 Webcam di Alberto Raimondo
-</h2>
-
-<p style="margin-bottom:15px">
-Pisticci direzione Ovest
-Rione Dirupo - Terravecchia
-</p>
-
-<img
-src="https://www.meteomarconia.it/webcam_pisticci/web1cropdx.php"
-style="width:100%;border-radius:20px">
-
+<h2>📷 Webcam di Alberto Raimondo</h2>
+<p>Pisticci direzione Ovest<br>Rione Dirupo - Terravecchia</p>
+<div class="live-dot">LIVE</div>
+<img class="webcam-img" src="https://www.meteomarconia.it/webcam_pisticci/web1cropdx.php" alt="Webcam Pisticci Ovest">
 </div>
 
 <div class="card center">
-
-<h2>
-📷 Webcam di Alberto Raimondo
-</h2>
-
-<p style="margin-bottom:15px">
-Pisticci direzione Sud Ovest
-Craco - Monte Alpi - Monte Raparo
-</p>
-
-<img
-src="https://www.meteomarconia.it/webcam_pisticci/web1cropsx.php"
-style="width:100%;border-radius:20px">
-
+<h2>📷 Webcam di Alberto Raimondo</h2>
+<p>Pisticci direzione Sud Ovest<br>Craco - Monte Alpi - Monte Raparo</p>
+<div class="live-dot">LIVE</div>
+<img class="webcam-img" src="https://www.meteomarconia.it/webcam_pisticci/web1cropsx.php" alt="Webcam Pisticci Sud Ovest">
 </div>
 
 <div class="card center">
-
-<h2>
-📷 Webcam di Alberto Raimondo
-</h2>
-
-<p style="margin-bottom:15px">
-Pisticci direzione Sud-Sud/Ovest
-lato Valle del Cavone -
-Montalbano J. - Rotondella
-</p>
-
-<img
-src="https://www.meteomarconia.it/webcam_pisticci2/web2cropsx.php"
-style="width:100%;border-radius:20px">
-
+<h2>📷 Webcam di Alberto Raimondo</h2>
+<p>Pisticci direzione Sud-Sud/Ovest<br>Valle del Cavone - Montalbano J. - Rotondella</p>
+<div class="live-dot">LIVE</div>
+<img class="webcam-img" src="https://www.meteomarconia.it/webcam_pisticci2/web2cropsx.php" alt="Webcam Cavone Montalbano Rotondella">
 </div>
 
 <div class="card center">
-
-<h2>
-📷 Webcam di Alberto Raimondo
-</h2>
-
-<p style="margin-bottom:15px">
-Pisticci direzione Sud-Sud/Ovest
-lato Valle del Cavone
-direzione Pollino
-</p>
-
-<img
-src="https://www.meteomarconia.it/webcam_pisticci2/web2cropdx.php"
-style="width:100%;border-radius:20px">
-
+<h2>📷 Webcam di Alberto Raimondo</h2>
+<p>Pisticci direzione Sud-Sud/Ovest<br>Valle del Cavone direzione Pollino</p>
+<div class="live-dot">LIVE</div>
+<img class="webcam-img" src="https://www.meteomarconia.it/webcam_pisticci2/web2cropdx.php" alt="Webcam Pollino">
 </div>
 
 <div class="card center">
-
-<h2>
-📷 Webcam di Alberto Raimondo
-</h2>
-
-<p style="margin-bottom:15px">
-Marconia direzione Pisticci
-</p>
-
-<img
-src="https://www.meteomarconia.it/webcam_marconia3/web3cropdx.php"
-style="width:100%;border-radius:20px">
-
+<h2>📷 Webcam di Alberto Raimondo</h2>
+<p>Marconia direzione Pisticci</p>
+<div class="live-dot">LIVE</div>
+<img class="webcam-img" src="https://www.meteomarconia.it/webcam_marconia3/web3cropdx.php" alt="Webcam Marconia direzione Pisticci">
 </div>
 
 </div>
+</section>
 
+<section id="radar">
+<h2 class="section-title">Radar Meteo</h2>
+<p class="section-subtitle">Radar precipitazioni aggiornato in tempo reale.</p>
+<div class="frame">
+<iframe src="https://embed.windy.com/embed2.html?lat=40.390&lon=16.559&detailLat=40.390&detailLon=16.559&width=650&height=450&zoom=8&level=surface&overlay=rain&product=radar&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=true&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"></iframe>
+</div>
 </section>
 
 <section id="satellite">
 <h2 class="section-title">Satellite</h2>
 <div class="frame">
-<img src="https://modeles20.meteociel.fr/satellite/animsatviscolmtgit.gif">
+<img src="https://modeles20.meteociel.fr/satellite/animsatviscolmtgit.gif" alt="Satellite Italia">
 </div>
 </section>
 
@@ -253,15 +530,34 @@ style="width:100%;border-radius:20px">
 <h2 class="section-title">Astronomia</h2>
 
 <div class="grid">
-<div class="card"><h2>🌙 Fase lunare</h2><p>Visualizza la fase lunare aggiornata.</p><a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/moonPhase.php" target="_blank">Apri</a></div>
-<div class="card"><h2>🌅 Alba e tramonto</h2><p>Orari del Sole e della Luna.</p><a class="btn" href="https://www.comuni-italiani.it/soleluna/comune/077020/" target="_blank">Apri</a></div>
-<div class="card"><h2>🗓️ Calendario astronomico</h2><p>Eventi astronomici annuali.</p><a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/astroCalendar.php" target="_blank">Apri</a></div>
+<div class="card">
+<h2>🌙 Fase lunare</h2>
+<p>Visualizza la fase lunare aggiornata.</p>
+<a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/moonPhase.php" target="_blank">Apri</a>
+</div>
+
+<div class="card">
+<h2>🌅 Alba e tramonto</h2>
+<p>Orari del Sole e della Luna per Pisticci.</p>
+<a class="btn" href="https://www.comuni-italiani.it/soleluna/comune/077020/" target="_blank">Apri</a>
+</div>
+
+<div class="card">
+<h2>🗓️ Calendario astronomico</h2>
+<p>Eventi astronomici annuali.</p>
+<a class="btn" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/astroCalendar.php" target="_blank">Apri</a>
+</div>
 </div>
 </section>
 
 </main>
 
-<footer>© 2026 Meteo Pisticci - di Gabriele Lopatriello</footer>
+<footer>
+© 2026 Meteo Pisticci - di Gabriele Lopatriello<br>
+Dati meteo, webcam, radar, satellite e astronomia per Pisticci.
+</footer>
+
+<a href="#" class="to-top">↑</a>
 
 <script>
 const backgrounds = [
@@ -285,6 +581,7 @@ hero.classList.remove("fade");
 currentBg = (currentBg + 1) % backgrounds.length;
 },700);
 }
+
 changeHeroBackground();
 setInterval(changeHeroBackground,5000);
 
@@ -308,37 +605,51 @@ console.log(err);
 
 async function loadOpenMeteo(){
 try{
-const url = "https://api.open-meteo.com/v1/forecast?latitude=40.3902&longitude=16.5592&daily=weather_code,temperature_2m_max,temperature_2m_min,rain_sum,showers_sum,snowfall_sum,precipitation_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant&hourly=temperature_2m,precipitation_probability,precipitation,rain,showers,snowfall,wind_speed_10m,wind_direction_10m,wind_gusts_10m&models=italia_meteo_arpae_icon_2i,ecmwf_ifs&current=temperature_2m,relative_humidity_2m,precipitation,snowfall,wind_speed_10m,wind_direction_10m,wind_gusts_10m&timezone=Europe/Rome";
+const url = "https://api.open-meteo.com/v1/forecast?latitude=40.3902&longitude=16.5592&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant&hourly=temperature_2m,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m,wind_gusts_10m&models=ecmwf_ifs&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,wind_direction_10m,wind_gusts_10m&timezone=Europe/Rome";
 
 const response = await fetch(url);
 const data = await response.json();
 
 const dailyBox = document.getElementById("dailyForecast");
 const hourlyBox = document.getElementById("hourlyForecast");
-
 const giorni = ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
 
 dailyBox.innerHTML = "";
+
+const dTempMax = data.daily.temperature_2m_max_ecmwf_ifs || data.daily.temperature_2m_max;
+const dTempMin = data.daily.temperature_2m_min_ecmwf_ifs || data.daily.temperature_2m_min;
+const dCode = data.daily.weather_code_ecmwf_ifs || data.daily.weather_code;
+const dProb = data.daily.precipitation_probability_max_ecmwf_ifs || data.daily.precipitation_probability_max;
+const dRain = data.daily.precipitation_sum_ecmwf_ifs || data.daily.precipitation_sum;
+const dWind = data.daily.wind_speed_10m_max_ecmwf_ifs || data.daily.wind_speed_10m_max;
+const dGust = data.daily.wind_gusts_10m_max_ecmwf_ifs || data.daily.wind_gusts_10m_max;
 
 data.daily.time.forEach((day,i)=>{
 const d = new Date(day);
 
 dailyBox.innerHTML += `
 <div class="card center">
-<div class="icon">${weatherIcon(data.daily.weather_code_ecmwf_ifs[i])}</div>
+<div class="icon">${weatherIcon(dCode[i])}</div>
 <h2>${giorni[d.getDay()]} ${d.getDate()}</h2>
-<div class="value">${Math.round(data.daily.temperature_2m_max_ecmwf_ifs[i])}° / ${Math.round(data.daily.temperature_2m_min_ecmwf_ifs[i])}°</div>
-<p>🌧️ Probabilità: ${data.daily.precipitation_probability_max_ecmwf_ifs[i]}%</p>
-<p>🌧️ Pioggia totale: ${data.daily.precipitation_sum_ecmwf_ifs[i]} mm</p>
-<p>🌬️ Vento max: ${Math.round(data.daily.wind_speed_10m_max_ecmwf_ifs[i])} km/h</p>
-<p>💨 Raffiche: ${Math.round(data.daily.wind_gusts_10m_max_ecmwf_ifs[i])} km/h</p>
-<p>${weatherText(data.daily.weather_code_ecmwf_ifs[i])}</p>
-<p style="color:#7dd3fc;font-weight:800">ECMWF</p>
+<div class="value">${Math.round(dTempMax[i])}° / ${Math.round(dTempMin[i])}°</div>
+<p>🌧️ Probabilità: ${dProb[i]}%</p>
+<p>🌧️ Pioggia totale: ${dRain[i]} mm</p>
+<p>🌬️ Vento max: ${Math.round(dWind[i])} km/h</p>
+<p>💨 Raffiche: ${Math.round(dGust[i])} km/h</p>
+<p>${weatherText(dCode[i])}</p>
+<p style="color:#7dd3fc;font-weight:900">ECMWF</p>
 </div>
 `;
 });
 
 hourlyBox.innerHTML = "";
+
+const hTemp = data.hourly.temperature_2m_ecmwf_ifs || data.hourly.temperature_2m;
+const hProb = data.hourly.precipitation_probability_ecmwf_ifs || data.hourly.precipitation_probability;
+const hRain = data.hourly.precipitation_ecmwf_ifs || data.hourly.precipitation;
+const hWind = data.hourly.wind_speed_10m_ecmwf_ifs || data.hourly.wind_speed_10m;
+const hDir = data.hourly.wind_direction_10m_ecmwf_ifs || data.hourly.wind_direction_10m;
+const hGust = data.hourly.wind_gusts_10m_ecmwf_ifs || data.hourly.wind_gusts_10m;
 
 const now = new Date();
 let startIndex = data.hourly.time.findIndex(t => new Date(t) >= now);
@@ -349,29 +660,28 @@ const i = startIndex + x;
 if(!data.hourly.time[i]) break;
 
 const d = new Date(data.hourly.time[i]);
-const code = hourlyCode(
-data.hourly.precipitation_ecmwf_ifs[i],
-data.hourly.precipitation_probability_ecmwf_ifs[i]
-);
+const code = hourlyCode(hRain[i],hProb[i]);
 
 hourlyBox.innerHTML += `
 <div class="card center">
 <div class="icon-small">${weatherIcon(code)}</div>
 <h2>${String(d.getHours()).padStart(2,"0")}:00</h2>
-<div class="value">${Math.round(data.hourly.temperature_2m_ecmwf_ifs[i])}°</div>
-<p>🌧️ Probabilità: ${data.hourly.precipitation_probability_ecmwf_ifs[i]}%</p>
-<p>🌧️ Pioggia: ${data.hourly.precipitation_ecmwf_ifs[i]} mm</p>
-<p>🌬️ Vento: ${Math.round(data.hourly.wind_speed_10m_ecmwf_ifs[i])} km/h</p>
-<p>💨 Raffiche: ${Math.round(data.hourly.wind_gusts_10m_ecmwf_ifs[i])} km/h</p>
-<p>🧭 Direzione: ${Math.round(data.hourly.wind_direction_10m_ecmwf_ifs[i])}°</p>
+<div class="value">${Math.round(hTemp[i])}°</div>
+<p>🌧️ Probabilità: ${hProb[i]}%</p>
+<p>🌧️ Pioggia: ${hRain[i]} mm</p>
+<p>🌬️ Vento: ${Math.round(hWind[i])} km/h</p>
+<p>💨 Raffiche: ${Math.round(hGust[i])} km/h</p>
+<p>🧭 Direzione: ${Math.round(hDir[i])}°</p>
 <p>${weatherText(code)}</p>
-<p style="color:#7dd3fc;font-weight:800">ECMWF</p>
+<p style="color:#7dd3fc;font-weight:900">ECMWF</p>
 </div>
 `;
 }
+
 }catch(err){
 console.log(err);
-document.getElementById("dailyForecast").innerHTML = "<div class='card'><h2>Previsioni non caricate</h2><p>Controlla più tardi.</p></div>";
+document.getElementById("dailyForecast").innerHTML =
+"<div class='card'><h2>Previsioni non caricate</h2><p>Controlla più tardi.</p></div>";
 }
 }
 
@@ -385,11 +695,24 @@ return 1;
 
 function weatherText(code){
 const map = {
-0:"Sereno",1:"Poco nuvoloso",2:"Parzialmente nuvoloso",3:"Coperto",
-45:"Nebbia",48:"Brina",51:"Pioviggine debole",53:"Pioviggine",
-55:"Pioviggine intensa",61:"Pioggia debole",63:"Pioggia moderata",
-65:"Pioggia forte",80:"Rovesci",81:"Rovesci moderati",82:"Rovesci forti",
-95:"Temporale",96:"Grandine",99:"Temporale forte"
+0:"Sereno",
+1:"Poco nuvoloso",
+2:"Parzialmente nuvoloso",
+3:"Coperto",
+45:"Nebbia",
+48:"Brina",
+51:"Pioviggine debole",
+53:"Pioviggine",
+55:"Pioviggine intensa",
+61:"Pioggia debole",
+63:"Pioggia moderata",
+65:"Pioggia forte",
+80:"Rovesci",
+81:"Rovesci moderati",
+82:"Rovesci forti",
+95:"Temporale",
+96:"Temporale con grandine",
+99:"Temporale forte"
 };
 return map[code] || "Variabile";
 }
