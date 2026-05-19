@@ -35,6 +35,7 @@ h1{font-family:Orbitron,sans-serif;font-size:70px;margin:22px 0 8px;letter-spaci
 .center{text-align:center}
 .icon{font-size:55px;text-align:center;margin-bottom:8px}
 .icon-small{font-size:45px;text-align:center;margin-bottom:8px}
+.model-label{margin-top:10px;color:#7dd3fc;font-weight:900}
 .frame{padding:14px;margin-top:18px}
 .frame img,.frame iframe{width:100%;border:0;border-radius:22px;display:block}
 iframe{height:620px;background:white}
@@ -62,7 +63,7 @@ iframe{height:520px}
 <img class="logo" src="5f6a1571-8449-4f65-afcd-8130873109bb.png">
 <h1>METEO PISTICCI</h1>
 <div class="subtitle">di Gabriele Lopatriello</div>
-<p class="desc">Portale meteo locale con dati live, qualità dell’aria, previsioni per Pisticci, webcam, radar e satellite.</p>
+<p class="desc">Portale meteo locale con dati live, qualità dell’aria, previsioni ECMWF e ICON-EU per Pisticci, webcam, radar e satellite.</p>
 
 <nav class="menu">
 <a href="#stazione">Dati Live</a>
@@ -101,10 +102,10 @@ iframe{height:520px}
 </section>
 
 <section id="previsioni">
-<h2 class="section-title">Previsioni Meteo Pisticci - 7 giorni</h2>
+<h2 class="section-title">Previsioni Meteo Pisticci - 7 giorni ECMWF</h2>
 <div class="grid" id="dailyForecast"></div>
 
-<h2 class="section-title">Previsioni Meteo Pisticci - prossime 12 ore</h2>
+<h2 class="section-title">Previsioni Meteo Pisticci - prossime 12 ore ICON-EU</h2>
 <div class="grid" id="hourlyForecast"></div>
 </section>
 
@@ -203,10 +204,15 @@ document.getElementById("update").innerText = "Dati non caricati";
 
 async function loadOpenMeteo(){
 try{
-const url = "https://api.open-meteo.com/v1/forecast?latitude=40.39&longitude=16.56&hourly=temperature_2m,precipitation_probability,wind_speed_10m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FRome&forecast_days=7";
+const dailyUrl = "https://api.open-meteo.com/v1/forecast?latitude=40.39&longitude=16.56&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FRome&forecast_days=7&models=ecmwf_ifs04";
 
-const res = await fetch(url);
-const meteo = await res.json();
+const hourlyUrl = "https://api.open-meteo.com/v1/forecast?latitude=40.39&longitude=16.56&hourly=temperature_2m,precipitation_probability,wind_speed_10m,weather_code&timezone=Europe%2FRome&forecast_days=2&models=icon_eu";
+
+const dailyRes = await fetch(dailyUrl);
+const dailyData = await dailyRes.json();
+
+const hourlyRes = await fetch(hourlyUrl);
+const hourlyData = await hourlyRes.json();
 
 const dailyBox = document.getElementById("dailyForecast");
 const hourlyBox = document.getElementById("hourlyForecast");
@@ -215,16 +221,17 @@ const giorni = ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
 
 dailyBox.innerHTML = "";
 
-meteo.daily.time.forEach((day,i)=>{
+dailyData.daily.time.forEach((day,i)=>{
 const d = new Date(day);
 
 dailyBox.innerHTML += `
 <div class="card center">
-<div class="icon">${weatherIcon(meteo.daily.weather_code[i])}</div>
+<div class="icon">${weatherIcon(dailyData.daily.weather_code[i])}</div>
 <h2>${giorni[d.getDay()]} ${d.getDate()}</h2>
-<div class="value">${Math.round(meteo.daily.temperature_2m_max[i])}° / ${Math.round(meteo.daily.temperature_2m_min[i])}°</div>
-<p>🌧️ Probabilità pioggia: ${meteo.daily.precipitation_probability_max[i]}%</p>
-<p>${weatherText(meteo.daily.weather_code[i])}</p>
+<div class="value">${Math.round(dailyData.daily.temperature_2m_max[i])}° / ${Math.round(dailyData.daily.temperature_2m_min[i])}°</div>
+<p>🌧️ Pioggia: ${dailyData.daily.precipitation_probability_max[i]}%</p>
+<p>${weatherText(dailyData.daily.weather_code[i])}</p>
+<p class="model-label">ECMWF</p>
 </div>
 `;
 });
@@ -232,16 +239,17 @@ dailyBox.innerHTML += `
 hourlyBox.innerHTML = "";
 
 for(let i = 0; i < 12; i++){
-const d = new Date(meteo.hourly.time[i]);
+const d = new Date(hourlyData.hourly.time[i]);
 
 hourlyBox.innerHTML += `
 <div class="card center">
-<div class="icon-small">${weatherIcon(meteo.hourly.weather_code[i])}</div>
+<div class="icon-small">${weatherIcon(hourlyData.hourly.weather_code[i])}</div>
 <h2>${String(d.getHours()).padStart(2,"0")}:00</h2>
-<div class="value">${Math.round(meteo.hourly.temperature_2m[i])}°</div>
-<p>🌧️ Pioggia: ${meteo.hourly.precipitation_probability[i]}%</p>
-<p>🌬️ Vento: ${Math.round(meteo.hourly.wind_speed_10m[i])} km/h</p>
-<p>${weatherText(meteo.hourly.weather_code[i])}</p>
+<div class="value">${Math.round(hourlyData.hourly.temperature_2m[i])}°</div>
+<p>🌧️ Pioggia: ${hourlyData.hourly.precipitation_probability[i]}%</p>
+<p>🌬️ Vento: ${Math.round(hourlyData.hourly.wind_speed_10m[i])} km/h</p>
+<p>${weatherText(hourlyData.hourly.weather_code[i])}</p>
+<p class="model-label">ICON-EU</p>
 </div>
 `;
 }
