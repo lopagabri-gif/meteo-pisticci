@@ -1329,7 +1329,7 @@ const d = new Date(day);
 dailyBox.innerHTML += `
 <div class="day-card">
 <h3>${giorni[d.getDay()]}<br>${d.getDate()}</h3>
-<div class="icon">${weatherIcon(code[i])}</div>
+<div class="icon">${weatherIcon(code[i], 12)}</div>
 <div>
 <span class="temp-max">${Math.round(max[i])}°</span>
 <span class="temp-min">${Math.round(min[i])}°</span>
@@ -1374,7 +1374,7 @@ const c = hourlyCode(hRain[i],hProb[i]);
 hourlyBox.innerHTML += `
 <div class="hour-card">
 <h3>${String(d.getHours()).padStart(2,"0")}:00</h3>
-<div class="icon">${weatherIcon(c)}</div>
+<div class="icon">${weatherIcon(c, d.getHours())}</div>
 <strong>${Math.round(hTemp[i])}°</strong>
 <div class="rain-small">💧 ${hProb[i]}%</div>
 </div>
@@ -1401,9 +1401,9 @@ if(probability >= 30) return 2;
 return 1;
 }
 
-function weatherIcon(code){
+function weatherIcon(code, forecastHour){
 
-const hour = new Date().getHours();
+const hour = forecastHour !== undefined ? forecastHour : new Date().getHours();
 const isNight = (hour >= 20 || hour <= 6);
 
 /* NOTTE */
