@@ -1238,52 +1238,52 @@ async function loadAstronomy(){
 
 try{
 
+const today = new Date().toISOString().split("T")[0];
+
 const url =
-"https://api.open-meteo.com/v1/forecast?latitude=40.3902&longitude=16.5592&daily=sunrise,sunset,moonrise,moonset,moon_phase&timezone=Europe/Rome&forecast_days=1";
+`https://api.sunrisesunset.io/json?lat=40.3902&lng=16.5592&date=${today}&time_format=24`;
 
 const response = await fetch(url);
 const data = await response.json();
 
-function formatTime(value){
-if(!value) return "--:--";
-return new Date(value).toLocaleTimeString("it-IT",{
-hour:"2-digit",
-minute:"2-digit"
-});
+if(data.status !== "OK"){
+throw new Error("Dati astronomici non disponibili");
 }
 
-document.getElementById("sunrise").innerText = formatTime(data.daily.sunrise[0]);
-document.getElementById("sunset").innerText = formatTime(data.daily.sunset[0]);
-document.getElementById("moonrise").innerText = formatTime(data.daily.moonrise[0]);
-document.getElementById("moonset").innerText = formatTime(data.daily.moonset[0]);
+const r = data.results;
 
-const phase = data.daily.moon_phase[0];
+document.getElementById("sunrise").innerText = r.sunrise || "--:--";
+document.getElementById("sunset").innerText = r.sunset || "--:--";
+document.getElementById("moonrise").innerText = r.moonrise || "--:--";
+document.getElementById("moonset").innerText = r.moonset || "--:--";
 
-let phaseText = "";
+const phase = (r.moon_phase || "").toLowerCase();
+
+let phaseText = r.moon_phase || "Fase lunare non disponibile";
 let moonIcon = "🌙";
 
-if(phase === 0 || phase === 1){
+if(phase.includes("new")){
 phaseText = "Luna nuova";
 moonIcon = "🌑";
-}else if(phase > 0 && phase < 0.25){
+}else if(phase.includes("waxing crescent")){
 phaseText = "Luna crescente";
 moonIcon = "🌒";
-}else if(phase === 0.25){
+}else if(phase.includes("first quarter")){
 phaseText = "Primo quarto";
 moonIcon = "🌓";
-}else if(phase > 0.25 && phase < 0.5){
+}else if(phase.includes("waxing gibbous")){
 phaseText = "Gibbosa crescente";
 moonIcon = "🌔";
-}else if(phase === 0.5){
+}else if(phase.includes("full")){
 phaseText = "Luna piena";
 moonIcon = "🌕";
-}else if(phase > 0.5 && phase < 0.75){
+}else if(phase.includes("waning gibbous")){
 phaseText = "Gibbosa calante";
 moonIcon = "🌖";
-}else if(phase === 0.75){
+}else if(phase.includes("last quarter") || phase.includes("third quarter")){
 phaseText = "Ultimo quarto";
 moonIcon = "🌗";
-}else{
+}else if(phase.includes("waning crescent")){
 phaseText = "Luna calante";
 moonIcon = "🌘";
 }
@@ -1294,7 +1294,15 @@ document.getElementById("moonIcon").innerText = moonIcon;
 }catch(err){
 
 console.log(err);
+
 document.getElementById("moonPhaseText").innerText = "Dati non disponibili";
+document.getElementById("sunrise").innerText = "--:--";
+document.getElementById("sunset").innerText = "--:--";
+document.getElementById("moonrise").innerText = "--:--";
+document.getElementById("moonset").innerText = "--:--";
+
+}
+}
 
 }
 }
