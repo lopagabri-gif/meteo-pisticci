@@ -835,15 +835,35 @@ target="_blank">
 <section class="panel" id="astronomy">
 <div class="panel-title">
 <div>
-<h2><span class="blue-dot"></span>ASTRONOMIA</h2>
-<span>Informazioni astronomiche</span>
+<h2><span class="blue-dot"></span>ASTRONOMIA LIVE</h2>
+<span>Sole e Luna per Pisticci</span>
 </div>
 </div>
 
 <div class="astro-row">
-<div class="astro-card"><div class="big">🌙</div><div><strong>Fase lunare</strong><p>Luna crescente</p></div></div>
-<div class="astro-card"><div class="big">🌅</div><div><strong>Alba</strong><p>05:42</p></div></div>
-<div class="astro-card"><div class="big">🌇</div><div><strong>Tramonto</strong><p>20:33</p></div></div>
+<div class="astro-card">
+<div class="big" id="moonIcon">🌙</div>
+<div>
+<strong>Fase lunare</strong>
+<p id="moonPhaseText">Caricamento...</p>
+</div>
+</div>
+
+<div class="astro-card">
+<div class="big">🌅</div>
+<div>
+<strong>Alba / Tramonto Sole</strong>
+<p><span id="sunrise">--:--</span> / <span id="sunset">--:--</span></p>
+</div>
+</div>
+
+<div class="astro-card">
+<div class="big">🌙</div>
+<div>
+<strong>Luna</strong>
+<p>Sorge: <span id="moonrise">--:--</span><br>Tramonta: <span id="moonset">--:--</span></p>
+</div>
+</div>
 </div>
 
 <a class="btn" style="width:100%;text-align:center;margin-top:18px" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/moonPhase.php" target="_blank">⭐ Vai alla sezione astronomia</a>
@@ -1214,6 +1234,71 @@ if(code>=95) return "⛈️";
 return "☁️";
 }
 
+async function loadAstronomy(){
+
+try{
+
+const url =
+"https://api.open-meteo.com/v1/forecast?latitude=40.3902&longitude=16.5592&daily=sunrise,sunset,moonrise,moonset,moon_phase&timezone=Europe/Rome&forecast_days=1";
+
+const response = await fetch(url);
+const data = await response.json();
+
+function formatTime(value){
+if(!value) return "--:--";
+return new Date(value).toLocaleTimeString("it-IT",{
+hour:"2-digit",
+minute:"2-digit"
+});
+}
+
+document.getElementById("sunrise").innerText = formatTime(data.daily.sunrise[0]);
+document.getElementById("sunset").innerText = formatTime(data.daily.sunset[0]);
+document.getElementById("moonrise").innerText = formatTime(data.daily.moonrise[0]);
+document.getElementById("moonset").innerText = formatTime(data.daily.moonset[0]);
+
+const phase = data.daily.moon_phase[0];
+
+let phaseText = "";
+let moonIcon = "🌙";
+
+if(phase === 0 || phase === 1){
+phaseText = "Luna nuova";
+moonIcon = "🌑";
+}else if(phase > 0 && phase < 0.25){
+phaseText = "Luna crescente";
+moonIcon = "🌒";
+}else if(phase === 0.25){
+phaseText = "Primo quarto";
+moonIcon = "🌓";
+}else if(phase > 0.25 && phase < 0.5){
+phaseText = "Gibbosa crescente";
+moonIcon = "🌔";
+}else if(phase === 0.5){
+phaseText = "Luna piena";
+moonIcon = "🌕";
+}else if(phase > 0.5 && phase < 0.75){
+phaseText = "Gibbosa calante";
+moonIcon = "🌖";
+}else if(phase === 0.75){
+phaseText = "Ultimo quarto";
+moonIcon = "🌗";
+}else{
+phaseText = "Luna calante";
+moonIcon = "🌘";
+}
+
+document.getElementById("moonPhaseText").innerText = phaseText;
+document.getElementById("moonIcon").innerText = moonIcon;
+
+}catch(err){
+
+console.log(err);
+document.getElementById("moonPhaseText").innerText = "Dati non disponibili";
+
+}
+}
+
 const webcamImages = document.querySelectorAll(".webcam-box img");
 const webcamModal = document.getElementById("webcamModal");
 const webcamModalImg = document.getElementById("webcamModalImg");
@@ -1249,6 +1334,7 @@ webcamModalImg.src = "";
 loadRealtime();
 setInterval(loadRealtime,60000);
 loadOpenMeteo();
+loadAstronomy();
 
 </script>
 
