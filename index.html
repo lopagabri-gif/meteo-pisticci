@@ -12,7 +12,6 @@
 html{scroll-behavior:smooth}
 body{font-family:Inter,sans-serif;background:#020617;color:white;overflow-x:hidden}
 
-/* SFONDO PIÙ VISIBILE */
 body::before{
 content:"";
 position:fixed;
@@ -27,7 +26,6 @@ transform:scale(1.05);
 z-index:-2;
 }
 
-/* EFFETTO CAMBIO FOTO */
 body.bg-fade::before{
 opacity:.75;
 transform:scale(1.09)
@@ -37,10 +35,7 @@ body::after{
 content:"";
 position:fixed;
 inset:0;
-background:
-radial-gradient(circle at top,
-rgba(14,165,233,.18),
-transparent 35%);
+background:radial-gradient(circle at top,rgba(14,165,233,.18),transparent 35%);
 z-index:-1;
 }
 
@@ -57,7 +52,7 @@ justify-content:space-between;
 gap:15px;
 padding:10px 22px;
 border-radius:20px;
-background:rgba(2,6,23,.60);
+background:rgba(2,6,23,.68);
 border:1px solid rgba(125,211,252,.22);
 backdrop-filter:blur(16px);
 box-shadow:0 15px 50px rgba(0,0,0,.35);
@@ -143,12 +138,20 @@ box-shadow:
 0 28px 70px rgba(0,0,0,.6);
 }
 
+.hero-subtitle{
+margin-top:18px;
+font-size:20px;
+font-weight:900;
+color:#e0f2fe;
+text-shadow:0 0 18px rgba(14,165,233,.6);
+}
+
 .clock-box{
 margin:22px auto 0;
 max-width:500px;
 padding:15px 20px;
 border-radius:22px;
-background:rgba(2,6,23,.55);
+background:rgba(2,6,23,.65);
 border:1px solid rgba(56,189,248,.55);
 box-shadow:0 0 35px rgba(14,165,233,.25);
 backdrop-filter:blur(10px);
@@ -170,17 +173,16 @@ text-shadow:0 0 24px rgba(250,204,21,.6);
 }
 
 .dashboard{
-max-width:1380px;
+max-width:1500px;
 margin:auto;
 padding:0 18px 40px;
 display:grid;
-grid-template-columns:1.6fr 1.1fr;
+grid-template-columns:1.25fr 1.25fr;
 gap:18px;
 }
 
-/* PANNELLI PIÙ TRASPARENTI */
 .panel{
-background:rgba(15,23,42,.55);
+background:rgba(15,23,42,.72);
 border:1px solid rgba(125,211,252,.24);
 border-radius:18px;
 padding:18px;
@@ -215,12 +217,44 @@ border-radius:50%;
 margin-right:7px;
 }
 
-.blue-dot{
-background:#0ea5e9
+.blue-dot{background:#0ea5e9}
+.green-dot{background:#22c55e}
+
+.live-weather-box{
+text-align:center;
+margin-bottom:16px;
+padding:14px;
+border-radius:18px;
+background:rgba(2,6,23,.45);
+border:1px solid rgba(125,211,252,.2);
 }
 
-.green-dot{
-background:#22c55e
+.live-weather-logo{
+font-size:48px;
+margin-bottom:8px;
+animation:pulseWeather 1.8s ease-in-out infinite;
+}
+
+.weather-anim{
+font-size:42px;
+display:inline-block;
+animation:floatWeather 2.4s ease-in-out infinite;
+filter:drop-shadow(0 0 12px rgba(56,189,248,.7));
+}
+
+.day-card .icon,
+.hour-card .icon{
+animation:floatWeather 2.4s ease-in-out infinite;
+}
+
+@keyframes floatWeather{
+0%,100%{transform:translateY(0) scale(1)}
+50%{transform:translateY(-7px) scale(1.08)}
+}
+
+@keyframes pulseWeather{
+0%,100%{transform:scale(1);opacity:1}
+50%{transform:scale(1.15);opacity:.85}
 }
 
 .live-grid{
@@ -230,7 +264,7 @@ gap:10px;
 }
 
 .live-card{
-background:rgba(15,23,42,.45);
+background:rgba(15,23,42,.55);
 border:1px solid rgba(148,163,184,.2);
 border-radius:12px;
 padding:18px 10px;
@@ -288,7 +322,7 @@ transform:translateY(-2px)
 }
 
 .btn.dark{
-background:rgba(15,23,42,.55);
+background:rgba(15,23,42,.65);
 border:1px solid rgba(148,163,184,.25)
 }
 
@@ -299,7 +333,7 @@ gap:9px;
 }
 
 .day-card,.hour-card{
-background:rgba(15,23,42,.45);
+background:rgba(15,23,42,.55);
 border:1px solid rgba(148,163,184,.18);
 border-radius:10px;
 padding:14px 8px;
@@ -362,19 +396,20 @@ gap:18px
 .webcam-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:8px;
+gap:10px;
 }
 
 .webcam-box{
 position:relative;
 overflow:hidden;
-border-radius:8px;
+border-radius:10px;
 border:1px solid rgba(125,211,252,.25);
+background:rgba(2,6,23,.7);
 }
 
 .webcam-box img{
 width:100%;
-height:165px;
+height:190px;
 object-fit:cover;
 display:block;
 transition:.4s;
@@ -383,7 +418,7 @@ cursor:pointer;
 
 .webcam-text{
 padding:10px;
-background:rgba(2,6,23,.75);
+background:rgba(2,6,23,.82);
 }
 
 .webcam-text strong{
@@ -430,7 +465,7 @@ border:0;
 }
 
 .frame iframe{
-height:320px;
+height:400px;
 background:white;
 }
 
@@ -441,24 +476,6 @@ gap:18px;
 margin-top:18px;
 }
 
-.air-value{
-display:flex;
-align-items:center;
-gap:18px
-}
-
-.gauge{
-width:105px;
-height:105px;
-border-radius:50%;
-background:conic-gradient(#22c55e 0 72%,rgba(255,255,255,.1) 72% 100%);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:32px;
-font-weight:900;
-}
-
 .astro-row{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -466,7 +483,7 @@ gap:10px;
 }
 
 .astro-card{
-background:rgba(15,23,42,.45);
+background:rgba(15,23,42,.55);
 border:1px solid rgba(148,163,184,.18);
 border-radius:12px;
 padding:14px;
@@ -542,11 +559,9 @@ box-shadow:0 12px 30px rgba(37,99,235,.5);
 z-index:99;
 }
 
-/* TABLET */
-@media(max-width:1100px){
-
+@media(max-width:1200px){
 .dashboard{
-grid-template-columns:1fr
+grid-template-columns:1fr;
 }
 
 .live-grid{
@@ -558,7 +573,6 @@ grid-template-columns:repeat(4,1fr)
 }
 }
 
-/* MOBILE */
 @media(max-width:760px){
 
 body::before{
@@ -627,6 +641,11 @@ width:285px;
 max-width:88vw;
 }
 
+.hero-subtitle{
+font-size:16px;
+padding:0 10px;
+}
+
 .clock-box{
 margin-top:18px;
 padding:14px 12px;
@@ -666,7 +685,7 @@ grid-template-columns:repeat(2,1fr);
 }
 
 .webcam-box img{
-height:120px;
+height:145px;
 }
 
 .air-astro{
@@ -678,7 +697,7 @@ grid-template-columns:1fr;
 }
 
 .frame iframe{
-height:320px;
+height:360px;
 }
 
 .btn{
@@ -688,7 +707,6 @@ padding:12px 16px;
 }
 }
 
-/* CELLULARI PICCOLI */
 @media(max-width:420px){
 
 .nav{
@@ -712,7 +730,7 @@ grid-template-columns:1fr;
 }
 
 .webcam-box img{
-height:160px;
+height:170px;
 }
 
 #liveClock{
@@ -721,6 +739,7 @@ font-size:28px;
 }
 </style>
 </head>
+
 <body>
 
 <header class="topbar">
@@ -747,6 +766,10 @@ font-size:28px;
 <div class="hero-box">
 <img class="logo-main" src="5f6a1571-8449-4f65-afcd-8130873109bb.png" alt="Logo Meteo Pisticci">
 
+<div class="hero-subtitle">
+Il meteo locale di Pisticci in tempo reale
+</div>
+
 <div class="clock-box">
 <div id="liveDate">--</div>
 <div id="liveClock">--:--:--</div>
@@ -765,6 +788,11 @@ font-size:28px;
 <span>Valori aggiornati in tempo reale</span>
 </div>
 <span>Ultimo aggiornamento: <strong id="update">--</strong></span>
+</div>
+
+<div class="live-weather-box">
+<div class="live-weather-logo" id="liveWeatherIcon">🌤️</div>
+<div style="font-weight:900;color:#bae6fd">Tempo in diretta su Pisticci</div>
 </div>
 
 <div class="live-grid">
@@ -786,7 +814,7 @@ font-size:28px;
 <div class="panel-title">
 <div>
 <h2><span class="blue-dot"></span>PREVISIONI 7 GIORNI</h2>
-<span>Previsioni giornaliere</span>
+<span>Previsioni giornaliere con icone animate</span>
 </div>
 </div>
 
@@ -795,7 +823,7 @@ font-size:28px;
 <div class="panel-title" style="margin-top:18px">
 <div>
 <h2><span class="blue-dot"></span>PREVISIONI ORARIE</h2>
-<span>Prossime ore</span>
+<span>Prossime ore con icone animate</span>
 </div>
 </div>
 
@@ -815,19 +843,11 @@ font-size:28px;
 <div class="frame">
 <iframe
 src="https://stazioni4.soluzionimeteo.it/pisticci/upload/airlink.html"
-style="
-width:100%;
-height:360px;
-border:0;
-border-radius:12px;
-background:white;">
+style="width:100%;height:360px;border:0;border-radius:12px;background:white;">
 </iframe>
 </div>
 
-<a class="btn"
-style="width:100%;text-align:center;margin-top:18px"
-href="https://stazioni4.soluzionimeteo.it/pisticci/upload/airlink.html"
-target="_blank">
+<a class="btn" style="width:100%;text-align:center;margin-top:18px" href="https://stazioni4.soluzionimeteo.it/pisticci/upload/airlink.html" target="_blank">
 🌿 Apri qualità aria completa
 </a>
 </section>
@@ -991,7 +1011,6 @@ Dati meteo, webcam, radar, satellite e astronomia per Pisticci.
 <script>
 
 const backgrounds = [
-
 "dji_fly_20260224_173212_0201_1771952725036_photo(1).jpg",
 "La-citta-di-Pisticci(1).jpg",
 "Marconia(1).jpg",
@@ -1006,7 +1025,6 @@ const backgrounds = [
 "dji_fly_20260225_174628_0236_1772038233671_photo(1).jpg",
 "La torre vista dagli archi di Piazza Elettra(1).jpg",
 "dji_export_20260411_175843_1775923123724_sphere_screenshot(1).jpg"
-
 ];
 
 let currentBg = 0;
@@ -1067,7 +1085,6 @@ const response = await fetch(
 );
 
 const text = await response.text();
-
 const data = text.trim().split(/\s+/);
 
 document.getElementById("update").innerText =
@@ -1092,9 +1109,7 @@ document.getElementById("pressure").innerText =
 data[10] ? data[10] + " hPa" : "--";
 
 }catch(err){
-
 console.log(err);
-
 }
 }
 
@@ -1106,7 +1121,6 @@ const url =
 "https://api.open-meteo.com/v1/forecast?latitude=40.3902&longitude=16.5592&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max&hourly=temperature_2m,precipitation_probability,precipitation,wind_speed_10m,wind_gusts_10m&models=ecmwf_ifs&timezone=Europe/Rome";
 
 const response = await fetch(url);
-
 const data = await response.json();
 
 const dailyBox = document.getElementById("dailyForecast");
@@ -1131,6 +1145,10 @@ data.daily.precipitation_sum;
 const code =
 data.daily.weather_code_ecmwf_ifs ||
 data.daily.weather_code;
+
+if(code && code[0] !== undefined){
+document.getElementById("liveWeatherIcon").innerHTML = weatherIcon(code[0]);
+}
 
 data.daily.time.forEach((day,i)=>{
 
@@ -1179,7 +1197,6 @@ const i = startIndex + (x*3);
 if(!data.hourly.time[i]) break;
 
 const d = new Date(data.hourly.time[i]);
-
 const c = hourlyCode(hRain[i],hProb[i]);
 
 hourlyBox.innerHTML += `
@@ -1205,11 +1222,8 @@ document.getElementById("dailyForecast").innerHTML =
 function hourlyCode(precipitation, probability){
 
 if(precipitation > 2) return 65;
-
 if(precipitation > 0.2) return 61;
-
 if(probability >= 60) return 61;
-
 if(probability >= 30) return 2;
 
 return 1;
@@ -1217,21 +1231,21 @@ return 1;
 
 function weatherIcon(code){
 
-if(code==0) return "☀️";
+if(code==0) return '<span class="weather-anim">☀️</span>';
 
-if(code==1 || code==2) return "🌤️";
+if(code==1 || code==2) return '<span class="weather-anim">🌤️</span>';
 
-if(code==3) return "☁️";
+if(code==3) return '<span class="weather-anim">☁️</span>';
 
-if(code==45 || code==48) return "🌫️";
+if(code==45 || code==48) return '<span class="weather-anim">🌫️</span>';
 
-if(code>=51 && code<=67) return "🌧️";
+if(code>=51 && code<=67) return '<span class="weather-anim">🌧️</span>';
 
-if(code>=80 && code<=82) return "🌦️";
+if(code>=80 && code<=82) return '<span class="weather-anim">🌦️</span>';
 
-if(code>=95) return "⛈️";
+if(code>=95) return '<span class="weather-anim">⛈️</span>';
 
-return "☁️";
+return '<span class="weather-anim">☁️</span>';
 }
 
 async function loadAstronomy(){
