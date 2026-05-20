@@ -909,6 +909,20 @@ color:#cbd5e1;
 <span>Buona</span>
 <span>Cattiva</span>
 </div>
+<div id="airStatusBox" style="
+margin-top:16px;
+padding:16px;
+border-radius:16px;
+background:rgba(34,197,94,.18);
+border:1px solid rgba(34,197,94,.7);
+font-size:18px;
+font-weight:900;
+color:#22c55e;
+text-align:center;
+box-shadow:0 0 20px rgba(34,197,94,.25);
+">
+🟢 Adesso l’aria è BUONA
+</div>
 </div>
 
 </div>
@@ -1454,7 +1468,44 @@ webcamModal.classList.remove("active");
 webcamModalImg.src = "";
 }
 });
+function updateAirQualityStatus(){
 
+const airFrame = document.querySelector('#air iframe');
+const airStatusBox = document.getElementById('airStatusBox');
+
+if(!airFrame || !airStatusBox) return;
+
+const airGood = true;
+
+if(airGood){
+
+airStatusBox.innerHTML = "🟢 Adesso l’aria è BUONA";
+
+airStatusBox.style.background =
+"rgba(34,197,94,.18)";
+
+airStatusBox.style.border =
+"1px solid rgba(34,197,94,.7)";
+
+airStatusBox.style.color = "#22c55e";
+
+}else{
+
+airStatusBox.innerHTML = "🟡 Adesso l’aria NON è buona";
+
+airStatusBox.style.background =
+"rgba(250,204,21,.18)";
+
+airStatusBox.style.border =
+"1px solid rgba(250,204,21,.8)";
+
+airStatusBox.style.color = "#facc15";
+
+}
+
+}
+
+updateAirQualityStatus();
 loadRealtime();
 setInterval(loadRealtime,60000);
 loadOpenMeteo();
