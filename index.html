@@ -1403,21 +1403,63 @@ return 1;
 
 function weatherIcon(code){
 
-if(code==0) return '<span class="weather-anim">☀️</span>';
+const hour = new Date().getHours();
+const isNight = (hour >= 20 || hour <= 6);
 
-if(code==1 || code==2) return '<span class="weather-anim">🌤️</span>';
+/* NOTTE */
 
-if(code==3) return '<span class="weather-anim">☁️</span>';
+if(isNight){
 
-if(code==45 || code==48) return '<span class="weather-anim">🌫️</span>';
+if(code==0)
+return '<span class="weather-anim">🌙</span>';
 
-if(code>=51 && code<=67) return '<span class="weather-anim">🌧️</span>';
+if(code==1 || code==2)
+return '<span class="weather-anim">🌙☁️</span>';
 
-if(code>=80 && code<=82) return '<span class="weather-anim">🌦️</span>';
+if(code==3)
+return '<span class="weather-anim">☁️</span>';
 
-if(code>=95) return '<span class="weather-anim">⛈️</span>';
+if(code==45 || code==48)
+return '<span class="weather-anim">🌫️</span>';
+
+if(code>=51 && code<=67)
+return '<span class="weather-anim">🌧️</span>';
+
+if(code>=80 && code<=82)
+return '<span class="weather-anim">🌧️</span>';
+
+if(code>=95)
+return '<span class="weather-anim">⛈️</span>';
+
+return '<span class="weather-anim">🌙</span>';
+
+}
+
+/* GIORNO */
+
+if(code==0)
+return '<span class="weather-anim">☀️</span>';
+
+if(code==1 || code==2)
+return '<span class="weather-anim">🌤️</span>';
+
+if(code==3)
+return '<span class="weather-anim">☁️</span>';
+
+if(code==45 || code==48)
+return '<span class="weather-anim">🌫️</span>';
+
+if(code>=51 && code<=67)
+return '<span class="weather-anim">🌧️</span>';
+
+if(code>=80 && code<=82)
+return '<span class="weather-anim">🌦️</span>';
+
+if(code>=95)
+return '<span class="weather-anim">⛈️</span>';
 
 return '<span class="weather-anim">☁️</span>';
+
 }
 
 async function loadAstronomy(){
