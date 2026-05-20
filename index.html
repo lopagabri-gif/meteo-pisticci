@@ -174,7 +174,7 @@ max-width:1380px;
 margin:auto;
 padding:0 18px 40px;
 display:grid;
-grid-template-columns:2fr 1fr;
+grid-template-columns:1.6fr 1.1fr;
 gap:18px;
 }
 
@@ -291,7 +291,8 @@ transform:translateY(-2px)
 background:rgba(15,23,42,.55);
 border:1px solid rgba(148,163,184,.25)
 }
-  .forecast-grid{
+
+.forecast-grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
 gap:9px;
@@ -361,7 +362,7 @@ gap:18px
 .webcam-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:6px;
+gap:8px;
 }
 
 .webcam-box{
@@ -373,11 +374,13 @@ border:1px solid rgba(125,211,252,.25);
 
 .webcam-box img{
 width:100%;
-height:120px;
+height:165px;
 object-fit:cover;
 display:block;
 transition:.4s;
+cursor:pointer;
 }
+
 .webcam-text{
 padding:10px;
 background:rgba(2,6,23,.75);
@@ -395,6 +398,7 @@ font-size:12px;
 line-height:1.35;
 color:#cbd5e1;
 }
+
 .webcam-box:hover img{
 transform:scale(1.05)
 }
@@ -408,6 +412,7 @@ font-size:10px;
 font-weight:900;
 padding:3px 6px;
 border-radius:5px;
+z-index:2;
 }
 
 .frame{
@@ -425,7 +430,7 @@ border:0;
 }
 
 .frame iframe{
-height:260px;
+height:320px;
 background:white;
 }
 
@@ -473,6 +478,42 @@ backdrop-filter:blur(8px);
 
 .astro-card .big{
 font-size:42px
+}
+
+.webcam-modal{
+display:none;
+position:fixed;
+z-index:9999;
+inset:0;
+background:rgba(0,0,0,.88);
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.webcam-modal.active{
+display:flex;
+}
+
+.webcam-modal img{
+max-width:95vw;
+max-height:88vh;
+border-radius:16px;
+border:2px solid rgba(125,211,252,.45);
+box-shadow:0 0 45px rgba(14,165,233,.45);
+background:#020617;
+}
+
+.webcam-close{
+position:absolute;
+top:18px;
+right:28px;
+font-size:46px;
+font-weight:900;
+color:white;
+cursor:pointer;
+z-index:10000;
+line-height:1;
 }
 
 footer{
@@ -625,7 +666,7 @@ grid-template-columns:repeat(2,1fr);
 }
 
 .webcam-box img{
-height:95px;
+height:120px;
 }
 
 .air-astro{
@@ -671,7 +712,7 @@ grid-template-columns:1fr;
 }
 
 .webcam-box img{
-height:140px;
+height:160px;
 }
 
 #liveClock{
@@ -760,9 +801,9 @@ font-size:28px;
 
 <div class="hourly-scroll" id="hourlyForecast"></div>
 </section>
+
 <div class="air-astro">
 
-<section class="panel" id="air">
 <section class="panel" id="air">
 <div class="panel-title">
 <div>
@@ -779,8 +820,7 @@ width:100%;
 height:360px;
 border:0;
 border-radius:12px;
-background:white;
-">
+background:white;">
 </iframe>
 </div>
 
@@ -819,7 +859,7 @@ target="_blank">
 <div class="panel-title">
 <div>
 <h2><span class="green-dot"></span>WEB CAM LIVE</h2>
-<span>Immagini in tempo reale</span>
+<span>Clicca su una webcam per aprirla in grande</span>
 </div>
 </div>
 
@@ -922,6 +962,12 @@ Dati meteo, webcam, radar, satellite e astronomia per Pisticci.
 </footer>
 
 <a href="#" class="to-top">↑</a>
+
+<div id="webcamModal" class="webcam-modal">
+<span class="webcam-close">&times;</span>
+<img id="webcamModalImg" src="" alt="Webcam grande">
+</div>
+
 <script>
 
 const backgrounds = [
@@ -1168,10 +1214,40 @@ if(code>=95) return "⛈️";
 return "☁️";
 }
 
+const webcamImages = document.querySelectorAll(".webcam-box img");
+const webcamModal = document.getElementById("webcamModal");
+const webcamModalImg = document.getElementById("webcamModalImg");
+const webcamClose = document.querySelector(".webcam-close");
+
+webcamImages.forEach(img => {
+img.addEventListener("click", () => {
+const separator = img.src.includes("?") ? "&" : "?";
+webcamModalImg.src = img.src + separator + "nocache=" + Date.now();
+webcamModal.classList.add("active");
+});
+});
+
+webcamClose.addEventListener("click", () => {
+webcamModal.classList.remove("active");
+webcamModalImg.src = "";
+});
+
+webcamModal.addEventListener("click", e => {
+if(e.target === webcamModal){
+webcamModal.classList.remove("active");
+webcamModalImg.src = "";
+}
+});
+
+document.addEventListener("keydown", e => {
+if(e.key === "Escape"){
+webcamModal.classList.remove("active");
+webcamModalImg.src = "";
+}
+});
+
 loadRealtime();
-
 setInterval(loadRealtime,60000);
-
 loadOpenMeteo();
 
 </script>
