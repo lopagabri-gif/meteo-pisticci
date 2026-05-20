@@ -598,6 +598,62 @@ margin-bottom:6px;
 font-size:22px;
 color:#38bdf8;
 }
+.extremes-box{
+margin-top:16px;
+padding:16px;
+border-radius:18px;
+background:rgba(2,6,23,.45);
+border:1px solid rgba(125,211,252,.22);
+text-align:center;
+}
+
+.extremes-box h3{
+font-size:17px;
+margin-bottom:12px;
+color:#e0f2fe;
+}
+
+.extremes-grid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:10px;
+}
+
+.extremes-grid div{
+padding:14px 8px;
+border-radius:14px;
+background:rgba(14,165,233,.12);
+border:1px solid rgba(56,189,248,.25);
+}
+
+.extremes-grid span{
+display:block;
+font-size:12px;
+color:#cbd5e1;
+font-weight:800;
+margin-bottom:6px;
+}
+
+.extremes-grid strong{
+font-size:20px;
+color:#38bdf8;
+}
+
+@media(max-width:760px){
+
+.extremes-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:420px){
+
+.extremes-grid{
+grid-template-columns:1fr;
+}
+
+}
 @media(max-width:1200px){
 .dashboard{
 grid-template-columns:1fr;
@@ -895,6 +951,40 @@ Il meteo locale di Pisticci in tempo reale
 <div class="live-card"><div class="emoji">🧭</div><h3>Direzione</h3><strong id="winddir">--</strong><small>Direzione vento</small></div>
 <div class="live-card"><div class="emoji">☔</div><h3>Pioggia</h3><strong id="rain">--</strong><small>Oggi</small></div>
 <div class="live-card"><div class="emoji">📈</div><h3>Pressione</h3><strong id="pressure">--</strong><small>hPa</small></div>
+</div>
+<div class="extremes-box">
+
+<h3>📊 Estremi giornalieri</h3>
+
+<div class="extremes-grid">
+
+<div>
+<span>🌡️ Temp. Massima</span>
+<strong id="tempMaxDay">--</strong>
+</div>
+
+<div>
+<span>❄️ Temp. Minima</span>
+<strong id="tempMinDay">--</strong>
+</div>
+
+<div>
+<span>💧 Umidità Max</span>
+<strong id="humMaxDay">--</strong>
+</div>
+
+<div>
+<span>🌵 Umidità Min</span>
+<strong id="humMinDay">--</strong>
+</div>
+
+<div>
+<span>🌬️ Raffica Max</span>
+<strong id="windMaxDay">--</strong>
+</div>
+
+</div>
+
 </div>
 <div class="rain-accum-box">
 <h3>☔ Accumuli pioggia</h3>
@@ -1384,6 +1474,21 @@ document.getElementById("rainYearlyAccum").innerText =
 
 document.getElementById("pressure").innerText =
 data[10] ? data[10] + " hPa" : "--";
+
+document.getElementById("tempMaxDay").innerText =
+data[46] ? data[46] + "°" : "--";
+
+document.getElementById("tempMinDay").innerText =
+data[47] ? data[47] + "°" : "--";
+
+document.getElementById("humMaxDay").innerText =
+data[48] ? data[48] + "%" : "--";
+
+document.getElementById("humMinDay").innerText =
+data[49] ? data[49] + "%" : "--";
+
+document.getElementById("windMaxDay").innerText =
+data[6] ? data[6] + " km/h" : "--";
 
 }catch(err){
 console.log(err);
