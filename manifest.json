@@ -1,0 +1,22 @@
+{
+  "name": "Meteo Pisticci",
+  "short_name": "Meteo Pisticci",
+  "description": "Meteo live, webcam, radar, satellite e astronomia per Pisticci",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "5f6a1571-8449-4f65-afcd-8130873109bb.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "5f6a1571-8449-4f65-afcd-8130873109bb.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
