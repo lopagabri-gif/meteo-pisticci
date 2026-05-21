@@ -1469,26 +1469,36 @@ parseFloat(document.getElementById("rain")
 
 if(rain > 0){
 
+weatherBox.className = "weather-message weather-rain";
+
 weatherBox.innerHTML =
-"🌧️ Pioggia in corso a Pisticci. Prestare attenzione sulle strade.";
+"🌧️ Pioggia in corso a Pisticci. Prestare attenzione.";
 
 }else if(temp >= 30){
 
+weatherBox.className = "weather-message weather-sun";
+  
 weatherBox.innerHTML =
 "☀️ Caldo intenso su Pisticci con temperature elevate.";
 
 }else if(wind >= 30){
 
+weatherBox.className = "weather-message weather-wind";
+  
 weatherBox.innerHTML =
 "💨 Vento forte in zona. Possibili raffiche intense.";
 
 }else if(temp <= 5){
 
+weatherBox.className = "weather-message weather-cold";
+  
 weatherBox.innerHTML =
 "❄️ Temperature molto basse durante la notte.";
 
 }else{
 
+weatherBox.className = "weather-message";
+  
 weatherBox.innerHTML =
 "🌤️ Situazione meteo stabile su Pisticci.";
 }
