@@ -156,7 +156,50 @@ border:1px solid rgba(56,189,248,.55);
 box-shadow:0 0 35px rgba(14,165,233,.25);
 backdrop-filter:blur(10px);
 }
+.weather-message{
+margin-top:14px;
+padding:13px 16px;
+border-radius:16px;
+background:linear-gradient(135deg,rgba(14,165,233,.18),rgba(59,130,246,.12));
+border:1px solid rgba(125,211,252,.28);
+color:#dbeafe;
+font-size:14px;
+font-weight:900;
+line-height:1.4;
+box-shadow:0 0 22px rgba(14,165,233,.18);
+transition:.4s ease;
+}
 
+.weather-sun{
+background:linear-gradient(135deg,rgba(250,204,21,.22),rgba(245,158,11,.18));
+border:1px solid rgba(250,204,21,.35);
+color:#fde68a;
+}
+
+.weather-rain{
+background:linear-gradient(135deg,rgba(14,165,233,.22),rgba(59,130,246,.18));
+border:1px solid rgba(125,211,252,.35);
+color:#dbeafe;
+animation:rainAlert 1.8s infinite;
+}
+
+.weather-wind{
+background:linear-gradient(135deg,rgba(148,163,184,.22),rgba(71,85,105,.20));
+border:1px solid rgba(203,213,225,.35);
+color:#e2e8f0;
+}
+
+.weather-cold{
+background:linear-gradient(135deg,rgba(125,211,252,.20),rgba(96,165,250,.16));
+border:1px solid rgba(125,211,252,.35);
+color:#dbeafe;
+}
+
+@keyframes rainAlert{
+0%{transform:scale(1)}
+50%{transform:scale(1.02)}
+100%{transform:scale(1)}
+}
 #liveDate{
 font-size:18px;
 font-weight:900;
