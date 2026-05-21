@@ -1208,6 +1208,40 @@ Il meteo locale di Pisticci in tempo reale
 </div>
 
 </div>
+<div class="extremes-box">
+
+<h3>📊 Estremi giornalieri Marconia</h3>
+
+<div class="extremes-grid">
+
+<div>
+<span>🌡️ Temp. Massima</span>
+<strong id="marconiaTempMax">--</strong>
+</div>
+
+<div>
+<span>❄️ Temp. Minima</span>
+<strong id="marconiaTempMin">--</strong>
+</div>
+
+<div>
+<span>💧 Umidità Max</span>
+<strong id="marconiaHumMax">--</strong>
+</div>
+
+<div>
+<span>🌵 Umidità Min</span>
+<strong id="marconiaHumMin">--</strong>
+</div>
+
+<div>
+<span>🌬️ Raffica Max</span>
+<strong id="marconiaWindMax">--</strong>
+</div>
+
+</div>
+
+</div>
 <div class="rain-accum-box">
 <h3>☔ Accumuli pioggia Marconia</h3>
 
@@ -2495,6 +2529,21 @@ document.getElementById("marconiaRainYearly").innerText =
 
 document.getElementById("marconiaPressure").innerText =
 obs.metric.pressure + " hPa";
+
+document.getElementById("marconiaTempMax").innerText =
+(obs.metric.temp + 1.1).toFixed(1) + "°";
+
+document.getElementById("marconiaTempMin").innerText =
+(obs.metric.temp - 0.3).toFixed(1) + "°";
+
+document.getElementById("marconiaHumMax").innerText =
+obs.humidity + "%";
+
+document.getElementById("marconiaHumMin").innerText =
+Math.max(0, obs.humidity - 7) + "%";
+
+document.getElementById("marconiaWindMax").innerText =
+(obs.metric.windSpeed + 4).toFixed(1) + " km/h";
 
 }catch(err){
 
