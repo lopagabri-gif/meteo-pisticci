@@ -938,6 +938,9 @@ Il meteo locale di Pisticci in tempo reale
 <div class="clock-box">
 <div id="liveDate">--</div>
 <div id="liveClock">--:--:--</div>
+<div class="weather-message" id="weatherMessage">
+📢 Caricamento situazione meteo...
+</div>
 </div>
 </div>
 </section>
@@ -1445,6 +1448,52 @@ document.body.classList.remove("bg-fade");
 
 changeBackground();
 setInterval(changeBackground,5000);
+function updateWeatherMessage(){
+
+const weatherBox =
+document.getElementById("weatherMessage");
+
+if(!weatherBox) return;
+
+const temp =
+parseFloat(document.getElementById("temp")
+.innerText);
+
+const wind =
+parseFloat(document.getElementById("wind")
+.innerText);
+
+const rain =
+parseFloat(document.getElementById("rain")
+.innerText);
+
+if(rain > 0){
+
+weatherBox.innerHTML =
+"🌧️ Pioggia in corso a Pisticci. Prestare attenzione sulle strade.";
+
+}else if(temp >= 30){
+
+weatherBox.innerHTML =
+"☀️ Caldo intenso su Pisticci con temperature elevate.";
+
+}else if(wind >= 30){
+
+weatherBox.innerHTML =
+"💨 Vento forte in zona. Possibili raffiche intense.";
+
+}else if(temp <= 5){
+
+weatherBox.innerHTML =
+"❄️ Temperature molto basse durante la notte.";
+
+}else{
+
+weatherBox.innerHTML =
+"🌤️ Situazione meteo stabile su Pisticci.";
+}
+
+}
 
 function updateLiveClock(){
 
@@ -1857,6 +1906,10 @@ airStatusBox.style.color = "#facc15";
 
 updateAirQualityStatus();
 loadRealtime();
+
+setTimeout(updateWeatherMessage,2000);
+
+setInterval(updateWeatherMessage,60000);
 setInterval(loadRealtime,60000);
 loadOpenMeteo();
 loadAstronomy();
