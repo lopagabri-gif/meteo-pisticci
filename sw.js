@@ -1,4 +1,4 @@
-const CACHE_NAME = "meteo-pisticci-v2";
+const CACHE_NAME = "meteo-pisticci-v3";
 
 const urlsToCache = [
   "/",
@@ -17,7 +17,11 @@ self.addEventListener("install", event => {
 
 self.addEventListener("fetch", event => {
 
-if(event.request.url.includes("retestazionimeteo.altervista.org")){
+if(
+event.request.url.includes("retestazionimeteo.altervista.org") ||
+event.request.url.includes("meteonetwork.eu") ||
+event.request.url.includes("api.allorigins.win")
+){
 event.respondWith(fetch(event.request));
 return;
 }
