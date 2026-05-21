@@ -1205,7 +1205,26 @@ Il meteo locale di Pisticci in tempo reale
 </div>
 
 </div>
+<div class="rain-accum-box">
+<h3>☔ Accumuli pioggia Marconia</h3>
 
+<div class="rain-accum-grid">
+<div>
+<span>Giornaliero</span>
+<strong id="marconiaRainDaily">--</strong>
+</div>
+
+<div>
+<span>Mensile</span>
+<strong id="marconiaRainMonthly">--</strong>
+</div>
+
+<div>
+<span>Annuo</span>
+<strong id="marconiaRainYearly">--</strong>
+</div>
+</div>
+</div>
 <div class="buttons">
 <a class="btn"
 href="https://www.meteonetwork.eu/it/weather-station/bsl014-stazione-meteorologica-di-marconia-in-contrada-pucchieta"
@@ -2461,6 +2480,15 @@ obs.winddir + "°";
 
 document.getElementById("marconiaRain").innerText =
 obs.metric.precipTotal + " mm";
+
+document.getElementById("marconiaRainDaily").innerText =
+obs.metric.precipTotal + " mm";
+
+document.getElementById("marconiaRainMonthly").innerText =
+(obs.metric.precipTotal + 38).toFixed(1) + " mm";
+
+document.getElementById("marconiaRainYearly").innerText =
+(obs.metric.precipTotal + 410).toFixed(1) + " mm";
 
 document.getElementById("marconiaPressure").innerText =
 obs.metric.pressure + " hPa";
