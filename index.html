@@ -1242,7 +1242,8 @@ box-shadow:0 0 20px rgba(34,197,94,.25);
 <div class="webcam-box">
 <span class="live-label">LIVE</span>
 
-<img src="https://meteone.it/stazionimeteo/pisticci/webcam/pisticci.jpg"
+<img id="webcamMeteone"
+src="https://meteone.it/stazionimeteo/pisticci/webcam/pisticci.jpg"
 alt="Pisticci Webcam di Gabriele Lopatriello">
 
 <div class="webcam-text">
@@ -1815,6 +1816,19 @@ loadRealtime();
 setInterval(loadRealtime,60000);
 loadOpenMeteo();
 loadAstronomy();
+
+setInterval(() => {
+
+const cam = document.getElementById("webcamMeteone");
+
+if(cam){
+
+cam.src =
+"https://meteone.it/stazionimeteo/pisticci/webcam/pisticci.jpg?nocache=" + Date.now();
+
+}
+
+},10000);
 
 </script>
 
