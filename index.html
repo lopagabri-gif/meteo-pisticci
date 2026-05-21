@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meteo Pisticci</title>
-
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0ea5e9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Meteo Pisticci">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
@@ -2492,7 +2495,11 @@ button.innerHTML = "🔄 Aggiorna webcam";
 },1500);
 
 }
-
+if("serviceWorker" in navigator){
+window.addEventListener("load", () => {
+navigator.serviceWorker.register("/sw.js");
+});
+}
 
 </script>
 
