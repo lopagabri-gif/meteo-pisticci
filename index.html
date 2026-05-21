@@ -2437,53 +2437,57 @@ button.innerHTML = "🔄 Aggiorna webcam";
 },1500);
 
 }
+
 async function loadMarconia(){
 
 try{
 
-const proxy =
-"https://api.allorigins.win/raw?url=";
+const url =
+"https://api.allorigins.win/raw?url=" +
+encodeURIComponent("https://www.meteonetwork.eu/it/weather-station/bsl014-stazione-meteorologica-di-marconia-in-contrada-pucchieta") +
+"&t=" + Date.now();
 
-const target =
-encodeURIComponent(
-"https://www.meteonetwork.eu/it/weather-station/bsl014-stazione-meteorologica-di-marconia-in-contrada-pucchieta"
-);
-
-const response = await fetch(
-proxy + target + "&t=" + Date.now()
-);
-
+const response = await fetch(url);
 const html = await response.text();
 
-function extract(regex){
-
-const match = html.match(regex);
-
+function getBetween(label, regex){
+const index = html.indexOf(label);
+if(index === -1) return "--";
+const part = html.substring(index, index + 500);
+const match = part.match(regex);
 return match ? match[1].trim() : "--";
-
 }
 
+const temp = getBetween("Temperatura", /([0-9.,]+)\s*°C/i);
+const hum = getBetween("Umidità", /([0-9.,]+)\s*%/i);
+const pressure = getBetween("Pressione", /([0-9.,]+)\s*hPa/i);
+const rain = getBetween("Pioggia", /([0-9.,]+)\s*mm/i);
+
+const windBlockIndex = html.indexOf("Vento");
+const windBlock = windBlockIndex !== -1 ? html.substring(windBlockIndex, windBlockIndex + 500) : "";
+const windMatch = windBlock.match(/([0-9.,]+)\s*km\/h\s*\(([A-Z]+)\)/i);
+
 document.getElementById("marconiaTemp").innerText =
-extract(/Temperatura.*?([0-9.,]+)\s?°/is) + " °C";
+temp !== "--" ? temp + " °C" : "--";
 
 document.getElementById("marconiaHum").innerText =
-extract(/Umidit.*?([0-9]{1,3})\s?%/is) + " %";
-
-document.getElementById("marconiaWind").innerText =
-extract(/Vento.*?([0-9.,]+)\s?km\/h/is) + " km/h";
-
-document.getElementById("marconiaDir").innerText =
-extract(/Direzione.*?([A-Z]+)/is);
-
-document.getElementById("marconiaRain").innerText =
-extract(/Pioggia.*?([0-9.,]+)\s?mm/is) + " mm";
+hum !== "--" ? hum + " %" : "--";
 
 document.getElementById("marconiaPressure").innerText =
-extract(/Pressione.*?([0-9.,]+)\s?hPa/is) + " hPa";
+pressure !== "--" ? pressure + " hPa" : "--";
+
+document.getElementById("marconiaRain").innerText =
+rain !== "--" ? rain + " mm" : "--";
+
+document.getElementById("marconiaWind").innerText =
+windMatch ? windMatch[1] + " km/h" : "--";
+
+document.getElementById("marconiaDir").innerText =
+windMatch ? windMatch[2] : "--";
 
 }catch(err){
 
-console.log("Errore Marconia:", err);
+console.log("Errore dati Marconia:", err);
 
 }
 
