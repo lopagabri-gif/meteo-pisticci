@@ -208,7 +208,41 @@ background:linear-gradient(135deg,rgba(125,211,252,.20),rgba(96,165,250,.16));
 border:1px solid rgba(125,211,252,.35);
 color:#dbeafe;
 }
+.alert-box{
+margin-top:16px;
+padding:18px;
+border-radius:18px;
+font-weight:800;
+text-align:center;
+font-size:16px;
+border:1px solid rgba(255,255,255,.15);
+backdrop-filter:blur(10px);
+animation:rainAlert 2s infinite;
+}
 
+.alert-green{
+background:linear-gradient(135deg,
+rgba(34,197,94,.22),
+rgba(34,197,94,.10));
+border:1px solid rgba(34,197,94,.45);
+color:#bbf7d0;
+}
+
+.alert-yellow{
+background:linear-gradient(135deg,
+rgba(250,204,21,.22),
+rgba(250,204,21,.10));
+border:1px solid rgba(250,204,21,.45);
+color:#fde68a;
+}
+
+.alert-red{
+background:linear-gradient(135deg,
+rgba(239,68,68,.22),
+rgba(239,68,68,.10));
+border:1px solid rgba(239,68,68,.45);
+color:#fecaca;
+}
 @keyframes rainAlert{
 0%{transform:scale(1)}
 50%{transform:scale(1.02)}
@@ -999,6 +1033,9 @@ Il meteo locale di Pisticci in tempo reale
 <div id="liveClock">--:--:--</div>
 <div class="weather-message" id="weatherMessage">
 📢 Caricamento situazione meteo...
+</div>
+<div class="alert-box" id="weatherAlert">
+🟢 Nessuna allerta meteo attiva
 </div>
 </div>
 </div>
@@ -2346,6 +2383,61 @@ setInterval(updateWeatherMessage,60000);
 setInterval(loadRealtime,60000);
 loadOpenMeteo();
 loadAstronomy();
+function updateWeatherAlert(){
+
+const alertBox = document.getElementById("weatherAlert");
+
+if(!alertBox) return;
+
+const temp =
+parseFloat(
+document.getElementById("temp")?.innerText
+);
+
+const wind =
+parseFloat(
+document.getElementById("wind")?.innerText
+);
+
+const rain =
+parseFloat(
+document.getElementById("rain")?.innerText
+);
+
+if(rain >= 20){
+
+alertBox.className = "alert-box alert-red";
+
+alertBox.innerHTML =
+"⛈️ ALLERTA METEO: forti piogge e possibili temporali su Pisticci";
+
+}else if(wind >= 40){
+
+alertBox.className = "alert-box alert-yellow";
+
+alertBox.innerHTML =
+"🌬️ ATTENZIONE: vento forte e raffiche intense in zona";
+
+}else if(temp >= 35){
+
+alertBox.className = "alert-box alert-red";
+
+alertBox.innerHTML =
+"🔥 ALLERTA CALDO: temperature elevate e afa intensa";
+
+}else{
+
+alertBox.className = "alert-box alert-green";
+
+alertBox.innerHTML =
+"🟢 Nessuna allerta meteo attiva";
+}
+
+}
+
+setInterval(updateWeatherAlert,5000);
+
+updateWeatherAlert();
 
 setInterval(() => {
 
