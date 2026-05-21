@@ -1071,7 +1071,7 @@ Il meteo locale di Pisticci in tempo reale
 
 <div>
 
-<section class="panel" id="Pisticci Live">
+<section class="panel" id="PisticciLive">
 <div class="panel-title">
 <div>
 <h2><span class="blue-dot"></span>DATI LIVE STAZIONE METEO</h2>
@@ -1152,134 +1152,34 @@ Il meteo locale di Pisticci in tempo reale
 <a class="btn dark" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/station/graph.php" target="_blank">📉 Grafici interattivi</a>
 </div>
 </section>
-<section class="panel" id="Marconia Live" style="margin-top:18px">
+<section class="panel" id="marconiaLive" style="margin-top:18px">
 
 <div class="panel-title">
 <div>
 <h2><span class="green-dot"></span>DATI LIVE MARCONIA</h2>
-<span>Stazione meteo Marconia - Contrada Pucchieta</span>
+<span>Stazione meteo Marconia - dati live</span>
 </div>
 </div>
 
-<div class="live-weather-box">
-<div class="live-weather-logo">🌤️</div>
-<div style="font-weight:900;color:#bae6fd">
-Tempo in diretta su Marconia
-</div>
-</div>
-
-<div class="live-grid">
-
-<div class="live-card">
-<div class="emoji">🌡️</div>
-<h3>Temperatura</h3>
-<strong id="marconiaTemp">--</strong>
-<small>Stazione live</small>
+<div class="frame" style="background:white">
+<iframe
+src="https://retestazionimeteo.altervista.org/widget_meteo.php?id=401&embed=1"
+style="width:100%;height:520px;border:0;border-radius:12px;background:white;"
+frameborder="0"
+scrolling="no">
+</iframe>
 </div>
 
-<div class="live-card">
-<div class="emoji">💧</div>
-<h3>Umidità</h3>
-<strong id="marconiaHum">--</strong>
-<small>Umidità</small>
-</div>
-
-<div class="live-card">
-<div class="emoji">🌬️</div>
-<h3>Vento</h3>
-<strong id="marconiaWind">--</strong>
-<small>Velocità vento</small>
-</div>
-
-<div class="live-card">
-<div class="emoji">🧭</div>
-<h3>Direzione</h3>
-<strong id="marconiaDir">--</strong>
-<small>Direzione vento</small>
-</div>
-
-<div class="live-card">
-<div class="emoji">☔</div>
-<h3>Pioggia</h3>
-<strong id="marconiaRain">--</strong>
-<small>Accumulo</small>
-</div>
-
-<div class="live-card">
-<div class="emoji">📈</div>
-<h3>Pressione</h3>
-<strong id="marconiaPressure">--</strong>
-<small>hPa</small>
-</div>
-
-</div>
-<div class="extremes-box">
-
-<h3>📊 Estremi giornalieri Marconia</h3>
-
-<div class="extremes-grid">
-
-<div>
-<span>🌡️ Temp. Massima</span>
-<strong id="marconiaTempMax">24.1°</strong>
-</div>
-
-<div>
-<span>❄️ Temp. Minima</span>
-<strong id="marconiaTempMin">18.4°</strong>
-</div>
-
-<div>
-<span>💧 Umidità Max</span>
-<strong id="marconiaHumMax">81%</strong>
-</div>
-
-<div>
-<span>🌵 Umidità Min</span>
-<strong id="marconiaHumMin">52%</strong>
-</div>
-
-<div>
-<span>🌬️ Raffica Max</span>
-<strong id="marconiaWindMax">28 km/h</strong>
-</div>
-
-</div>
-
-</div>
-<div class="rain-accum-box">
-
-<h3>☔ Accumuli pioggia Marconia</h3>
-
-<div class="rain-accum-grid">
-
-<div>
-<span>Giornaliero</span>
-<strong id="marconiaRainDaily">0.0 mm</strong>
-</div>
-
-<div>
-<span>Mensile</span>
-<strong id="marconiaRainMonth">38.6 mm</strong>
-</div>
-
-<div>
-<span>Annuo</span>
-<strong id="marconiaRainYear">401.8 mm</strong>
-</div>
-
-</div>
-
-</div>
 <div class="buttons">
 <a class="btn"
-href="https://www.meteonetwork.eu/it/weather-station/bsl014-stazione-meteorologica-di-marconia-in-contrada-pucchieta"
+href="https://retestazionimeteo.altervista.org/widget_meteo.php?id=401&embed=1"
 target="_blank">
-📡 Apri stazione Marconia
+📡 Apri dati live Marconia
 </a>
 </div>
 
 </section>
+
 <section class="panel" id="forecast" style="margin-top:18px">
 <div class="panel-title">
 <div>
@@ -2477,24 +2377,7 @@ cam.src =
 }
 
 },10000);
-async function loadMarconiaLive(){
 
-try{
-
-document.getElementById("marconiaTemp").innerText = "23.1 °C";
-document.getElementById("marconiaHum").innerText = "58 %";
-document.getElementById("marconiaWind").innerText = "12 km/h";
-document.getElementById("marconiaDir").innerText = "320°";
-document.getElementById("marconiaRain").innerText = "0.0 mm";
-document.getElementById("marconiaPressure").innerText = "1016 hPa";
-
-}catch(err){
-console.log(err);
-}
-
-}
-
-loadMarconiaLive();
 function refreshWebcam(button){
 
 const webcamBox = button.closest(".webcam-box");
