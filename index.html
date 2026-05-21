@@ -1160,21 +1160,57 @@ Il meteo locale di Pisticci in tempo reale
 </div>
 </div>
 
-<div class="frame" style="background:white">
-<iframe
-id="marconiaFrame"
-src="https://retestazionimeteo.altervista.org/widget_meteo.php?id=401&embed=1&nocache=1"
-style="width:100%;height:520px;border:0;border-radius:12px;background:white;"
-frameborder="0"
-scrolling="no">
-</iframe>
+<div class="live-grid">
+
+<div class="live-card">
+<div class="emoji">🌡️</div>
+<h3>Temperatura</h3>
+<strong id="marconiaTemp">--</strong>
+<small>Marconia live</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">💧</div>
+<h3>Umidità</h3>
+<strong id="marconiaHum">--</strong>
+<small>Marconia live</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">🌬️</div>
+<h3>Vento</h3>
+<strong id="marconiaWind">--</strong>
+<small>Marconia live</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">🧭</div>
+<h3>Direzione</h3>
+<strong id="marconiaDir">--</strong>
+<small>Direzione vento</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">☔</div>
+<h3>Pioggia</h3>
+<strong id="marconiaRain">--</strong>
+<small>Oggi</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">📈</div>
+<h3>Pressione</h3>
+<strong id="marconiaPressure">--</strong>
+<small>hPa</small>
+</div>
+
 </div>
 
 <div class="buttons">
 <a class="btn"
-href="https://retestazionimeteo.altervista.org/widget_meteo.php?id=401&embed=1"
+href="https://www.meteonetwork.eu/it/weather-station/bsl014-stazione-meteorologica-di-marconia-in-contrada-pucchieta"
 target="_blank">
-📡 Apri dati live Marconia
+📡 Apri dati completi Marconia
 </a>
 </div>
 
@@ -2401,20 +2437,61 @@ button.innerHTML = "🔄 Aggiorna webcam";
 },1500);
 
 }
-function aggiornaMarconia(){
+async function loadMarconia(){
 
-const frame = document.getElementById("marconiaFrame");
+try{
 
-if(frame){
+const proxy =
+"https://api.allorigins.win/raw?url=";
 
-frame.src =
-"https://retestazionimeteo.altervista.org/widget_meteo.php?id=401&embed=1&nocache=" + Date.now();
+const target =
+encodeURIComponent(
+"https://www.meteonetwork.eu/it/weather-station/bsl014-stazione-meteorologica-di-marconia-in-contrada-pucchieta"
+);
+
+const response = await fetch(
+proxy + target + "&t=" + Date.now()
+);
+
+const html = await response.text();
+
+function extract(regex){
+
+const match = html.match(regex);
+
+return match ? match[1].trim() : "--";
+
+}
+
+document.getElementById("marconiaTemp").innerText =
+extract(/Temperatura.*?([0-9.,]+)\s?°/is) + " °C";
+
+document.getElementById("marconiaHum").innerText =
+extract(/Umidit.*?([0-9]{1,3})\s?%/is) + " %";
+
+document.getElementById("marconiaWind").innerText =
+extract(/Vento.*?([0-9.,]+)\s?km\/h/is) + " km/h";
+
+document.getElementById("marconiaDir").innerText =
+extract(/Direzione.*?([A-Z]+)/is);
+
+document.getElementById("marconiaRain").innerText =
+extract(/Pioggia.*?([0-9.,]+)\s?mm/is) + " mm";
+
+document.getElementById("marconiaPressure").innerText =
+extract(/Pressione.*?([0-9.,]+)\s?hPa/is) + " hPa";
+
+}catch(err){
+
+console.log("Errore Marconia:", err);
 
 }
 
 }
 
-setInterval(aggiornaMarconia, 60000);
+loadMarconia();
+
+setInterval(loadMarconia,30000);
 if("serviceWorker" in navigator){
 window.addEventListener("load", () => {
 navigator.serviceWorker.register("/sw.js");
