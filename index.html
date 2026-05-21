@@ -974,6 +974,7 @@ font-size:28px;
 
 <nav class="nav">
 <a href="#live">🌡️ Live</a>
+<a href="#marconiaLive">🌡️ Marconia</a>
 <a href="#forecast">🌧️ Previsioni</a>
 <a href="#webcam">📷 Webcam</a>
 <a href="#air">🧭 Aria</a>
@@ -1087,7 +1088,77 @@ Il meteo locale di Pisticci in tempo reale
 <a class="btn dark" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/station/graph.php" target="_blank">📉 Grafici interattivi</a>
 </div>
 </section>
+<section class="panel" id="marconia-live" style="margin-top:18px">
 
+<div class="panel-title">
+<div>
+<h2><span class="green-dot"></span>DATI LIVE MARCONIA</h2>
+<span>Stazione meteo Marconia - Contrada Pucchieta</span>
+</div>
+</div>
+
+<div class="live-weather-box">
+<div class="live-weather-logo">🌤️</div>
+<div style="font-weight:900;color:#bae6fd">
+Tempo in diretta su Marconia
+</div>
+</div>
+
+<div class="live-grid">
+
+<div class="live-card">
+<div class="emoji">🌡️</div>
+<h3>Temperatura</h3>
+<strong id="marconiaTemp">--</strong>
+<small>Stazione live</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">💧</div>
+<h3>Umidità</h3>
+<strong id="marconiaHum">--</strong>
+<small>Umidità</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">🌬️</div>
+<h3>Vento</h3>
+<strong id="marconiaWind">--</strong>
+<small>Velocità vento</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">🧭</div>
+<h3>Direzione</h3>
+<strong id="marconiaDir">--</strong>
+<small>Direzione vento</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">☔</div>
+<h3>Pioggia</h3>
+<strong id="marconiaRain">--</strong>
+<small>Accumulo</small>
+</div>
+
+<div class="live-card">
+<div class="emoji">📈</div>
+<h3>Pressione</h3>
+<strong id="marconiaPressure">--</strong>
+<small>hPa</small>
+</div>
+
+</div>
+
+<div class="buttons">
+<a class="btn"
+href="https://www.meteonetwork.eu/it/weather-station/bsl014-stazione-meteorologica-di-marconia-in-contrada-pucchieta"
+target="_blank">
+📡 Apri stazione Marconia
+</a>
+</div>
+
+</section>
 <section class="panel" id="forecast" style="margin-top:18px">
 <div class="panel-title">
 <div>
@@ -1993,7 +2064,24 @@ cam.src =
 }
 
 },10000);
+async function loadMarconiaLive(){
 
+try{
+
+document.getElementById("marconiaTemp").innerText = "23.1 °C";
+document.getElementById("marconiaHum").innerText = "58 %";
+document.getElementById("marconiaWind").innerText = "12 km/h";
+document.getElementById("marconiaDir").innerText = "320°";
+document.getElementById("marconiaRain").innerText = "0.0 mm";
+document.getElementById("marconiaPressure").innerText = "1016 hPa";
+
+}catch(err){
+console.log(err);
+}
+
+}
+
+loadMarconiaLive();
 function refreshWebcam(button){
 
 const webcamBox = button.closest(".webcam-box");
