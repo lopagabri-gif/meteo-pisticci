@@ -449,7 +449,23 @@ padding:3px 6px;
 border-radius:5px;
 z-index:2;
 }
+.refresh-webcam{
+margin-top:10px;
+width:100%;
+padding:8px;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#0ea5e9,#2563eb);
+color:white;
+font-size:12px;
+font-weight:900;
+cursor:pointer;
+transition:.3s;
+}
 
+.refresh-webcam:hover{
+transform:scale(1.03);
+}
 .frame{
 overflow:hidden;
 border-radius:10px;
@@ -1191,6 +1207,10 @@ box-shadow:0 0 20px rgba(34,197,94,.25);
 <div class="webcam-text">
 <strong>📷 Pisticci Sud - Gabriele Lopatriello</strong>
 <p>Webcam mobile (360°)</p>
+<button class="refresh-webcam"
+onclick="refreshWebcam(this)">
+🔄 Aggiorna webcam
+</button>
 </div>
 </div>
 
@@ -1200,6 +1220,10 @@ box-shadow:0 0 20px rgba(34,197,94,.25);
 <div class="webcam-text">
 <strong>📷 Webcam di Alberto Raimondo</strong>
 <p>Pisticci direzione Ovest<br>Rione Dirupo - Terravecchia</p>
+<button class="refresh-webcam"
+onclick="refreshWebcam(this)">
+🔄 Aggiorna webcam
+</button>
 </div>
 </div>
 
@@ -1209,6 +1233,10 @@ box-shadow:0 0 20px rgba(34,197,94,.25);
 <div class="webcam-text">
 <strong>📷 Webcam di Alberto Raimondo</strong>
 <p>Pisticci direzione Sud Ovest<br>Craco - Monte Alpi - Monte Raparo</p>
+<button class="refresh-webcam"
+onclick="refreshWebcam(this)">
+🔄 Aggiorna webcam
+</button>
 </div>
 </div>
 
@@ -1218,6 +1246,10 @@ box-shadow:0 0 20px rgba(34,197,94,.25);
 <div class="webcam-text">
 <strong>📷 Webcam di Alberto Raimondo</strong>
 <p>Pisticci direzione Sud-Sud/Ovest<br>Valle del Cavone - Montalbano J. - Rotondella</p>
+<button class="refresh-webcam"
+onclick="refreshWebcam(this)">
+🔄 Aggiorna webcam
+</button>
 </div>
 </div>
 
@@ -1227,6 +1259,10 @@ box-shadow:0 0 20px rgba(34,197,94,.25);
 <div class="webcam-text">
 <strong>📷 Webcam di Alberto Raimondo</strong>
 <p>Pisticci direzione Sud-Sud/Ovest<br>Valle del Cavone direzione Pollino</p>
+<button class="refresh-webcam"
+onclick="refreshWebcam(this)">
+🔄 Aggiorna webcam
+</button>
 </div>
 </div>
 
@@ -1236,6 +1272,10 @@ box-shadow:0 0 20px rgba(34,197,94,.25);
 <div class="webcam-text">
 <strong>📷 Webcam di Alberto Raimondo</strong>
 <p>Marconia direzione Pisticci</p>
+<button class="refresh-webcam"
+onclick="refreshWebcam(this)">
+🔄 Aggiorna webcam
+</button>
 </div>
 </div>
 
@@ -1253,6 +1293,10 @@ alt="Pisticci Webcam di Gabriele Lopatriello">
 Pisticci vista da Nord a Sud Est<br>
 Val Basento - Ferrandina - Pomarico - Montescaglioso - Bernalda - Golfo di Taranto
 </p>
+<button class="refresh-webcam"
+onclick="refreshWebcam(this)">
+🔄 Aggiorna webcam
+</button>
 
 <div style="
 margin-top:10px;
@@ -1829,6 +1873,31 @@ cam.src =
 }
 
 },10000);
+
+function refreshWebcam(button){
+
+const webcamBox = button.closest(".webcam-box");
+
+if(!webcamBox) return;
+
+const img = webcamBox.querySelector("img");
+
+if(!img) return;
+
+const originalSrc = img.src.split("?")[0];
+
+img.src = originalSrc + "?refresh=" + Date.now();
+
+button.innerHTML = "✅ Aggiornata";
+
+setTimeout(() => {
+
+button.innerHTML = "🔄 Aggiorna webcam";
+
+},1500);
+
+}
+
 
 </script>
 
