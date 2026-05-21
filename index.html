@@ -1375,6 +1375,37 @@ box-shadow:0 0 20px rgba(34,197,94,.25);
 <p id="dayLength">--h --m</p>
 </div>
 </div>
+<div class="astro-card">
+<div class="big">🌕</div>
+<div>
+<strong>Illuminazione Luna</strong>
+<p id="moonIllumination">--%</p>
+</div>
+</div>
+
+<div class="astro-card">
+<div class="big">🌌</div>
+<div>
+<strong>Costellazione visibile</strong>
+<p id="nightConstellation">Orione / Leone</p>
+</div>
+</div>
+
+<div class="astro-card">
+<div class="big">🪐</div>
+<div>
+<strong>Pianeti visibili stasera</strong>
+<p id="visiblePlanets">Venere, Marte, Saturno</p>
+</div>
+</div>
+
+<div class="astro-card">
+<div class="big">☄️</div>
+<div>
+<strong>Prossimo evento astronomico</strong>
+<p id="nextAstroEvent">Luna piena / sciami meteorici</p>
+</div>
+</div>
 </div>
 
 <a class="btn" style="width:100%;text-align:center;margin-top:18px" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/moonPhase.php" target="_blank">⭐ Vai alla sezione astronomia</a>
@@ -1952,6 +1983,68 @@ const minutes = totalMinutes % 60;
 
 document.getElementById("dayLength").innerText =
 hours + "h " + minutes + "m";
+const moonIllumination =
+r.moon_illumination ||
+r.moon_illumination_percentage ||
+"--";
+
+document.getElementById("moonIllumination").innerText =
+moonIllumination !== "--"
+? moonIllumination + "%"
+: "--%";
+
+const month = new Date().getMonth() + 1;
+
+let constellation = "Cielo stellato visibile";
+let planets = "Venere, Marte e Saturno";
+let event = "Osservazione del cielo serale";
+
+if(month === 1 || month === 2){
+
+constellation = "Orione, Toro e Gemelli";
+planets = "Giove, Marte e Venere";
+event = "Ottimo periodo per osservare Orione";
+
+}else if(month === 3 || month === 4){
+
+constellation = "Leone, Vergine e Boote";
+planets = "Venere e Giove";
+event = "Galassie primaverili visibili";
+
+}else if(month === 5 || month === 6){
+
+constellation = "Boote, Vergine e Scorpione";
+planets = "Marte e Saturno";
+event = "Cielo primaverile-estivo";
+
+}else if(month === 7 || month === 8){
+
+constellation = "Scorpione, Sagittario e Cigno";
+planets = "Saturno e Giove";
+event = "Perseidi ad agosto";
+
+}else if(month === 9 || month === 10){
+
+constellation = "Pegaso, Andromeda e Acquario";
+planets = "Giove e Saturno";
+event = "Galassia di Andromeda visibile";
+
+}else{
+
+constellation = "Orione, Toro e Auriga";
+planets = "Giove, Venere e Saturno";
+event = "Cielo invernale molto ricco";
+
+}
+
+document.getElementById("nightConstellation").innerText =
+constellation;
+
+document.getElementById("visiblePlanets").innerText =
+planets;
+
+document.getElementById("nextAstroEvent").innerText =
+event;
 document.getElementById("moonrise").innerText = r.moonrise || "--:--";
 document.getElementById("moonset").innerText = r.moonset || "--:--";
 
