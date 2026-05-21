@@ -1,4 +1,4 @@
-const CACHE_NAME = "meteo-pisticci-v1";
+const CACHE_NAME = "meteo-pisticci-v2";
 
 const urlsToCache = [
   "/",
@@ -16,10 +16,17 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        return response || fetch(event.request);
-      })
-  );
+
+if(event.request.url.includes("retestazionimeteo.altervista.org")){
+event.respondWith(fetch(event.request));
+return;
+}
+
+event.respondWith(
+caches.match(event.request)
+.then(response => {
+return response || fetch(event.request);
+})
+);
+
 });
