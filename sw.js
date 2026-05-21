@@ -21,6 +21,7 @@ if(
 event.request.url.includes("retestazionimeteo.altervista.org") ||
 event.request.url.includes("meteonetwork.eu") ||
 event.request.url.includes("api.allorigins.win")
+event.request.url.includes("api.weather.com") ||
 ){
 event.respondWith(fetch(event.request));
 return;
