@@ -2442,58 +2442,49 @@ async function loadMarconia(){
 
 try{
 
+const apiKey = "badc97819d3b4f3e9c97819d3b6f3eee";
+const stationId = "IBASILIC18";
+
 const url =
-"https://api.allorigins.win/raw?url=" +
-encodeURIComponent("https://www.meteonetwork.eu/it/weather-station/bsl014-stazione-meteorologica-di-marconia-in-contrada-pucchieta") +
+"https://api.weather.com/v2/pws/observations/current?stationId=" +
+stationId +
+"&format=json&units=m&apiKey=" +
+apiKey +
 "&t=" + Date.now();
 
 const response = await fetch(url);
-const html = await response.text();
+const data = await response.json();
 
-function getBetween(label, regex){
-const index = html.indexOf(label);
-if(index === -1) return "--";
-const part = html.substring(index, index + 500);
-const match = part.match(regex);
-return match ? match[1].trim() : "--";
-}
-
-const temp = getBetween("Temperatura", /([0-9.,]+)\s*°C/i);
-const hum = getBetween("Umidità", /([0-9.,]+)\s*%/i);
-const pressure = getBetween("Pressione", /([0-9.,]+)\s*hPa/i);
-const rain = getBetween("Pioggia", /([0-9.,]+)\s*mm/i);
-
-const windBlockIndex = html.indexOf("Vento");
-const windBlock = windBlockIndex !== -1 ? html.substring(windBlockIndex, windBlockIndex + 500) : "";
-const windMatch = windBlock.match(/([0-9.,]+)\s*km\/h\s*\(([A-Z]+)\)/i);
+const obs = data.observations[0];
 
 document.getElementById("marconiaTemp").innerText =
-temp !== "--" ? temp + " °C" : "--";
+obs.metric.temp + " °C";
 
 document.getElementById("marconiaHum").innerText =
-hum !== "--" ? hum + " %" : "--";
-
-document.getElementById("marconiaPressure").innerText =
-pressure !== "--" ? pressure + " hPa" : "--";
-
-document.getElementById("marconiaRain").innerText =
-rain !== "--" ? rain + " mm" : "--";
+obs.humidity + " %";
 
 document.getElementById("marconiaWind").innerText =
-windMatch ? windMatch[1] + " km/h" : "--";
+obs.metric.windSpeed + " km/h";
 
 document.getElementById("marconiaDir").innerText =
-windMatch ? windMatch[2] : "--";
+obs.winddir + "°";
+
+document.getElementById("marconiaRain").innerText =
+obs.metric.precipTotal + " mm";
+
+document.getElementById("marconiaPressure").innerText =
+obs.metric.pressure + " hPa";
 
 }catch(err){
 
-console.log("Errore dati Marconia:", err);
+console.log("Errore API Marconia:", err);
 
 }
 
 }
 
 loadMarconia();
+setInterval(loadMarconia,30000);
 
 setInterval(loadMarconia,30000);
 if("serviceWorker" in navigator){
