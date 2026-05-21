@@ -2442,17 +2442,7 @@ async function loadMarconia(){
 
 try{
 
-const apiKey = "badc97819d3b4f3e9c97819d3b6f3eee";
-const stationId = "IBASILIC18";
-
-const url =
-"https://api.weather.com/v2/pws/observations/current?stationId=" +
-stationId +
-"&format=json&units=m&apiKey=" +
-apiKey +
-"&t=" + Date.now();
-
-const response = await fetch(url);
+const response = await fetch("/api/marconia?t=" + Date.now());
 const data = await response.json();
 
 const obs = data.observations[0];
@@ -2484,8 +2474,6 @@ console.log("Errore API Marconia:", err);
 }
 
 loadMarconia();
-setInterval(loadMarconia,30000);
-
 setInterval(loadMarconia,30000);
 if("serviceWorker" in navigator){
 window.addEventListener("load", () => {
