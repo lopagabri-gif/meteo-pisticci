@@ -1,4 +1,4 @@
-const CACHE_NAME = "meteo-pisticci-v8";
+const CACHE_NAME = "meteo-pisticci-v10";
 
 const urlsToCache = [
   "/manifest.json"
