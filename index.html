@@ -2079,10 +2079,10 @@ document.getElementById("dailyForecast").innerHTML =
 
 function hourlyCode(precipitation, probability){
 
-if(precipitation > 2) return 65;
-if(precipitation > 0.2) return 61;
-if(probability >= 60) return 61;
-if(probability >= 30) return 2;
+if(precipitation > 4) return 65;
+if(precipitation > 1.5) return 61;
+if(probability >= 75) return 61;
+if(probability >= 40) return 2;
 
 return 1;
 }
