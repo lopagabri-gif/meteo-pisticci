@@ -1112,15 +1112,6 @@ Il meteo locale di Pisticci in tempo reale
 <strong id="tempMinDay">--</strong>
 </div>
 
-<div>
-<span>💧 Umidità Max</span>
-<strong id="humMaxDay">--</strong>
-</div>
-
-<div>
-<span>🌵 Umidità Min</span>
-<strong id="humMinDay">--</strong>
-</div>
 
 <div>
 <span>🌬️ Raffica Max</span>
@@ -1237,15 +1228,6 @@ Tempo in diretta su Marconia
 <strong id="marconiaTempMin">--</strong>
 </div>
 
-<div>
-<span>💧 Umidità Max</span>
-<strong id="marconiaHumMax">--</strong>
-</div>
-
-<div>
-<span>🌵 Umidità Min</span>
-<strong id="marconiaHumMin">--</strong>
-</div>
 
 <div>
 <span>🌬️ Raffica Max</span>
@@ -2000,19 +1982,13 @@ document.getElementById("pressure").innerText =
 data[10] ? data[10] + " hPa" : "--";
 
 document.getElementById("tempMaxDay").innerText =
-data[2] ? (parseFloat(data[2])+1.2).toFixed(1) + "°" : "--";
+data[26] ? data[26] + "°" : "--";
 
 document.getElementById("tempMinDay").innerText =
-data[2] ? (parseFloat(data[2])-0.1).toFixed(1) + "°" : "--";
-
-document.getElementById("humMaxDay").innerText =
-data[3] ? data[3] + "%" : "--";
-
-document.getElementById("humMinDay").innerText =
-data[3] ? Math.max(0, parseInt(data[3])-8) + "%" : "--";
+data[28] ? data[28] + "°" : "--";
 
 document.getElementById("windMaxDay").innerText =
-data[6] ? data[6] + " km/h" : "--";
+data[32] ? data[32] + " km/h" : "--";
 
 }catch(err){
 console.log(err);
