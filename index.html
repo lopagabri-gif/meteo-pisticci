@@ -2371,7 +2371,10 @@ setTimeout(updateWeatherMessage,2000);
 
 setInterval(updateWeatherMessage,60000);
 setInterval(loadRealtime,60000);
+
 loadOpenMeteo();
+setInterval(loadOpenMeteo,3600000);
+
 loadAstronomy();
 function updateWeatherAlert(){
 
