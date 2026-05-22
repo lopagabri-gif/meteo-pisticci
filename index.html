@@ -1212,31 +1212,7 @@ Tempo in diretta su Marconia
 </div>
 
 </div>
-<div class="extremes-box">
 
-<h3>📊 Estremi giornalieri Marconia</h3>
-
-<div class="extremes-grid">
-
-<div>
-<span>🌡️ Temp. Massima</span>
-<strong id="marconiaTempMax">--</strong>
-</div>
-
-<div>
-<span>❄️ Temp. Minima</span>
-<strong id="marconiaTempMin">--</strong>
-</div>
-
-
-<div>
-<span>🌬️ Raffica Max</span>
-<strong id="marconiaWindMax">--</strong>
-</div>
-
-</div>
-
-</div>
 <div class="rain-accum-box">
 <h3>☔ Accumuli pioggia Marconia</h3>
 
@@ -2575,20 +2551,6 @@ document.getElementById("marconiaRainMonthly").innerText =
 document.getElementById("marconiaRainYearly").innerText =
 (obs.metric.precipTotal + 410).toFixed(1) + " mm";
 
-document.getElementById("marconiaTempMax").innerText =
-(obs.metric.temp + 1.1).toFixed(1) + "°";
-
-document.getElementById("marconiaTempMin").innerText =
-(obs.metric.temp - 0.3).toFixed(1) + "°";
-
-document.getElementById("marconiaHumMax").innerText =
-obs.humidity + "%";
-
-document.getElementById("marconiaHumMin").innerText =
-Math.max(0, obs.humidity - 7) + "%";
-
-document.getElementById("marconiaWindMax").innerText =
-(obs.metric.windSpeed + 4).toFixed(1) + " km/h";
 
 }catch(err){
 
