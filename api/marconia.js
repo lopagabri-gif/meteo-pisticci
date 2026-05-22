@@ -5,39 +5,20 @@ export default async function handler(req, res) {
 
   try {
 
-    const url =
-      `https://api.weather.com/v2/pws/observations/current?stationId=${stationId}&format=json&units=m&apiKey=${apiKey}`;
+    const response = await fetch(
+      `https://api.weather.com/v2/pws/observations/current?stationId=${stationId}&format=json&units=m&apiKey=${apiKey}`
+    );
 
-    const response = await fetch(url, {
-      headers: {
-        "Accept": "application/json"
-      }
-    });
+    const data = await response.json();
 
-    const text = await response.text();
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
-    try {
-
-      const data = JSON.parse(text);
-
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Cache-Control", "no-store");
-
-      return res.status(200).json(data);
-
-    } catch {
-
-      return res.status(500).json({
-        error: "API non valida",
-        response: text
-      });
-
-    }
+    res.status(200).json(data);
 
   } catch (err) {
 
-    return res.status(500).json({
-      error: "Errore server",
+    res.status(500).json({
+      error: "Errore dati Marconia",
       details: err.message
     });
 
