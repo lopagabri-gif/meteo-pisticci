@@ -2015,7 +2015,7 @@ const d = new Date(day);
 dailyBox.innerHTML += `
 <div class="day-card">
 <h3>${giorni[d.getDay()]}<br>${d.getDate()}</h3>
-<div class="icon">${weatherIcon(code[i], 12)}</div>
+<div class="icon">${weatherIcon(dailyCode(rain[i], code[i]), 12)}</div>
 <div>
 <span class="temp-max">${Math.round(max[i])}°</span>
 <span class="temp-min">${Math.round(min[i])}°</span>
@@ -2086,7 +2086,16 @@ if(probability >= 40) return 2;
 
 return 1;
 }
+function dailyCode(rain, originalCode){
 
+if(rain > 4) return 65;
+if(rain > 1.5) return 61;
+if(rain > 0.3) return 2;
+
+if(originalCode >= 51 && originalCode <= 82) return 2;
+
+return originalCode;
+}
 function weatherIcon(code, forecastHour){
 
 const hour = forecastHour !== undefined ? forecastHour : new Date().getHours();
