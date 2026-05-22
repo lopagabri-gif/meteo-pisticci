@@ -2499,7 +2499,17 @@ async function loadMarconia(){
 
 try{
 
-const response = await fetch("/api/marconia?t=" + Date.now());
+const apiKey = "badc97819d3b4f3e9c97819d3b6f3eee";
+const stationId = "IBASILIC18";
+
+const url =
+"https://api.weather.com/v2/pws/observations/current?stationId=" +
+stationId +
+"&format=json&units=m&apiKey=" +
+apiKey +
+"&t=" + Date.now();
+
+const response = await fetch(url);
 const data = await response.json();
 
 const obs = data.observations[0];
@@ -2519,32 +2529,8 @@ obs.winddir + "°";
 document.getElementById("marconiaRain").innerText =
 obs.metric.precipTotal + " mm";
 
-document.getElementById("marconiaRainDaily").innerText =
-obs.metric.precipTotal + " mm";
-
-document.getElementById("marconiaRainMonthly").innerText =
-(obs.metric.precipTotal + 38).toFixed(1) + " mm";
-
-document.getElementById("marconiaRainYearly").innerText =
-(obs.metric.precipTotal + 410).toFixed(1) + " mm";
-
 document.getElementById("marconiaPressure").innerText =
 obs.metric.pressure + " hPa";
-
-document.getElementById("marconiaTempMax").innerText =
-(obs.metric.temp + 1.1).toFixed(1) + "°";
-
-document.getElementById("marconiaTempMin").innerText =
-(obs.metric.temp - 0.3).toFixed(1) + "°";
-
-document.getElementById("marconiaHumMax").innerText =
-obs.humidity + "%";
-
-document.getElementById("marconiaHumMin").innerText =
-Math.max(0, obs.humidity - 7) + "%";
-
-document.getElementById("marconiaWindMax").innerText =
-(obs.metric.windSpeed + 4).toFixed(1) + " km/h";
 
 }catch(err){
 
