@@ -2506,7 +2506,88 @@ button.innerHTML = "🔄 Aggiorna webcam";
 },1500);
 
 }
+async function loadMarina(){
 
+try{
+
+const response = await fetch(
+"https://marine-api.open-meteo.com/v1/marine?latitude=40.33&longitude=16.83&hourly=wave_height&timezone=Europe/Rome"
+);
+
+const marine = await response.json();
+
+const meteo = await fetch(
+"https://api.open-meteo.com/v1/forecast?latitude=40.33&longitude=16.83&current=temperature_2m,wind_speed_10m&daily=sunrise&timezone=Europe/Rome"
+);
+
+const weather = await meteo.json();
+
+const wave =
+marine.hourly.wave_height[0];
+
+const temp =
+weather.current.temperature_2m;
+
+const wind =
+weather.current.wind_speed_10m;
+
+const sunrise =
+weather.daily.sunrise[0]
+.split("T")[1];
+
+document.getElementById("seaTemp").innerText =
+Math.round(temp) + "°C";
+
+document.getElementById("seaWind").innerText =
+Math.round(wind) + " km/h";
+
+document.getElementById("waveHeight").innerText =
+wave.toFixed(1) + " m";
+
+document.getElementById("seaSunrise").innerText =
+sunrise;
+
+if(wave < 0.5){
+
+document.getElementById("seaStatus").innerText =
+"Buone";
+
+}else if(wave < 1.2){
+
+document.getElementById("seaStatus").innerText =
+"Moderate";
+
+}else{
+
+document.getElementById("seaStatus").innerText =
+"Agitate";
+
+}
+
+if(temp >= 28){
+
+document.getElementById("beachStatus").innerText =
+"Ottime";
+
+}else if(temp >= 22){
+
+document.getElementById("beachStatus").innerText =
+"Buone";
+
+}else{
+
+document.getElementById("beachStatus").innerText =
+"Fresche";
+
+}
+
+}catch(err){
+
+console.log("Errore Marina:", err);
+
+}
+
+}
 async function loadMarconia(){
 
 try{
@@ -2568,6 +2649,9 @@ console.log("Errore API Marconia:", err);
 
 loadMarconia();
 setInterval(loadMarconia,30000);
+
+loadMarina();
+setInterval(loadMarina,300000);
 if("serviceWorker" in navigator){
 window.addEventListener("load", () => {
 navigator.serviceWorker.register("/sw.js");
