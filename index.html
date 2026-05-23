@@ -2637,6 +2637,18 @@ const response = await fetch("/api/marconia?t=" + Date.now());
 const data = await response.json();
 
 const obs = data.observations[0];
+let marconiaCode = 1;
+
+if(obs.metric.precipRate > 0){
+  marconiaCode = 61;
+}else if(obs.solarRadiation < 100){
+  marconiaCode = 3;
+}else{
+  marconiaCode = 1;
+}
+
+document.getElementById("marconiaWeatherIcon").innerHTML =
+weatherIcon(marconiaCode);
 
 document.getElementById("marconiaTemp").innerText =
 obs.metric.temp + " °C";
