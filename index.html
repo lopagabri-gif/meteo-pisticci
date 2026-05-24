@@ -2095,7 +2095,7 @@ const code = data.daily.weather_code;
 if(isMain && code && code[0] !== undefined){
 
 document.getElementById("liveWeatherIcon").innerHTML =
-weatherIcon(code[0]);
+weatherIcon(dailyCode(rain[0], code[0]));
 
 }
 
