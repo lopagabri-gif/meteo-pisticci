@@ -1060,6 +1060,9 @@ Il meteo locale di Pisticci in tempo reale
 📢 Acquista questo spazio pubblicitario
 </div>
 <div class="clock-box">
+<button id="enableNotifications" class="btn" style="margin-top:14px">
+🔔 Attiva notifiche meteo
+</button>
 <div id="liveDate">--</div>
 <div id="liveClock">--:--:--</div>
 <div class="weather-message" id="weatherMessage">
@@ -2701,6 +2704,66 @@ window.addEventListener("load", () => {
 navigator.serviceWorker.register("/sw.js");
 });
 }
+
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+getMessaging,
+getToken
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-messaging.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyB3KfNcPZb42EFNANr1vu5qLaBQJBSRXnU",
+authDomain: "meteo-pisticci.firebaseapp.com",
+projectId: "meteo-pisticci",
+storageBucket: "meteo-pisticci.firebasestorage.app",
+messagingSenderId: "383061112581",
+appId: "1:383061112581:web:c25eb6292342f96bcee96c",
+measurementId: "G-NPS7Q9EBKG"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const messaging = getMessaging(app);
+
+document
+.getElementById("enableNotifications")
+.addEventListener("click", async () => {
+
+try {
+
+const permission =
+await Notification.requestPermission();
+
+if(permission === "granted") {
+
+const token = await getToken(messaging,{
+vapidKey:"BLzGOyFipYO3tJYyRBzET4JfYKJQ1HhFsaH5LhX92paB_Tf1pZJ4EacUB3NfXfhxZL29pt4WmL8tE9jWz4Jx7mg"
+});
+
+console.log("TOKEN:", token);
+
+alert("✅ Notifiche attivate!");
+
+}else{
+
+alert("❌ Permesso notifiche negato");
+
+}
+
+}catch(err){
+
+console.log(err);
+
+alert("Errore notifiche");
+
+}
+
+});
 
 </script>
 
