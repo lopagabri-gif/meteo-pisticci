@@ -12,4 +12,21 @@ appId: "1:383061112581:web:c25eb6292342f96bcee96c",
 measurementId: "G-NPS7Q9EBKG"
 });
 
-const messaging = firebase.messaging();
+const const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage(function(payload) {
+
+console.log(
+'[firebase-messaging-sw.js] Received background message ',
+payload
+);
+
+self.registration.showNotification(
+payload.notification.title,
+{
+body: payload.notification.body,
+icon: '/manifest-icon-192.png'
+}
+);
+
+});
