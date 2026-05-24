@@ -2196,8 +2196,12 @@ if(rain > 4) return 65;
 if(rain > 2) return 61;
 if(rain > 1.5) return 2;
 
+if(originalCode == 0) return 0;
+if(originalCode == 1) return 1;
+if(originalCode == 2) return 2;
+if(originalCode == 3) return 2;
 
-return originalCode;
+return 1;
 }
 function weatherIcon(code, forecastHour){
 
