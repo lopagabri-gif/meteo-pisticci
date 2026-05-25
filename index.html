@@ -2700,8 +2700,17 @@ setInterval(loadMarconia,30000);
 loadMarina();
 setInterval(loadMarina,300000);
 if("serviceWorker" in navigator){
-window.addEventListener("load", () => {
-navigator.serviceWorker.register("/sw.js");
+
+window.addEventListener("load", async () => {
+
+  const reg = await navigator.serviceWorker.register("/sw.js");
+
+  reg.update();
+
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.update());
+  });
+
 });
 }
 
