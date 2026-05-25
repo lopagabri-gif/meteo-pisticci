@@ -2724,6 +2724,11 @@ import {
 getMessaging,
 getToken
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-messaging.js";
+import {
+  getFirestore,
+  doc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
 apiKey: "AIzaSyB3KfNcPZb42EFNANr1vu5qLaBQJBSRXnU",
@@ -2736,6 +2741,7 @@ measurementId: "G-NPS7Q9EBKG"
 };
 
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const messaging = getMessaging(app);
 
@@ -2755,7 +2761,13 @@ vapidKey:"BLzGOyFipYO3tJYyRBzET4JfYKJQ1HhFsaH5LhX92paB_Tf1pZJ4EacUB3NfXfhxZL29pt
 });
 
 console.log("TOKEN:", token);
-alert("✅ Notifiche attivate!");
+
+await setDoc(doc(db, "tokens", token), {
+  token: token,
+  createdAt: Date.now()
+});
+
+alert("☑️ Notifiche attivate!");
 
 }else{
 
