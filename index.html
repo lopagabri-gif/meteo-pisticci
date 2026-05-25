@@ -2188,7 +2188,7 @@ function hourlyCode(precipitation, probability){
 
 if(precipitation > 4) return 65;
 if(precipitation > 1.5) return 61;
-if(probability >= 75) return 61;
+if(probability >= 60) return 61;
 if(probability >= 40) return 2;
 
 return 1;
@@ -2196,8 +2196,8 @@ return 1;
 function dailyCode(rain, originalCode){
 
 if(rain > 4) return 65;
-if(rain > 2) return 61;
-if(rain > 1.5) return 2;
+if(rain > 0.6) return 61;
+if(rain > 0.4) return 2;
 
 if(originalCode == 0) return 0;
 if(originalCode == 1) return 1;
