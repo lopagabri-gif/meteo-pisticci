@@ -2758,7 +2758,8 @@ await Notification.requestPermission();
 if(permission === "granted") {
 
 const token = await getToken(messaging,{
-vapidKey:"BLzGOyFipYO3tJYyRBzET4JfYKJQ1HhFsaH5LhX92paB_Tf1pZJ4EacUB3NfXfhxZL29pt4WmL8tE9jWz4Jx7mg"
+  vapidKey:"BLzGOyFipYO3tJYyRBzET4JfYKJQ1HhFsaH5LhX92paB_Tf1pZJ4EacUB3NfXfhxZL29pt4WmL8tE9jWz4Jx7mg",
+  serviceWorkerRegistration: await navigator.serviceWorker.ready
 });
 
 console.log("TOKEN:", token);
