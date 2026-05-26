@@ -2638,60 +2638,31 @@ console.log("Errore Marina:", err);
 
 }
 async function loadMarconia(){
+  try{
+    const response = await fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=40.32&longitude=16.67&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,surface_pressure,precipitation&timezone=Europe/Rome"
+    );
 
-try{
+    const data = await response.json();
+    const c = data.current;
 
-const response = await fetch("/api/marconia?t=" + Date.now());
-const data = await response.json();
+    let marconiaCode = 1;
+    if(c.precipitation > 0) marconiaCode = 61;
 
-const obs = data.observations[0];
-let marconiaCode = 1;
+    document.getElementById("marconiaWeatherIcon").innerHTML = weatherIcon(marconiaCode);
+    document.getElementById("marconiaTemp").innerText = c.temperature_2m + " °C";
+    document.getElementById("marconiaHum").innerText = c.relative_humidity_2m + " %";
+    document.getElementById("marconiaWind").innerText = c.wind_speed_10m + " km/h";
+    document.getElementById("marconiaDir").innerText = Math.round(c.wind_direction_10m) + "°";
+    document.getElementById("marconiaRain").innerText = c.precipitation + " mm";
+    document.getElementById("marconiaPressure").innerText = c.surface_pressure + " hPa";
+    document.getElementById("marconiaRainDaily").innerText = c.precipitation + " mm";
+    document.getElementById("marconiaRainMonthly").innerText = (c.precipitation + 38).toFixed(1) + " mm";
+    document.getElementById("marconiaRainYearly").innerText = (c.precipitation + 410).toFixed(1) + " mm";
 
-if(obs.metric.precipRate > 0){
-  marconiaCode = 61;
-}else if(obs.solarRadiation < 80){
-  marconiaCode = 3;
-}else{
-  marconiaCode = 1;
-}
-
-document.getElementById("marconiaWeatherIcon").innerHTML =
-weatherIcon(marconiaCode);
-
-document.getElementById("marconiaTemp").innerText =
-obs.metric.temp + " °C";
-
-document.getElementById("marconiaHum").innerText =
-obs.humidity + " %";
-
-document.getElementById("marconiaWind").innerText =
-obs.metric.windSpeed + " km/h";
-
-document.getElementById("marconiaDir").innerText =
-obs.winddir + "°";
-
-document.getElementById("marconiaRain").innerText =
-obs.metric.precipTotal + " mm";
-
-document.getElementById("marconiaPressure").innerText =
-obs.metric.pressure + " hPa";
-
-document.getElementById("marconiaRainDaily").innerText =
-obs.metric.precipTotal + " mm";
-
-document.getElementById("marconiaRainMonthly").innerText =
-(obs.metric.precipTotal + 38).toFixed(1) + " mm";
-
-document.getElementById("marconiaRainYearly").innerText =
-(obs.metric.precipTotal + 410).toFixed(1) + " mm";
-
-
-}catch(err){
-
-console.log("Errore API Marconia:", err);
-
-}
-
+  }catch(err){
+    console.log("Errore Marconia:", err);
+  }
 }
 
 loadMarconia();
