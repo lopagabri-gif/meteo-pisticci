@@ -2017,7 +2017,9 @@ console.log(err);
 async function loadOpenMeteo(){
 
 async function caricaPrevisione(url, dailyId, hourlyId, isMain=false){
+
 try{
+
 const response = await fetch(url + "&nocache=" + Date.now());
 const data = await response.json();
 
@@ -2025,14 +2027,18 @@ if(!data.daily || !data.hourly){
 throw new Error("Dati previsioni mancanti");
 }
 
-renderForecast(data,dailyId,hourlyId,isMain);
+renderForecast(data, dailyId, hourlyId, isMain);
 
 }catch(err){
+
 console.log("Errore previsioni:", dailyId, err);
+
 }
+
 }
 
 /* PISTICCI */
+
 await caricaPrevisione(
 "https://api.open-meteo.com/v1/forecast?latitude=40.3902&longitude=16.5592&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe/Rome",
 "dailyForecast",
@@ -2041,6 +2047,7 @@ true
 );
 
 /* MARCONIA */
+
 await caricaPrevisione(
 "https://api.open-meteo.com/v1/forecast?latitude=40.32&longitude=16.67&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe/Rome",
 "marconiaDailyForecast",
@@ -2048,6 +2055,7 @@ await caricaPrevisione(
 );
 
 /* MARINA */
+
 await caricaPrevisione(
 "https://api.open-meteo.com/v1/forecast?latitude=40.28&longitude=16.78&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&hourly=temperature_2m,precipitation_probability,precipitation&timezone=Europe/Rome",
 "marinaDailyForecast",
@@ -2055,7 +2063,6 @@ await caricaPrevisione(
 );
 
 }
-
 /* =====================================
    FUNZIONE GENERICA PREVISIONI
 ===================================== */
