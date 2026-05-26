@@ -1,4 +1,4 @@
-const CACHE_NAME = "meteo-pisticci-v29";
+const CACHE_NAME = "meteo-pisticci-v30";
 
 const urlsToCache = [
   "/manifest.json"
@@ -26,12 +26,13 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener("fetch", event => {
-
   if (
     event.request.url.includes("retestazionimeteo.altervista.org") ||
     event.request.url.includes("meteonetwork.eu") ||
     event.request.url.includes("api.allorigins.win") ||
     event.request.url.includes("api.weather.com") ||
+    event.request.url.includes("api.open-meteo.com") ||
+    event.request.url.includes("marine-api.open-meteo.com") ||
     event.request.url.includes("/api/marconia")
   ) {
     event.respondWith(fetch(event.request));
@@ -48,5 +49,4 @@ self.addEventListener("fetch", event => {
       return response || fetch(event.request);
     })
   );
-
 });
