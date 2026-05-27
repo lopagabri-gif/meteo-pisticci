@@ -2658,7 +2658,7 @@ async function loadMarconia(){
     if(metric.precipTotal > 0) marconiaCode = 61;
 
     document.getElementById("marconiaWeatherIcon").innerHTML = weatherIcon(marconiaCode);
-    document.getElementById("marconiaTemp").innerText = metric.temp + " °C";
+    document.getElementById("marconiaTemp").innerText = metric.temp.toFixed(1) + " °C"
     document.getElementById("marconiaHum").innerText = obs.humidity + " %";
     document.getElementById("marconiaWind").innerText = metric.windSpeed + " km/h";
     document.getElementById("marconiaDir").innerText = obs.winddir + "°";
@@ -2678,9 +2678,9 @@ const tempMax = Math.max(...obs2.map(o => o.metric.tempHigh));
 const tempMin = Math.min(...obs2.map(o => o.metric.tempLow).filter(v => v !== null));
 const windMax = Math.max(...obs2.map(o => o.metric.windgustHigh));
 
-document.getElementById("marconiaMaxDay").innerText = tempMax + "°";
-document.getElementById("marconiaMinDay").innerText = tempMin + "°";
-document.getElementById("marconiaWindMax").innerText = windMax + " km/h";
+document.getElementById("marconiaMaxDay").innerText = tempMax.toFixed(1) + "°"
+document.getElementById("marconiaMinDay").innerText = tempMin.toFixed(1) + "°"
+document.getElementById("marconiaWindMax").innerText = windMax.toFixed(1) + " km/h"
 
   }catch(err){
     console.log("Errore Marconia:", err);
