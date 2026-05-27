@@ -1238,6 +1238,23 @@ Tempo in diretta su Marconia
 </div>
 </div>
 </div>
+<div class="extremes-box">
+  <h3>📊 Estremi giornalieri Marconia</h3>
+  <div class="extremes-grid">
+    <div>
+      <span>🌡️ Temp. Massima</span>
+      <strong id="marconiaMaxDay">--</strong>
+    </div>
+    <div>
+      <span>❄️ Temp. Minima</span>
+      <strong id="marconiaMinDay">--</strong>
+    </div>
+    <div>
+      <span>🌬️ Raffica Max</span>
+      <strong id="marconiaWindMax">--</strong>
+    </div>
+  </div>
+</div>
 <div class="buttons">
 <a class="btn"
 href="https://www.meteonetwork.eu/it/weather-station/bsl014-stazione-meteorologica-di-marconia-in-contrada-pucchieta"
@@ -2627,32 +2644,44 @@ console.log("Errore Marina:", err);
 }
 async function loadMarconia(){
   try{
-    const response = await fetch(
-      "https://api.open-meteo.com/v1/forecast?latitude=40.32&longitude=16.67&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,surface_pressure,precipitation&timezone=Europe/Rome"
-    );
+    const apiKey = "badc97819d3b4f3e9c97819d3b6f3eee";
+    const stationId = "IBASILIC18";
 
+    const response = await fetch(
+      `https://api.weather.com/v2/pws/observations/current?stationId=${stationId}&format=json&units=m&apiKey=${apiKey}`
+    );
     const data = await response.json();
-    const c = data.current;
+    const obs = data.observations[0];
+    const metric = obs.metric;
 
     let marconiaCode = 1;
-    if(c.precipitation > 0) marconiaCode = 61;
+    if(metric.precipTotal > 0) marconiaCode = 61;
 
     document.getElementById("marconiaWeatherIcon").innerHTML = weatherIcon(marconiaCode);
-    document.getElementById("marconiaTemp").innerText = c.temperature_2m + " °C";
-    document.getElementById("marconiaHum").innerText = c.relative_humidity_2m + " %";
-    document.getElementById("marconiaWind").innerText = c.wind_speed_10m + " km/h";
-    document.getElementById("marconiaDir").innerText = Math.round(c.wind_direction_10m) + "°";
-    document.getElementById("marconiaRain").innerText = c.precipitation + " mm";
-    document.getElementById("marconiaPressure").innerText = c.surface_pressure + " hPa";
-    document.getElementById("marconiaRainDaily").innerText = c.precipitation + " mm";
-    document.getElementById("marconiaRainMonthly").innerText = (c.precipitation + 38).toFixed(1) + " mm";
-    document.getElementById("marconiaRainYearly").innerText = (c.precipitation + 410).toFixed(1) + " mm";
+    document.getElementById("marconiaTemp").innerText = metric.temp + " °C";
+    document.getElementById("marconiaHum").innerText = obs.humidity + " %";
+    document.getElementById("marconiaWind").innerText = metric.windSpeed + " km/h";
+    document.getElementById("marconiaDir").innerText = obs.winddir + "°";
+    document.getElementById("marconiaRain").innerText = metric.precipTotal + " mm";
+    document.getElementById("marconiaPressure").innerText = metric.pressure + " hPa";
+    document.getElementById("marconiaRainDaily").innerText = metric.precipTotal + " mm";
+    document.getElementById("marconiaRainMonthly").innerText = (metric.precipTotal + 38).toFixed(1) + " mm";
+    document.getElementById("marconiaRainYearly").innerText = (metric.precipTotal + 410).toFixed(1) + " mm";
+
+    const res2 = await fetch(
+      `https://api.weather.com/v2/pws/dailysummary/7day?stationId=${stationId}&format=json&units=m&apiKey=${apiKey}`
+    );
+    const data2 = await res2.json();
+    const today = data2.summaries[0].metric;
+
+    document.getElementById("marconiaMaxDay").innerText = today.tempHigh + "°";
+    document.getElementById("marconiaMinDay").innerText = today.tempLow + "°";
+    document.getElementById("marconiaWindMax").innerText = today.windspeedHigh + " km/h";
 
   }catch(err){
     console.log("Errore Marconia:", err);
   }
 }
-
 loadMarconia();
 setInterval(loadMarconia,30000);
 
