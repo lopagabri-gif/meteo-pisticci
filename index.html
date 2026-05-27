@@ -2668,15 +2668,19 @@ async function loadMarconia(){
     document.getElementById("marconiaRainMonthly").innerText = (metric.precipTotal + 38).toFixed(1) + " mm";
     document.getElementById("marconiaRainYearly").innerText = (metric.precipTotal + 410).toFixed(1) + " mm";
 
-    const res2 = await fetch(
-      `https://api.weather.com/v2/pws/dailysummary/7day?stationId=${stationId}&format=json&units=m&apiKey=${apiKey}`
-    );
-    const data2 = await res2.json();
-    const today = data2.summaries[0].metric;
+const res2 = await fetch(
+  `https://api.weather.com/v2/pws/observations/all/1day?stationId=${stationId}&format=json&units=m&apiKey=${apiKey}`
+);
+const data2 = await res2.json();
+const obs2 = data2.observations;
 
-    document.getElementById("marconiaMaxDay").innerText = today.tempHigh + "°";
-    document.getElementById("marconiaMinDay").innerText = today.tempLow + "°";
-    document.getElementById("marconiaWindMax").innerText = today.windspeedHigh + " km/h";
+const tempMax = Math.max(...obs2.map(o => o.metric.tempHigh));
+const tempMin = Math.min(...obs2.map(o => o.metric.tempLow).filter(v => v !== null));
+const windMax = Math.max(...obs2.map(o => o.metric.windgustHigh));
+
+document.getElementById("marconiaMaxDay").innerText = tempMax + "°";
+document.getElementById("marconiaMinDay").innerText = tempMin + "°";
+document.getElementById("marconiaWindMax").innerText = windMax + " km/h";
 
   }catch(err){
     console.log("Errore Marconia:", err);
