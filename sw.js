@@ -1,27 +1,42 @@
-const CACHE_NAME = "meteo-pisticci-v34";
+importScripts('https://www.gstatic.com/firebasejs/12.13.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/12.13.0/firebase-messaging-compat.js');
 
-const urlsToCache = [
-  "/manifest.json"
-];
+firebase.initializeApp({
+  apiKey: "AIzaSyB3KfNcPZb42EFNANr1vu5qLaBQJBSRXnU",
+  authDomain: "meteo-pisticci.firebaseapp.com",
+  projectId: "meteo-pisticci",
+  storageBucket: "meteo-pisticci.firebasestorage.app",
+  messagingSenderId: "383061112581",
+  appId: "1:383061112581:web:c25eb6292342f96bcee96c"
+});
+
+const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage(function(payload) {
+  self.registration.showNotification(
+    payload.notification.title,
+    {
+      body: payload.notification.body,
+      icon: '/manifest-icon-192.png'
+    }
+  );
+});
+
+const CACHE_NAME = "meteo-pisticci-v34";
+const urlsToCache = ["/manifest.json"];
 
 self.addEventListener("install", event => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
 });
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      );
-    }).then(() => self.clients.claim())
+    caches.keys().then(keys => Promise.all(
+      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+    )).then(() => self.clients.claim())
   );
 });
 
@@ -45,8 +60,6 @@ self.addEventListener("fetch", event => {
   }
 
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
