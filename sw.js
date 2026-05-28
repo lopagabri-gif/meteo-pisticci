@@ -22,7 +22,7 @@ messaging.onBackgroundMessage(function(payload) {
   );
 });
 
-const CACHE_NAME = "meteo-pisticci-v34";
+const CACHE_NAME = "meteo-pisticci-v35";
 const urlsToCache = ["/manifest.json"];
 
 self.addEventListener("install", event => {
