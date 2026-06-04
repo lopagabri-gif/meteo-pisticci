@@ -2034,24 +2034,38 @@ console.log(err);
 async function loadOpenMeteo(){
 
 async function caricaPrevisione(url, dailyId, hourlyId, isMain=false){
-
-try{
-
-const response = await fetch(url + "&nocache=" + Date.now());
-const data = await response.json();
-
-if(!data.daily || !data.hourly){
-throw new Error("Dati previsioni mancanti");
+  try{
+    const response = await fetch(url + "&nocache=" + Date.now());
+    if(!response.ok) throw new Error("API down");
+    const data = await response.json();
+    if(!data.daily || !data.hourly){
+      throw new Error("Dati previsioni mancanti");
+    }
+    renderForecast(data, dailyId, hourlyId, isMain);
+  }catch(err){
+    console.log("Errore previsioni:", dailyId, err);
+    const dailyBox = document.getElementById(dailyId);
+    const hourlyBox = document.getElementById(hourlyId);
+    if(dailyBox){
+      dailyBox.innerHTML = `
+        <div style="
+          grid-column:1/-1;
+          padding:18px;
+          border-radius:14px;
+          background:rgba(250,204,21,.12);
+          border:1px solid rgba(250,204,21,.4);
+          color:#fde68a;
+          text-align:center;
+          font-weight:800;
+          font-size:15px;
+        ">
+          ⚠️ Previsioni temporaneamente non disponibili. In aggiornamento. Riprova tra poco.
+        </div>
+      `;
+    }
+    if(hourlyBox) hourlyBox.innerHTML = "";
+  }
 }
-
-renderForecast(data, dailyId, hourlyId, isMain);
-
-}catch(err){
-
-console.log("Errore previsioni:", dailyId, err);
-
-}
-
 }
 
 /* PISTICCI */
