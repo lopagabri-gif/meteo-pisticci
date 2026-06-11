@@ -1049,26 +1049,6 @@ font-size:28px;
 </nav>
 </header>
 
-<section class="panel" style="max-width:1500px;margin:80px auto 18px;padding:18px;">
-  <div class="panel-title">
-    <div>
-      <h2><span class="blue-dot"></span>ALLERTE METEO UFFICIALI</h2>
-      <span>Protezione Civile - Basilicata</span>
-    </div>
-  </div>
-  <div class="frame">
-    <iframe 
-      src="https://www.meteoalarm.org/it/live/region/?s=IT07"
-      style="width:100%;height:300px;border:0;border-radius:12px;background:white;">
-    </iframe>
-  </div>
-  <a class="btn" style="width:100%;text-align:center;margin-top:14px"
-     href="https://www.meteoalarm.org/it/live/region/?s=IT07"
-     target="_blank">
-    🚨 Apri allerte ufficiali Basilicata
-  </a>
-</section>
-
 <section class="hero">
 <div class="hero-box">
 <img class="logo-main" src="5f6a1571-8449-4f65-afcd-8130873109bb.png" alt="Logo Meteo Pisticci">
@@ -2534,58 +2514,27 @@ loadOpenMeteo();
 setInterval(loadOpenMeteo,3600000);
 
 loadAstronomy();
+const ALLERTA = "gialla"; // cambia con: "gialla", "arancione", "rossa"
+const ALLERTA_MOTIVO = "Possibilità di temporali nel pomeriggio"; // es: "Temporali e forti piogge sulla Basilicata"
+
 function updateWeatherAlert(){
+  const alertBox = document.getElementById("weatherAlert");
+  if(!alertBox) return;
 
-const alertBox = document.getElementById("weatherAlert");
-
-if(!alertBox) return;
-
-const temp =
-parseFloat(
-document.getElementById("temp")?.innerText
-);
-
-const wind =
-parseFloat(
-document.getElementById("wind")?.innerText
-);
-
-const rain =
-parseFloat(
-document.getElementById("rain")?.innerText
-);
-
-if(rain >= 20){
-
-alertBox.className = "alert-box alert-red";
-
-alertBox.innerHTML =
-"⛈️ ALLERTA METEO: forti piogge e possibili temporali su Pisticci";
-
-}else if(wind >= 40){
-
-alertBox.className = "alert-box alert-yellow";
-
-alertBox.innerHTML =
-"🌬️ ATTENZIONE: vento forte e raffiche intense in zona";
-
-}else if(temp >= 35){
-
-alertBox.className = "alert-box alert-red";
-
-alertBox.innerHTML =
-"🔥 ALLERTA CALDO: temperature elevate e afa intensa";
-
-}else{
-
-alertBox.className = "alert-box alert-green";
-
-alertBox.innerHTML =
-"🟢 Nessuna allerta meteo attiva";
+  if(ALLERTA === "rossa"){
+    alertBox.className = "alert-box alert-red";
+    alertBox.innerHTML = "🔴 ALLERTA ROSSA - " + ALLERTA_MOTIVO;
+  } else if(ALLERTA === "arancione"){
+    alertBox.className = "alert-box alert-red";
+    alertBox.innerHTML = "🟠 ALLERTA ARANCIONE - " + ALLERTA_MOTIVO;
+  } else if(ALLERTA === "gialla"){
+    alertBox.className = "alert-box alert-yellow";
+    alertBox.innerHTML = "🟡 ALLERTA GIALLA - " + ALLERTA_MOTIVO;
+  } else {
+    alertBox.className = "alert-box alert-green";
+    alertBox.innerHTML = "🟢 Nessuna allerta meteo attiva";
+  }
 }
-
-}
-
 setInterval(updateWeatherAlert,5000);
 
 updateWeatherAlert();
