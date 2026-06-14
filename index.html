@@ -181,19 +181,55 @@ border-radius:10px;padding:14px 8px;text-align:center;backdrop-filter:blur(8px);
 .astro-card .big{font-size:42px}
 
 /* Astronomia compatta */
-.astro-compact{display:flex;flex-direction:column;gap:12px;}
-.astro-section-title{font-size:13px;font-weight:900;color:#38bdf8;text-transform:uppercase;letter-spacing:1px;padding:6px 0 2px;}
-.astro-mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.astro-mini{background:rgba(15,23,42,.55);border:1px solid rgba(148,163,184,.18);border-radius:10px;padding:10px 8px;text-align:center;backdrop-filter:blur(8px);}
-.astro-mini span{display:block;font-size:11px;color:#94a3b8;font-weight:700;margin-bottom:5px;}
-.astro-mini strong{display:block;font-size:12px;color:white;font-weight:800;line-height:1.3;}
-.astro-mini-wide{grid-column:span 3;}
+
+
+
+
+
+
+
 @media(max-width:760px){
-  .astro-mini-grid{grid-template-columns:repeat(2,1fr);}
-  .astro-mini-wide{grid-column:span 2;}
-  .astro-mini strong{font-size:11px;}
+  
+  
+  
 }
 
+.astro-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+}
+.astro-cell{
+background:rgba(15,23,42,.55);
+border:1px solid rgba(148,163,184,.18);
+border-radius:10px;
+padding:14px 10px;
+text-align:center;
+backdrop-filter:blur(8px);
+}
+.astro-cell span{
+display:block;
+font-size:13px;
+color:#94a3b8;
+font-weight:700;
+margin-bottom:6px;
+}
+.astro-cell strong{
+display:block;
+font-size:15px;
+color:white;
+font-weight:800;
+line-height:1.4;
+}
+.astro-cell-wide{
+grid-column:span 3;
+}
+@media(max-width:760px){
+.astro-grid{grid-template-columns:repeat(2,1fr);}
+.astro-cell-wide{grid-column:span 2;}
+.astro-cell span{font-size:12px;}
+.astro-cell strong{font-size:13px;}
+}
 .webcam-modal{display:none;position:fixed;z-index:9999;inset:0;background:rgba(0,0,0,.88);align-items:center;justify-content:center;padding:20px;}
 .webcam-modal.active{display:flex;}
 .webcam-modal img{max-width:95vw;max-height:88vh;border-radius:16px;border:2px solid rgba(125,211,252,.45);box-shadow:0 0 45px rgba(14,165,233,.45);background:#020617;}
@@ -505,39 +541,25 @@ body::before{background-position:center top;}
 <span>Sole e Luna per Pisticci</span>
 </div>
 </div>
-<div class="astro-compact">
-
-  <!-- RIGA 1: Sole e Luna -->
-  <div class="astro-section-title">☀️ Sole</div>
-  <div class="astro-mini-grid">
-    <div class="astro-mini"><span>🌅 Alba / Tramonto</span><strong><span id="sunrise">--:--</span> / <span id="sunset">--:--</span></strong></div>
-    <div class="astro-mini"><span>⏱️ Durata giorno</span><strong id="dayLength">--h --m</strong></div>
-    <div class="astro-mini"><span>🧭 Azimuth</span><strong id="sunAzimuth">-- / --</strong></div>
-    <div class="astro-mini"><span>🌅 Crep. civile</span><strong id="twilightCivil">--:-- / --:--</strong></div>
-    <div class="astro-mini"><span>🌆 Crep. nautico</span><strong id="twilightNautical">--:-- / --:--</strong></div>
-    <div class="astro-mini"><span>🌃 Crep. astronomico</span><strong id="twilightAstronomical">--:-- / --:--</strong></div>
-  </div>
-
-  <div class="astro-section-title">🌙 Luna</div>
-  <div class="astro-mini-grid">
-    <div class="astro-mini"><span><span id="moonIcon">🌙</span> Fase lunare</span><strong id="moonPhaseText">Caricamento...</strong></div>
-    <div class="astro-mini"><span>💡 Illuminazione</span><strong id="moonIllumination">--%</strong></div>
-    <div class="astro-mini"><span>📏 Distanza</span><strong id="moonDistance">-- km</strong></div>
-    <div class="astro-mini"><span>🌙 Luna sorge</span><strong id="moonrise">--:--</strong></div>
-    <div class="astro-mini"><span>🌙 Luna tramonta</span><strong id="moonset">--:--</strong></div>
-    <div class="astro-mini"><span>🌌 Via Lattea</span><strong id="milkyWay">--</strong></div>
-  </div>
-
-  <div class="astro-section-title">🔭 Cielo notturno</div>
-  <div class="astro-mini-grid">
-    <div class="astro-mini astro-mini-wide"><span>🪐 Pianeti visibili</span><strong id="visiblePlanets">--</strong></div>
-    <div class="astro-mini astro-mini-wide"><span>🌌 Costellazione</span><strong id="nightConstellation">--</strong></div>
-    <div class="astro-mini astro-mini-wide"><span>💫 Stelle brillanti</span><strong id="brightStars">--</strong></div>
-    <div class="astro-mini"><span>🔭 Seeing</span><strong id="seeingIndex">--</strong></div>
-    <div class="astro-mini"><span>☄️ Prossimo evento</span><strong id="nextAstroEvent">--</strong></div>
-    <div class="astro-mini"><span>☀️ Attività solare</span><strong id="solarActivity">--</strong></div>
-  </div>
-
+<div class="astro-grid">
+<div class="astro-cell"><span>🌅 Alba / Tramonto</span><strong><span id="sunrise">--:--</span> / <span id="sunset">--:--</span></strong></div>
+<div class="astro-cell"><span>⏱️ Durata giorno</span><strong id="dayLength">--h --m</strong></div>
+<div class="astro-cell"><span>🧭 Azimuth alba/tram.</span><strong id="sunAzimuth">-- / --</strong></div>
+<div class="astro-cell"><span>🌅 Crep. civile</span><strong id="twilightCivil">--:-- / --:--</strong></div>
+<div class="astro-cell"><span>🌆 Crep. nautico</span><strong id="twilightNautical">--:-- / --:--</strong></div>
+<div class="astro-cell"><span>🌃 Crep. astronomico</span><strong id="twilightAstronomical">--:-- / --:--</strong></div>
+<div class="astro-cell"><span><span id="moonIcon">🌙</span> Fase lunare</span><strong id="moonPhaseText">--</strong></div>
+<div class="astro-cell"><span>💡 Illuminazione luna</span><strong id="moonIllumination">--%</strong></div>
+<div class="astro-cell"><span>📏 Distanza Terra-Luna</span><strong id="moonDistance">-- km</strong></div>
+<div class="astro-cell"><span>🌙 Luna sorge</span><strong id="moonrise">--:--</strong></div>
+<div class="astro-cell"><span>🌙 Luna tramonta</span><strong id="moonset">--:--</strong></div>
+<div class="astro-cell"><span>🌌 Via Lattea</span><strong id="milkyWay">--</strong></div>
+<div class="astro-cell astro-cell-wide"><span>🪐 Pianeti visibili</span><strong id="visiblePlanets">--</strong></div>
+<div class="astro-cell astro-cell-wide"><span>🌌 Costellazione visibile</span><strong id="nightConstellation">--</strong></div>
+<div class="astro-cell astro-cell-wide"><span>💫 Stelle brillanti</span><strong id="brightStars">--</strong></div>
+<div class="astro-cell"><span>🔭 Seeing astronomico</span><strong id="seeingIndex">--</strong></div>
+<div class="astro-cell"><span>☄️ Prossimo evento</span><strong id="nextAstroEvent">--</strong></div>
+<div class="astro-cell"><span>☀️ Attività solare</span><strong id="solarActivity">--</strong></div>
 </div>
 <a class="btn" style="width:100%;text-align:center;margin-top:18px" href="https://stazioni4.soluzionimeteo.it/pisticci/mobile/pages/astronomy/moonPhase.php" target="_blank">⭐ Vai alla sezione astronomia</a>
 </section>
