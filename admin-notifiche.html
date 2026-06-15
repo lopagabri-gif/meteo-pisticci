@@ -7,84 +7,29 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Inter,sans-serif;background:#020617;color:white;min-height:100vh;padding:20px}
-
-.login-box{
-  max-width:400px;margin:100px auto;
-  background:rgba(15,23,42,.9);
-  border:1px solid rgba(125,211,252,.3);
-  border-radius:20px;padding:40px;
-  box-shadow:0 0 40px rgba(14,165,233,.2);
-}
-.admin-box{
-  max-width:700px;margin:40px auto;
-  background:rgba(15,23,42,.9);
-  border:1px solid rgba(125,211,252,.3);
-  border-radius:20px;padding:30px;
-  box-shadow:0 0 40px rgba(14,165,233,.2);
-}
+.login-box{max-width:400px;margin:100px auto;background:rgba(15,23,42,.9);border:1px solid rgba(125,211,252,.3);border-radius:20px;padding:40px;box-shadow:0 0 40px rgba(14,165,233,.2);}
+.admin-box{max-width:700px;margin:40px auto;background:rgba(15,23,42,.9);border:1px solid rgba(125,211,252,.3);border-radius:20px;padding:30px;box-shadow:0 0 40px rgba(14,165,233,.2);}
 h1{font-size:24px;font-weight:900;color:#38bdf8;margin-bottom:8px;text-align:center}
 h2{font-size:18px;font-weight:900;color:#e0f2fe;margin-bottom:20px;text-align:center}
 p.sub{font-size:13px;color:#94a3b8;text-align:center;margin-bottom:28px}
-
 label{display:block;font-size:13px;font-weight:700;color:#94a3b8;margin-bottom:6px;margin-top:16px}
-input,textarea,select{
-  width:100%;padding:12px 14px;
-  border-radius:10px;
-  background:rgba(2,6,23,.7);
-  border:1px solid rgba(125,211,252,.25);
-  color:white;font-size:14px;font-family:Inter,sans-serif;
-  outline:none;transition:.3s;
-}
-input:focus,textarea:focus,select:focus{border-color:#38bdf8}
+input,textarea{width:100%;padding:12px 14px;border-radius:10px;background:rgba(2,6,23,.7);border:1px solid rgba(125,211,252,.25);color:white;font-size:14px;font-family:Inter,sans-serif;outline:none;transition:.3s;}
+input:focus,textarea:focus{border-color:#38bdf8}
 textarea{resize:vertical;min-height:80px}
-
-.btn-send{
-  width:100%;padding:14px;margin-top:24px;
-  border:none;border-radius:12px;
-  background:linear-gradient(135deg,#2563eb,#0ea5e9);
-  color:white;font-size:16px;font-weight:900;
-  cursor:pointer;transition:.3s;
-}
-.btn-send:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(14,165,233,.4)}
-.btn-send:disabled{opacity:.5;cursor:not-allowed;transform:none}
-
-.btn-login{
-  width:100%;padding:14px;margin-top:20px;
-  border:none;border-radius:12px;
-  background:linear-gradient(135deg,#2563eb,#0ea5e9);
-  color:white;font-size:16px;font-weight:900;
-  cursor:pointer;transition:.3s;
-}
-.btn-login:hover{transform:translateY(-2px)}
-
-.status{
-  margin-top:16px;padding:14px;border-radius:12px;
-  font-weight:800;text-align:center;font-size:14px;
-  display:none;
-}
+.btn{width:100%;padding:14px;margin-top:20px;border:none;border-radius:12px;background:linear-gradient(135deg,#2563eb,#0ea5e9);color:white;font-size:16px;font-weight:900;cursor:pointer;transition:.3s;}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(14,165,233,.4)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.status{margin-top:16px;padding:14px;border-radius:12px;font-weight:800;text-align:center;font-size:14px;display:none;}
 .status.ok{background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.4);color:#86efac}
 .status.err{background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.4);color:#fca5a5}
 .status.loading{background:rgba(14,165,233,.2);border:1px solid rgba(14,165,233,.4);color:#7dd3fc}
-
 .presets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.preset-btn{
-  padding:10px 8px;border:1px solid rgba(125,211,252,.25);
-  border-radius:10px;background:rgba(15,23,42,.6);
-  color:#cbd5e1;font-size:12px;font-weight:700;
-  cursor:pointer;transition:.3s;text-align:center;
-}
+.preset-btn{padding:10px 8px;border:1px solid rgba(125,211,252,.25);border-radius:10px;background:rgba(15,23,42,.6);color:#cbd5e1;font-size:12px;font-weight:700;cursor:pointer;transition:.3s;text-align:center;}
 .preset-btn:hover{background:rgba(14,165,233,.2);border-color:#38bdf8;color:white}
-
-.stats{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;
-}
-.stat-card{
-  background:rgba(2,6,23,.5);border:1px solid rgba(125,211,252,.2);
-  border-radius:12px;padding:16px;text-align:center;
-}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+.stat-card{background:rgba(2,6,23,.5);border:1px solid rgba(125,211,252,.2);border-radius:12px;padding:16px;text-align:center;}
 .stat-card .num{font-size:28px;font-weight:900;color:#38bdf8}
 .stat-card .lbl{font-size:12px;color:#94a3b8;margin-top:4px;font-weight:700}
-
 .divider{height:1px;background:rgba(125,211,252,.15);margin:24px 0}
 .logo{font-size:32px;text-align:center;margin-bottom:8px}
 .error-msg{color:#f87171;font-size:13px;margin-top:8px;text-align:center;display:none}
@@ -92,140 +37,108 @@ textarea{resize:vertical;min-height:80px}
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="loginSection" class="login-box">
   <div class="logo">🌤️</div>
   <h1>Meteo Pisticci</h1>
   <h2>Pannello Admin Notifiche</h2>
   <p class="sub">Accedi per inviare notifiche push a tutti gli iscritti</p>
   <label>Password admin</label>
-  <input type="password" id="passwordInput" placeholder="Inserisci password..." onkeydown="if(event.key==='Enter') login()">
+  <input type="password" id="passwordInput" placeholder="Inserisci password...">
   <div class="error-msg" id="loginError">❌ Password errata</div>
-  <button class="btn-login" onclick="login()">🔐 Accedi</button>
+  <button class="btn" id="loginBtn">🔐 Accedi</button>
 </div>
 
-<!-- ADMIN PANEL -->
 <div id="adminSection" class="admin-box" style="display:none">
   <div class="logo">🔔</div>
   <h1>Meteo Pisticci</h1>
   <h2>Invia Notifica Push</h2>
-
   <div class="stats">
-    <div class="stat-card">
-      <div class="num" id="tokenCount">--</div>
-      <div class="lbl">📱 Dispositivi iscritti</div>
-    </div>
-    <div class="stat-card">
-      <div class="num" id="lastSent">--</div>
-      <div class="lbl">📤 Ultima notifica</div>
-    </div>
+    <div class="stat-card"><div class="num" id="tokenCount">--</div><div class="lbl">📱 Dispositivi iscritti</div></div>
+    <div class="stat-card"><div class="num" id="lastSent">--</div><div class="lbl">📤 Ultima notifica</div></div>
   </div>
-
   <label>💬 Messaggi rapidi</label>
   <div class="presets">
-    <div class="preset-btn" onclick="setPreset('🌩️ Allerta temporali', 'Domani previsti temporali su Pisticci e Marconia. Possibili grandinate e vento forte.')">⛈️ Allerta temporali</div>
-    <div class="preset-btn" onclick="setPreset('☀️ Caldo intenso', 'Domani temperature fino a 38°C su Pisticci. Evitare le ore centrali della giornata.')">🌡️ Caldo intenso</div>
-    <div class="preset-btn" onclick="setPreset('🌧️ Pioggia in arrivo', 'Nelle prossime ore previste piogge su Pisticci e dintorni. Porta con te l\'ombrello!')">🌧️ Pioggia in arrivo</div>
-    <div class="preset-btn" onclick="setPreset('💨 Vento forte', 'Allerta vento forte su Pisticci. Raffiche fino a 70 km/h nelle prossime ore.')">💨 Vento forte</div>
-    <div class="preset-btn" onclick="setPreset('❄️ Temperature basse', 'Stanotte temperature in picchiata sotto zero. Attenzione al ghiaccio sulle strade.')">❄️ Freddo intenso</div>
-    <div class="preset-btn" onclick="setPreset('🌈 Bel tempo', 'Weekend soleggiato su Pisticci! Temperatura piacevole, ideale per stare all\'aperto.')">🌈 Bel tempo</div>
-    <div class="preset-btn" onclick="setPreset('🌊 Mare agitato', 'Mare agitato sulla Costa Ionica. Sconsigliata la balneazione a Marina di Pisticci.')">🌊 Mare agitato</div>
-    <div class="preset-btn" onclick="setPreset('⚡ Fulmini', 'Temporale con fulmini in avvicinamento su Pisticci. Rientrare al chiuso.')">⚡ Fulmini</div>
+    <div class="preset-btn" data-title="🌩️ Allerta temporali" data-body="Domani previsti temporali su Pisticci e Marconia. Possibili grandinate e vento forte.">⛈️ Allerta temporali</div>
+    <div class="preset-btn" data-title="☀️ Caldo intenso" data-body="Domani temperature fino a 38°C su Pisticci. Evitare le ore centrali della giornata.">🌡️ Caldo intenso</div>
+    <div class="preset-btn" data-title="🌧️ Pioggia in arrivo" data-body="Nelle prossime ore previste piogge su Pisticci. Porta con te l'ombrello!">🌧️ Pioggia in arrivo</div>
+    <div class="preset-btn" data-title="💨 Vento forte" data-body="Allerta vento forte su Pisticci. Raffiche fino a 70 km/h nelle prossime ore.">💨 Vento forte</div>
+    <div class="preset-btn" data-title="❄️ Temperature basse" data-body="Stanotte temperature sotto zero. Attenzione al ghiaccio sulle strade.">❄️ Freddo intenso</div>
+    <div class="preset-btn" data-title="🌈 Bel tempo" data-body="Weekend soleggiato su Pisticci! Temperatura piacevole, ideale per stare all'aperto.">🌈 Bel tempo</div>
+    <div class="preset-btn" data-title="🌊 Mare agitato" data-body="Mare agitato sulla Costa Ionica. Sconsigliata la balneazione a Marina di Pisticci.">🌊 Mare agitato</div>
+    <div class="preset-btn" data-title="⚡ Fulmini" data-body="Temporale con fulmini in avvicinamento su Pisticci. Rientrare al chiuso.">⚡ Fulmini</div>
   </div>
-
   <div class="divider"></div>
-
   <label>📋 Titolo notifica</label>
   <input type="text" id="notifTitle" placeholder="Es: 🌩️ Allerta temporali - Meteo Pisticci" maxlength="100">
-
   <label>💬 Messaggio</label>
-  <textarea id="notifBody" placeholder="Es: Domani previsti temporali su Pisticci e Marconia. Possibili grandinate." maxlength="200"></textarea>
-
+  <textarea id="notifBody" placeholder="Es: Domani previsti temporali su Pisticci e Marconia." maxlength="200"></textarea>
   <label>🔗 Link (opzionale)</label>
-  <input type="text" id="notifUrl" placeholder="https://meteopisticci.it" value="https://meteopisticci.it">
-
-  <button class="btn-send" id="sendBtn" onclick="sendNotification()">
-    🚀 Invia a tutti gli iscritti
-  </button>
-
+  <input type="text" id="notifUrl" value="https://meteo-pisticci.vercel.app">
+  <button class="btn" id="sendBtn">🚀 Invia a tutti gli iscritti</button>
   <div class="status" id="statusBox"></div>
-
   <div class="divider"></div>
   <p style="font-size:12px;color:#475569;text-align:center">
-    🔒 Pannello sicuro — Solo tu puoi accedere a questa pagina<br>
-    Le notifiche vengono inviate a tutti i dispositivi che hanno attivato le notifiche sul sito
+    🔒 Pannello sicuro — Solo tu puoi accedere a questa pagina
   </p>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+<!-- Firebase CDN (NON module, compatibile con tutti i browser) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-const firebaseConfig = {
+<script>
+const ADMIN_PASSWORD = "meteopisticci2026";
+
+// Inizializza Firebase
+firebase.initializeApp({
   apiKey: "AIzaSyB3KfNcPZb42EFNANr1vu5qLaBQJBSRXnU",
   authDomain: "meteo-pisticci.firebaseapp.com",
   projectId: "meteo-pisticci",
   storageBucket: "meteo-pisticci.firebasestorage.app",
   messagingSenderId: "383061112581",
   appId: "1:383061112581:web:c25eb6292342f96bcee96c"
-};
+});
+const db = firebase.firestore();
 
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+// LOGIN
+document.getElementById("loginBtn").addEventListener("click", login);
+document.getElementById("passwordInput").addEventListener("keydown", function(e){
+  if(e.key === "Enter") login();
+});
 
-// Password admin (cambia questa password!)
-const ADMIN_PASSWORD = "meteopisticci2026";
-
-// Genera JWT per autenticazione OAuth2 con Service Account
-async function getAccessToken() {
-  const now = Math.floor(Date.now() / 1000);
-  const header = { alg: "RS256", typ: "JWT" };
-  const payload = {
-    iss: SERVICE_ACCOUNT.client_email,
-    scope: "https://www.googleapis.com/auth/firebase.messaging",
-    aud: "https://oauth2.googleapis.com/token",
-    exp: now + 3600,
-    iat: now
-  };
-
-  const b64Header  = btoa(JSON.stringify(header)).replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
-  const b64Payload = btoa(JSON.stringify(payload)).replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
-  const sigInput   = b64Header + "." + b64Payload;
-
-  // Importa la chiave privata RSA
-  const pemKey = SERVICE_ACCOUNT.private_key
-    .replace("-----BEGIN PRIVATE KEY-----", "")
-    .replace("-----END PRIVATE KEY-----", "")
-    .replace(/\n/g, "");
-  const binaryKey = Uint8Array.from(atob(pemKey), c => c.charCodeAt(0));
-
-  const cryptoKey = await crypto.subtle.importKey(
-    "pkcs8", binaryKey.buffer,
-    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
-    false, ["sign"]
-  );
-
-  const signature = await crypto.subtle.sign(
-    "RSASSA-PKCS1-v1_5", cryptoKey,
-    new TextEncoder().encode(sigInput)
-  );
-
-  const b64Sig = btoa(String.fromCharCode(...new Uint8Array(signature)))
-    .replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
-
-  const jwt = sigInput + "." + b64Sig;
-
-  // Scambia JWT con access token
-  const res = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`
-  });
-  const data = await res.json();
-  return data.access_token;
+function login() {
+  const pwd = document.getElementById("passwordInput").value;
+  if(pwd === ADMIN_PASSWORD) {
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("adminSection").style.display = "block";
+    loadTokenCount();
+  } else {
+    document.getElementById("loginError").style.display = "block";
+  }
 }
 
-window.sendNotification = async function() {
+// Carica numero dispositivi
+async function loadTokenCount() {
+  try {
+    const snap = await db.collection("tokens").get();
+    document.getElementById("tokenCount").innerText = snap.size;
+  } catch(e) {
+    document.getElementById("tokenCount").innerText = "?";
+  }
+}
+
+// Preset messaggi
+document.querySelectorAll(".preset-btn").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    document.getElementById("notifTitle").value = this.getAttribute("data-title");
+    document.getElementById("notifBody").value  = this.getAttribute("data-body");
+  });
+});
+
+// INVIA NOTIFICA
+document.getElementById("sendBtn").addEventListener("click", sendNotification);
+
+async function sendNotification() {
   const title = document.getElementById("notifTitle").value.trim();
   const body  = document.getElementById("notifBody").value.trim();
   const url   = document.getElementById("notifUrl").value.trim();
@@ -241,10 +154,10 @@ window.sendNotification = async function() {
   showStatus("⏳ Recupero dispositivi iscritti...", "loading");
 
   try {
-    // 1. Leggi tutti i token da Firestore
-    const snap = await getDocs(collection(db, "tokens"));
+    // Leggi token da Firestore
+    const snap = await db.collection("tokens").get();
     const tokens = [];
-    snap.forEach(d => { if(d.data().token) tokens.push(d.data().token); });
+    snap.forEach(function(d) { if(d.data().token) tokens.push(d.data().token); });
 
     if(tokens.length === 0) {
       showStatus("⚠️ Nessun dispositivo iscritto trovato.", "err");
@@ -253,24 +166,21 @@ window.sendNotification = async function() {
       return;
     }
 
-    showStatus(`⏳ Invio notifica a ${tokens.length} dispositivi...`, "loading");
+    showStatus("⏳ Invio notifica a " + tokens.length + " dispositivi...", "loading");
 
-    // 2. Chiama API serverless Vercel che gestisce FCM lato server
+    // Chiama API serverless
     const res = await fetch("/api/send-notification", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        tokens, title, body, url,
-        password: "meteopisticci2026"
-      })
+      body: JSON.stringify({ tokens: tokens, title: title, body: body, url: url, password: ADMIN_PASSWORD })
     });
 
     const result = await res.json();
     if(!res.ok) throw new Error(result.error || "Errore API");
 
-    // 3. Salva log ultima notifica
-    await setDoc(doc(db, "notifications_log", Date.now().toString()), {
-      title, body, url,
+    // Salva log
+    await db.collection("notifications_log").add({
+      title: title, body: body, url: url,
       sentAt: new Date().toISOString(),
       success: result.success,
       failed: result.failed,
@@ -278,11 +188,7 @@ window.sendNotification = async function() {
     });
 
     document.getElementById("lastSent").innerText = new Date().toLocaleTimeString("it-IT");
-
-    showStatus(
-      `✅ Notifica inviata! ${result.success} successi, ${result.failed} falliti su ${tokens.length} dispositivi.`,
-      "ok"
-    );
+    showStatus("✅ Notifica inviata! " + result.success + " successi, " + result.failed + " falliti su " + tokens.length + " dispositivi.", "ok");
 
   } catch(err) {
     console.error(err);
@@ -294,7 +200,7 @@ window.sendNotification = async function() {
 }
 
 function showStatus(msg, type) {
-  const box = document.getElementById("statusBox");
+  var box = document.getElementById("statusBox");
   box.innerText = msg;
   box.className = "status " + type;
   box.style.display = "block";
