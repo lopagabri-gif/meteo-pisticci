@@ -180,6 +180,20 @@ border-radius:10px;padding:14px 8px;text-align:center;backdrop-filter:blur(8px);
 .astro-card{background:rgba(15,23,42,.55);border:1px solid rgba(148,163,184,.18);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(8px);}
 .astro-card .big{font-size:42px}
 
+/* Astronomia compatta */
+
+
+
+
+
+
+
+@media(max-width:760px){
+  
+  
+  
+}
+
 .astro-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -775,56 +789,32 @@ updateLiveClock();
 setInterval(updateLiveClock,1000);
 
 /* =====================================================
-   PIOGGIA PISTICCI - dati reali dalla stazione
-   Legge direttamente dal rainBlock.php del vecchio sito
-===================================================== */
-async function loadRainBlock() {
-  try {
-    const res = await fetch(
-      "https://stazioni4.soluzionimeteo.it/pisticci/homepage/blocks/rain/rainBlock.php?nocache=" + Date.now()
-    );
-    const html = await res.text();
-
-    // Estrae il valore mensile: gauge2, VALORE
-    const monthMatch = html.match(/gauge2,\s*([\d.]+)/);
-    if (monthMatch) {
-      document.getElementById("rainMonthlyAccum").innerText = monthMatch[1] + " mm";
-    }
-
-    // Estrae il valore annuo: gauge3, VALORE
-    const yearMatch = html.match(/gauge3,\s*([\d.]+)/);
-    if (yearMatch) {
-      document.getElementById("rainYearlyAccum").innerText = yearMatch[1] + " mm";
-    }
-
-  } catch(err) {
-    console.log("Errore loadRainBlock:", err);
-    document.getElementById("rainMonthlyAccum").innerText = "-- mm";
-    document.getElementById("rainYearlyAccum").innerText  = "-- mm";
-  }
-}
-
-/* =====================================================
-   ACCUMULI PIOGGIA MARCONIA (Open-Meteo Historical)
+   ACCUMULI PIOGGIA AUTOMATICI (Open-Meteo Historical)
 ===================================================== */
 async function loadRainAccum(lat, lon, monthlyId, yearlyId, todayRain) {
   try {
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
+    const today = now.toISOString().split("T")[0];
 
+    // Inizio mese corrente
     const startMonth = year + "-" + month + "-01";
+    // Inizio anno corrente
     const startYear  = year + "-01-01";
+    // Ieri (i dati storici arrivano fino a ieri)
     const yesterday = new Date(now);
     yesterday.setDate(yesterday.getDate() - 1);
     const endDate = yesterday.toISOString().split("T")[0];
 
+    // Se siamo al primo giorno del mese/anno usiamo solo oggi
     if(endDate < startMonth) {
       document.getElementById(monthlyId).innerText = todayRain.toFixed(1) + " mm";
       document.getElementById(yearlyId).innerText  = todayRain.toFixed(1) + " mm";
       return;
     }
 
+    // Fetch dati storici dall'inizio anno
     const url = "https://archive-api.open-meteo.com/v1/archive?latitude=" + lat +
       "&longitude=" + lon +
       "&start_date=" + startYear +
@@ -851,6 +841,7 @@ async function loadRainAccum(lat, lon, monthlyId, yearlyId, todayRain) {
       }
     }
 
+    // Aggiungi la pioggia di oggi (non ancora nei dati storici)
     monthTotal += todayRain;
     yearTotal  += todayRain;
 
@@ -877,10 +868,8 @@ document.getElementById("winddir").innerText = data[7] ? data[7]+"°" : "--";
 document.getElementById("rain").innerText = data[9] ? data[9]+" mm" : "--";
 const rainToday = data[9] ? parseFloat(data[9].replace(",",".")) : 0;
 document.getElementById("rainDailyAccum").innerText = rainToday.toFixed(1)+" mm";
-
-// ✅ NUOVO: accumuli mensile e annuo dalla stazione reale
-loadRainBlock();
-
+// Mensile e annuo calcolati da API storica
+loadRainAccum(40.3902, 16.5592, "rainMonthlyAccum", "rainYearlyAccum", rainToday);
 document.getElementById("pressure").innerText  = data[10] ? data[10]+" hPa" : "--";
 document.getElementById("tempMaxDay").innerText = data[26] ? data[26]+"°" : "--";
 document.getElementById("tempMinDay").innerText = data[28] ? data[28]+"°" : "--";
@@ -911,16 +900,19 @@ async function caricaPrevisione(url, dailyId, hourlyId, isMain=false){
   }
 }
 
+/* PISTICCI */
 await caricaPrevisione(
   "https://api.open-meteo.com/v1/forecast?latitude=40.3902&longitude=16.5592&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max&hourly=temperature_2m,precipitation_probability,precipitation,wind_speed_10m&timezone=Europe/Rome",
   "dailyForecast","hourlyForecast",true
 );
 
+/* MARCONIA */
 await caricaPrevisione(
   "https://api.open-meteo.com/v1/forecast?latitude=40.32&longitude=16.67&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max&hourly=temperature_2m,precipitation_probability,precipitation,wind_speed_10m&timezone=Europe/Rome",
   "marconiaDailyForecast","marconiaHourlyForecast"
 );
 
+/* MARINA */
 await caricaPrevisione(
   "https://api.open-meteo.com/v1/forecast?latitude=40.28&longitude=16.78&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max&hourly=temperature_2m,precipitation_probability,precipitation,wind_speed_10m&timezone=Europe/Rome",
   "marinaDailyForecast","marinaHourlyForecast"
@@ -928,6 +920,9 @@ await caricaPrevisione(
 
 }
 
+/* =====================================
+   FUNZIONE GENERICA PREVISIONI
+===================================== */
 function renderForecast(data,dailyId,hourlyId,isMain=false){
 
 const dailyBox  = document.getElementById(dailyId);
@@ -968,6 +963,7 @@ ${wMax !== null ? `<div class="wind-small">🌬️ ${wMax} km/h</div>` : ""}
 `;
 });
 
+/* ORARIE */
 hourlyBox.innerHTML = "";
 
 const hTemp = data.hourly.temperature_2m;
@@ -1041,6 +1037,11 @@ if(code>=95) return '<span class="weather-anim">⛈️</span>';
 return '<span class="weather-anim">☁️</span>';
 }
 
+/* =====================================================
+   ASTRONOMIA - Calcoli reali per Pisticci
+   Lat: 40.3902, Lon: 16.5592
+===================================================== */
+
 function getJulianDate(date) {
   return date.getTime() / 86400000 + 2440587.5;
 }
@@ -1057,14 +1058,17 @@ function getSunPosition(date) {
 }
 
 function getRaVisibile(date) {
+  // RA visibile di notte = opposta al sole +/- 6h
   const sun = getSunPosition(date);
   return (sun.ra + 180) % 360;
 }
 
 function getCostellazione(date) {
+  // Se Astronomy Engine disponibile usiamo dati precisi
   if (typeof Astronomy !== "undefined") {
     return getCostellazioneAE(date);
   }
+  // Fallback con RA calcolata
   const ra = getRaVisibile(date);
   const h = ra / 15;
   const costellazioni = [
@@ -1088,13 +1092,20 @@ function getCostellazione(date) {
 }
 
 function getCostellazioneAE(date) {
+  // Calcola la costellazione meridiana (al meridiano, massima altitudine) per Pisticci
   const LAT = 40.3902;
   const LON = 16.5592;
   const observer = new Astronomy.Observer(LAT, LON, 50);
+
+  // Ora locale: se è giorno prendiamo la mezzanotte prossima
   const midnight = new Date(date);
   midnight.setHours(23, 0, 0, 0);
+
+  // Sideral time -> RA al meridiano
   const gst = Astronomy.SiderealTime(midnight);
-  const lst = (gst + LON / 15 + 24) % 24;
+  const lst = (gst + LON / 15 + 24) % 24; // Local Sidereal Time in ore
+
+  // Mappa RA -> costellazione con confini precisi (catalogo IAU semplificato)
   const constellations = [
     { raMin: 0,    raMax: 1.5,  nome: "Pesci",                  info: "α Piscium visibile, galassia M74 nella costellazione" },
     { raMin: 1.5,  raMax: 3.5,  nome: "Ariete e Toro",           info: "Pleiadi (M45) splendide, Aldebaran rosseggia" },
@@ -1110,6 +1121,7 @@ function getCostellazioneAE(date) {
     { raMin: 21.5, raMax: 23.5, nome: "Pegaso e Acquario",       info: "Grande Quadrato di Pegaso, galassia di Andromeda M31" },
     { raMin: 23.5, raMax: 24,   nome: "Pesci e Andromeda",       info: "Galassia di Andromeda M31 visibile a occhio nudo" },
   ];
+
   for (const c of constellations) {
     if (lst >= c.raMin && lst < c.raMax) return c;
   }
@@ -1117,12 +1129,15 @@ function getCostellazioneAE(date) {
 }
 
 function getPlanetVisibility(date) {
+  // Usa Astronomy Engine se disponibile, altrimenti fallback
   if (typeof Astronomy === "undefined") {
     return "Libreria astronomica in caricamento...";
   }
+
   const LAT = 40.3902;
   const LON = 16.5592;
   const observer = new Astronomy.Observer(LAT, LON, 50);
+
   const pianeti = [
     { name: "Venere",  body: Astronomy.Body.Venus   },
     { name: "Marte",   body: Astronomy.Body.Mars    },
@@ -1130,15 +1145,23 @@ function getPlanetVisibility(date) {
     { name: "Saturno", body: Astronomy.Body.Saturn  },
     { name: "Mercurio",body: Astronomy.Body.Mercury },
   ];
+
   const results = [];
+
   for (const p of pianeti) {
     try {
+      // Elongazione dal sole
       const elong = Astronomy.Elongation(p.body, date);
       const elongDeg = elong.elongation;
+
+      // Altitudine sull'orizzonte (visibilità notturna)
       const equator = Astronomy.Equator(p.body, date, observer, true, true);
       const horizon = Astronomy.Horizon(date, observer, equator.ra, equator.dec, "normal");
       const altitude = horizon.altitude;
+
+      // Visibile se elongazione > 15° e altitudine > -6° di notte
       if (elongDeg > 15) {
+        const isEvening = elong.elongation > 0 && elong.visibility === "evening";
         const quando = elong.visibility === "evening" ? "🌅 serale" : "🌄 mattutino";
         const altStr = altitude > 10 ? ` (alt. ${Math.round(altitude)}°)` : altitude > 0 ? " (basso)" : " (sotto orizzonte)";
         if (altitude > -10) {
@@ -1147,15 +1170,25 @@ function getPlanetVisibility(date) {
       }
     } catch(e) { /* skip */ }
   }
+
   return results.length > 0 ? results.join(" — ") : "Nessun pianeta luminoso visibile stasera";
 }
 
 function getMoonPhaseData(date) {
+  // Calcolo fase lunare preciso
   const JD = getJulianDate(date);
+  const T = (JD - 2451545.0) / 36525;
+  const D = (297.85036 + 445267.111480 * T) % 360;
+  const M = (357.52772 + 35999.050340 * T) % 360;
+  const Mprime = (134.96298 + 477198.867398 * T) % 360;
+
+  // Età della luna in giorni (ciclo 29.53059)
   const lunation = (JD - 2451550.09766) / 29.530588861;
-  const age = (lunation % 1 + 1) % 1;
+  const age = (lunation % 1 + 1) % 1; // 0-1
+
   let phase, icon, illumination;
   illumination = Math.round((1 - Math.cos(age * 2 * Math.PI)) / 2 * 100);
+
   if (age < 0.033 || age > 0.967) { phase = "Luna nuova"; icon = "🌑"; }
   else if (age < 0.25) { phase = "Luna crescente"; icon = "🌒"; }
   else if (age < 0.283) { phase = "Primo quarto"; icon = "🌓"; }
@@ -1164,13 +1197,26 @@ function getMoonPhaseData(date) {
   else if (age < 0.75) { phase = "Gibbosa calante"; icon = "🌖"; }
   else if (age < 0.783) { phase = "Ultimo quarto"; icon = "🌗"; }
   else { phase = "Luna calante"; icon = "🌘"; }
-  const daysToFull = age < 0.5 ? Math.round((0.5 - age) * 29.53) : Math.round((1.5 - age) * 29.53);
-  const daysToNew = age > 0 ? Math.round((1 - age) * 29.53) : 0;
+
+  // Prossima luna piena
+  const daysToFull = age < 0.5
+    ? Math.round((0.5 - age) * 29.53)
+    : Math.round((1.5 - age) * 29.53);
+
+  // Prossimo novilunio
+  const daysToNew = age > 0
+    ? Math.round((1 - age) * 29.53)
+    : 0;
+
   return { phase, icon, illumination, daysToFull, daysToNew, age };
 }
 
 function getProssimoEvento(date) {
   const moon = getMoonPhaseData(date);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  // Sciami meteorici
   const sciami = [
     { name: "Quadrantidi",  mese: 1,  giorno: 3  },
     { name: "Liridi",       mese: 4,  giorno: 22 },
@@ -1180,28 +1226,51 @@ function getProssimoEvento(date) {
     { name: "Leonidi",      mese: 11, giorno: 17 },
     { name: "Geminidi",     mese: 12, giorno: 14 },
   ];
+
+  // Equinozi e solstizi
   const eventi = [
     { name: "Equinozio di primavera", mese: 3,  giorno: 20 },
     { name: "Solstizio d'estate",     mese: 6,  giorno: 21 },
     { name: "Equinozio d'autunno",    mese: 9,  giorno: 22 },
     { name: "Solstizio d'inverno",    mese: 12, giorno: 21 },
   ];
+
   const tutti = [...sciami.map(s => ({...s, tipo: "☄️ Sciame meteorico"})),
                  ...eventi.map(e => ({...e, tipo: "🌍 Evento solare"}))];
+
+  // Trova il prossimo evento
   let prossimo = null;
   let minGiorni = 999;
+
   for (const ev of tutti) {
     const evDate = new Date(date.getFullYear(), ev.mese - 1, ev.giorno);
     if (evDate < date) evDate.setFullYear(date.getFullYear() + 1);
     const diff = Math.round((evDate - date) / 86400000);
-    if (diff < minGiorni) { minGiorni = diff; prossimo = ev; }
+    if (diff < minGiorni) {
+      minGiorni = diff;
+      prossimo = ev;
+    }
   }
-  if (moon.daysToFull <= minGiorni && moon.daysToFull > 0) return `🌕 Luna piena tra ${moon.daysToFull} giorni`;
-  if (moon.daysToNew <= minGiorni && moon.daysToNew > 0 && moon.daysToNew < 7) return `🌑 Novilunio tra ${moon.daysToNew} giorni`;
-  if (prossimo) return `${prossimo.tipo}: ${prossimo.name} tra ${minGiorni} giorni`;
+
+  // Confronta con luna piena e novilunio
+  if (moon.daysToFull <= minGiorni && moon.daysToFull > 0) {
+    return `🌕 Luna piena tra ${moon.daysToFull} giorni`;
+  }
+  if (moon.daysToNew <= minGiorni && moon.daysToNew > 0 && moon.daysToNew < 7) {
+    return `🌑 Novilunio tra ${moon.daysToNew} giorni`;
+  }
+
+  if (prossimo) {
+    return `${prossimo.tipo}: ${prossimo.name} tra ${minGiorni} giorni`;
+  }
+
   return "🔭 Osservazione del cielo consigliata";
 }
 
+
+/* =====================================================
+   DISTANZA TERRA-LUNA
+===================================================== */
 function getMoonDistance(date) {
   const JD = getJulianDate(date);
   const d = JD - 2451545.0;
@@ -1215,6 +1284,9 @@ function getMoonDistance(date) {
   return Math.round(dist);
 }
 
+/* =====================================================
+   AZIMUTH SOLE ALBA/TRAMONTO
+===================================================== */
 function getSunAzimuth(date) {
   const lat = 40.3902 * Math.PI / 180;
   const JD = getJulianDate(date);
@@ -1229,6 +1301,9 @@ function getSunAzimuth(date) {
   return { rise: Math.round(az), set: Math.round(360 - az) };
 }
 
+/* =====================================================
+   CREPUSCOLI
+===================================================== */
 function getTwilights(date) {
   const lat = 40.3902;
   const JD = getJulianDate(date);
@@ -1266,17 +1341,23 @@ function getTwilights(date) {
   };
 }
 
+/* =====================================================
+   VIA LATTEA VISIBILE
+===================================================== */
 function getMilkyWayVisibility(date, moonIllumination) {
   const month = date.getMonth() + 1;
   const goodMonths = [4,5,6,7,8,9,10];
   const isGoodMonth = goodMonths.includes(month);
   const isDark = moonIllumination < 30;
-  if (isGoodMonth && isDark)                             return "✅ Ottima — nucleo galattico visibile";
-  else if (isGoodMonth && moonIllumination < 60)        return "🟡 Parziale — luna interferisce";
-  else if (!isGoodMonth && isDark)                      return "🟡 Braccio galattico visibile";
-  else                                                   return "❌ Scarsa — luna troppo luminosa";
+  if (isGoodMonth && isDark)              return "✅ Ottima — nucleo galattico visibile";
+  else if (isGoodMonth && moonIllumination < 60) return "🟡 Parziale — luna interferisce";
+  else if (!isGoodMonth && isDark)        return "🟡 Braccio galattico visibile";
+  else                                    return "❌ Scarsa — luna troppo luminosa";
 }
 
+/* =====================================================
+   STELLE BRILLANTI
+===================================================== */
 function getBrightStars(date) {
   const month = date.getMonth() + 1;
   const stars = {
@@ -1296,6 +1377,9 @@ function getBrightStars(date) {
   return stars[month] || "Sirio, Vega, Arturo";
 }
 
+/* =====================================================
+   SEEING ASTRONOMICO
+===================================================== */
 function getSeeingIndex() {
   const humEl   = document.getElementById("hum");
   const pressEl = document.getElementById("pressure");
@@ -1317,6 +1401,9 @@ function getSeeingIndex() {
   return labels[score];
 }
 
+/* =====================================================
+   ATTIVITÀ SOLARE NOAA
+===================================================== */
 async function loadSolarActivity() {
   try {
     const res = await fetch("https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json");
@@ -1340,39 +1427,77 @@ async function loadAstronomy() {
     const url = `https://api.sunrisesunset.io/json?lat=40.3902&lng=16.5592&date=${today}&time_format=24`;
     const response = await fetch(url);
     const data = await response.json();
+
     if (data.status !== "OK") throw new Error("API non disponibile");
+
     const r = data.results;
+
+    // Alba / tramonto
     document.getElementById("sunrise").innerText = r.sunrise || "--:--";
     document.getElementById("sunset").innerText  = r.sunset  || "--:--";
+
+    // Durata del giorno
     const sp = r.sunrise.split(":").map(Number);
     const ep = r.sunset.split(":").map(Number);
     const totalMin = (ep[0]*60+ep[1]) - (sp[0]*60+sp[1]);
     document.getElementById("dayLength").innerText = Math.floor(totalMin/60)+"h "+totalMin%60+"m";
+
+    // Luna sorge/tramonta
     document.getElementById("moonrise").innerText = r.moonrise || "--:--";
     document.getElementById("moonset").innerText  = r.moonset  || "--:--";
+
+    // Fase lunare con calcolo preciso
     const now = new Date();
     const moonData = getMoonPhaseData(now);
-    document.getElementById("moonPhaseText").innerText    = moonData.phase;
-    document.getElementById("moonIcon").innerText         = moonData.icon;
+    document.getElementById("moonPhaseText").innerText = moonData.phase;
+    document.getElementById("moonIcon").innerText      = moonData.icon;
     document.getElementById("moonIllumination").innerText = moonData.illumination + "%";
+
+    // Costellazione reale
     const cost = getCostellazione(now);
     document.getElementById("nightConstellation").innerText = cost.nome + " — " + cost.info;
-    document.getElementById("visiblePlanets").innerText     = getPlanetVisibility(now);
-    document.getElementById("nextAstroEvent").innerText     = getProssimoEvento(now);
+
+    // Pianeti visibili reali
+    document.getElementById("visiblePlanets").innerText = getPlanetVisibility(now);
+
+    // Prossimo evento astronomico reale
+    document.getElementById("nextAstroEvent").innerText = getProssimoEvento(now);
+
+    // Distanza Terra-Luna
     const moonDist = getMoonDistance(now);
     document.getElementById("moonDistance").innerText = moonDist.toLocaleString("it-IT") + " km";
+
+    // Crepuscoli
     const tw = getTwilights(now);
     document.getElementById("twilightCivil").innerText        = tw.civilMorn + " / " + tw.civilEve;
     document.getElementById("twilightNautical").innerText     = tw.nautMorn  + " / " + tw.nautEve;
     document.getElementById("twilightAstronomical").innerText = tw.astroMorn + " / " + tw.astroEve;
+
+    // Azimuth sole
     const az = getSunAzimuth(now);
     document.getElementById("sunAzimuth").innerText = az.rise + "° / " + az.set + "°";
-    document.getElementById("milkyWay").innerText   = getMilkyWayVisibility(now, moonData.illumination);
-    document.getElementById("brightStars").innerText= getBrightStars(now);
-    document.getElementById("seeingIndex").innerText= getSeeingIndex();
+
+    // Via Lattea
+    document.getElementById("milkyWay").innerText = getMilkyWayVisibility(now, moonData.illumination);
+
+    // Stelle brillanti
+    document.getElementById("brightStars").innerText = getBrightStars(now);
+
+    // Seeing
+    document.getElementById("seeingIndex").innerText = getSeeingIndex();
+
+    // Attività solare NOAA
     loadSolarActivity();
+
   } catch(err) {
     console.log(err);
+    document.getElementById("moonPhaseText").innerText = "Dati non disponibili";
+    document.getElementById("sunrise").innerText  = "--:--";
+    document.getElementById("sunset").innerText   = "--:--";
+    document.getElementById("moonrise").innerText = "--:--";
+    document.getElementById("moonset").innerText  = "--:--";
+
+    // Fallback con calcoli locali anche senza API
     const now = new Date();
     const moonData = getMoonPhaseData(now);
     document.getElementById("moonPhaseText").innerText    = moonData.phase;
@@ -1381,6 +1506,7 @@ async function loadAstronomy() {
     document.getElementById("nightConstellation").innerText = getCostellazione(now).nome;
     document.getElementById("visiblePlanets").innerText     = getPlanetVisibility(now);
     document.getElementById("nextAstroEvent").innerText     = getProssimoEvento(now);
+
     const moonDist2 = getMoonDistance(now);
     document.getElementById("moonDistance").innerText = moonDist2.toLocaleString("it-IT") + " km";
     const tw2 = getTwilights(now);
@@ -1395,6 +1521,7 @@ async function loadAstronomy() {
     loadSolarActivity();
   }
 }
+
 
 const webcamImages   = document.querySelectorAll(".webcam-box img");
 const webcamModal    = document.getElementById("webcamModal");
@@ -1413,31 +1540,36 @@ webcamModal.addEventListener("click", e => { if(e.target===webcamModal){ webcamM
 document.addEventListener("keydown", e => { if(e.key==="Escape"){ webcamModal.classList.remove("active"); webcamModalImg.src=""; }});
 
 function updateAirQualityStatus(){
+const airFrame     = document.querySelector('#air iframe');
 const airStatusBox = document.getElementById('airStatusBox');
-if(!airStatusBox) return;
+if(!airFrame || !airStatusBox) return;
+const airGood = true;
+if(airGood){
 airStatusBox.innerHTML = "🌿 Qualità aria disponibile nel pannello sopra";
 airStatusBox.style.background = "rgba(34,197,94,.18)";
 airStatusBox.style.border = "1px solid rgba(34,197,94,.7)";
 airStatusBox.style.color = "#22c55e";
+}else{
+airStatusBox.innerHTML = "🟡 Adesso l'aria NON è buona";
+airStatusBox.style.background = "rgba(250,204,21,.18)";
+airStatusBox.style.border = "1px solid rgba(250,204,21,.8)";
+airStatusBox.style.color = "#facc15";
+}
 }
 updateAirQualityStatus();
 
-// ✅ Avvio principale
 loadRealtime();
-setTimeout(updateWeatherMessage, 2000);
-setInterval(updateWeatherMessage, 60000);
-setInterval(loadRealtime, 60000);
-
-// ✅ Aggiorna pioggia mensile/annua ogni 10 minuti
-setInterval(loadRainBlock, 600000);
+setTimeout(updateWeatherMessage,2000);
+setInterval(updateWeatherMessage,60000);
+setInterval(loadRealtime,60000);
 
 loadOpenMeteo();
-setInterval(loadOpenMeteo, 3600000);
+setInterval(loadOpenMeteo,3600000);
 
 loadAstronomy();
 
-const ALLERTA = "VERDE";
-const ALLERTA_MOTIVO = "NESSUNA ALLERTA";
+const ALLERTA = "VERDE"; // cambia con: "gialla", "arancione", "rossa"
+const ALLERTA_MOTIVO = "NESSUNA ALLERTA"; // es: "Temporali e forti piogge sulla Basilicata"
 
 function updateWeatherAlert(){
 const alertBox = document.getElementById("weatherAlert");
@@ -1447,13 +1579,13 @@ else if(ALLERTA==="arancione"){ alertBox.className="alert-box alert-red"; alertB
 else if(ALLERTA==="gialla"){ alertBox.className="alert-box alert-yellow"; alertBox.innerHTML="🟡 ALLERTA GIALLA - "+ALLERTA_MOTIVO; }
 else{ alertBox.className="alert-box alert-green"; alertBox.innerHTML="🟢 Nessuna allerta meteo attiva"; }
 }
-setInterval(updateWeatherAlert, 5000);
+setInterval(updateWeatherAlert,5000);
 updateWeatherAlert();
 
 setInterval(() => {
 const cam = document.getElementById("webcamMeteone");
 if(cam){ cam.src = "https://meteone.it/stazionimeteo/pisticci/webcam/pisticci.jpg?nocache=" + Date.now(); }
-}, 10000);
+},10000);
 
 function refreshWebcam(button){
 const webcamBox = button.closest(".webcam-box");
@@ -1463,7 +1595,7 @@ if(!img) return;
 const originalSrc = img.src.split("?")[0];
 img.src = originalSrc + "?refresh=" + Date.now();
 button.innerHTML = "✅ Aggiornata";
-setTimeout(() => { button.innerHTML = "🔄 Aggiorna webcam"; }, 1500);
+setTimeout(() => { button.innerHTML = "🔄 Aggiorna webcam"; },1500);
 }
 
 async function loadMarina(){
@@ -1509,7 +1641,7 @@ document.getElementById("marconiaDir").innerText       = obs.winddir+"°";
 document.getElementById("marconiaRain").innerText      = metric.precipTotal+" mm";
 document.getElementById("marconiaPressure").innerText  = metric.pressure+" hPa";
 document.getElementById("marconiaRainDaily").innerText = metric.precipTotal+" mm";
-// Marconia: usa Open-Meteo Archive (non ha rainBlock.php)
+// Mensile e annuo calcolati da API storica
 loadRainAccum(40.32, 16.67, "marconiaRainMonthly", "marconiaRainYearly", parseFloat(metric.precipTotal));
 const res2  = await fetch(`https://api.weather.com/v2/pws/observations/all/1day?stationId=${stationId}&format=json&units=m&apiKey=${apiKey}`);
 const data2 = await res2.json();
@@ -1524,9 +1656,9 @@ document.getElementById("marconiaWindMax").innerText = windMax.toFixed(1)+" km/h
 }
 
 loadMarconia();
-setInterval(loadMarconia, 30000);
+setInterval(loadMarconia,30000);
 loadMarina();
-setInterval(loadMarina, 300000);
+setInterval(loadMarina,300000);
 
 if("serviceWorker" in navigator){
 window.addEventListener("load", async () => {
@@ -1565,6 +1697,7 @@ const token = await getToken(messaging,{
   vapidKey:"BLzGOyFipYO3tJYyRBzET4JfYKJQ1HhFsaH5LhX92paB_Tf1pZJ4EacUB3NfXfhxZL29pt4WmL8tE9jWz4Jx7mg",
   serviceWorkerRegistration: await navigator.serviceWorker.ready
 });
+console.log("TOKEN:", token);
 await setDoc(doc(db,"tokens",token),{ token:token, createdAt:Date.now() });
 alert("☑️ Notifiche attivate!");
 }else{
